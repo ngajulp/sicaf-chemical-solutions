@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MapPin, Phone, Mail, Globe, Send, CheckCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Globe, Send, CheckCircle, MessageCircle } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -8,28 +8,53 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
+import { sendContactEmail } from '@/lib/emailjs';
+import WhatsAppButton, { getWhatsAppUrl } from '@/components/WhatsAppButton';
 
 const Contact = () => {
   const { t, language } = useLanguage();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    message: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    toast({
-      title: t('contact.success'),
-      description: language === 'fr' 
-        ? 'Nous vous répondrons dans les plus brefs délais.'
-        : 'We will respond to you as soon as possible.',
-    });
+    try {
+      await sendContactEmail(formData);
+      setIsSubmitted(true);
+      toast({
+        title: t('contact.success'),
+        description: language === 'fr' 
+          ? 'Nous vous répondrons dans les plus brefs délais.'
+          : 'We will respond to you as soon as possible.',
+      });
+    } catch (error) {
+      toast({
+        title: language === 'fr' ? 'Erreur' : 'Error',
+        description: language === 'fr' 
+          ? 'Une erreur est survenue. Veuillez réessayer.'
+          : 'An error occurred. Please try again.',
+        variant: 'destructive'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -60,6 +85,9 @@ const Contact = () => {
 
   return (
     <Layout>
+      {/* Floating WhatsApp Button */}
+      <WhatsAppButton variant="floating" />
+
       {/* Hero */}
       <section className="gradient-hero text-primary-foreground py-16 md:py-24">
         <div className="container mx-auto px-4 text-center">
@@ -85,14 +113,27 @@ const Contact = () => {
                       <h3 className="font-heading text-2xl font-bold text-foreground mb-2">
                         {t('contact.success')}
                       </h3>
-                      <p className="text-muted-foreground">
+                      <p className="text-muted-foreground mb-6">
                         {language === 'fr' 
                           ? 'Nous vous répondrons dans les plus brefs délais.'
                           : 'We will respond to you as soon as possible.'}
                       </p>
+                      
+                      {/* WhatsApp CTA after submission */}
+                      <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+                        <p className="text-sm text-green-800 mb-3">
+                          {language === 'fr' 
+                            ? '💬 Pour une réponse plus rapide, contactez-nous sur WhatsApp !'
+                            : '💬 For a faster response, contact us on WhatsApp!'}
+                        </p>
+                        <WhatsAppButton variant="inline" />
+                      </div>
+
                       <Button 
-                        onClick={() => setIsSubmitted(false)} 
-                        className="mt-6"
+                        onClick={() => {
+                          setIsSubmitted(false);
+                          setFormData({ name: '', email: '', phone: '', company: '', message: '' });
+                        }} 
                         variant="outline"
                       >
                         {language === 'fr' ? 'Envoyer un autre message' : 'Send another message'}
@@ -103,22 +144,46 @@ const Contact = () => {
                       <div className="grid md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="name">{t('contact.name')} *</Label>
-                          <Input id="name" name="name" required />
+                          <Input 
+                            id="name" 
+                            name="name" 
+                            value={formData.name}
+                            onChange={handleChange}
+                            required 
+                          />
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="email">{t('contact.email')} *</Label>
-                          <Input id="email" name="email" type="email" required />
+                          <Input 
+                            id="email" 
+                            name="email" 
+                            type="email" 
+                            value={formData.email}
+                            onChange={handleChange}
+                            required 
+                          />
                         </div>
                       </div>
 
                       <div className="grid md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="phone">{t('contact.phone')}</Label>
-                          <Input id="phone" name="phone" type="tel" />
+                          <Input 
+                            id="phone" 
+                            name="phone" 
+                            type="tel"
+                            value={formData.phone}
+                            onChange={handleChange}
+                          />
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="company">{t('contact.company')}</Label>
-                          <Input id="company" name="company" />
+                          <Input 
+                            id="company" 
+                            name="company"
+                            value={formData.company}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
 
@@ -127,7 +192,9 @@ const Contact = () => {
                         <Textarea 
                           id="message" 
                           name="message" 
-                          rows={5} 
+                          rows={5}
+                          value={formData.message}
+                          onChange={handleChange}
                           required 
                         />
                       </div>
@@ -188,6 +255,20 @@ const Contact = () => {
                     </div>
                   </div>
                 ))}
+
+                {/* WhatsApp Contact */}
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#25D366]/10 flex items-center justify-center">
+                    <MessageCircle className="h-6 w-6 text-[#25D366]" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">WhatsApp</h3>
+                    <p className="text-muted-foreground mb-2">
+                      {language === 'fr' ? 'Réponse rapide garantie' : 'Fast response guaranteed'}
+                    </p>
+                    <WhatsAppButton variant="inline" />
+                  </div>
+                </div>
               </div>
 
               {/* Map placeholder */}
