@@ -40,7 +40,7 @@ const Index = () => {
                 </Button>
               </Link>
               <Link to="/catalog">
-                <Button size="lg" variant="outline" className="border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full sm:w-auto">
                   {t('hero.cta')}
                 </Button>
               </Link>
