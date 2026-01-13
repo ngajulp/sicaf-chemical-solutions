@@ -67,7 +67,7 @@ const Contact = () => {
       icon: Phone,
       label: language === 'fr' ? 'Téléphone' : 'Phone',
       values: ['+237 691 83 70 39'],
-      href: 'tel:+237691837039'
+      href: 'tel:+237651254307'
     },
     {
       icon: Mail,
