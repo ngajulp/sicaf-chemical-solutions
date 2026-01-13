@@ -7,7 +7,7 @@ interface WhatsAppButtonProps {
   customMessage?: string;
 }
 
-const WHATSAPP_NUMBER = '237691837039';
+const WHATSAPP_NUMBER = '237651254307';
 
 const WhatsAppButton = ({ variant = 'floating', className = '', customMessage }: WhatsAppButtonProps) => {
   const { language } = useLanguage();
