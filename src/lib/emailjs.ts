@@ -39,7 +39,7 @@ export const sendContactEmail = async (data: ContactFormData): Promise<void> => 
       message: data.message,
       subject: data.subject || 'Message depuis le site SICAF',
       to_name: 'SICAF',
-      to_email: 'contact@sicaf.cm',
+      to_email: 'sicaf@chimistry.com',
       reply_to: data.email,
     });
   } catch (error) {
@@ -76,7 +76,7 @@ Délai souhaité: ${data.deadline || 'Non spécifié'}
       message: message,
       subject: 'Demande de devis - SICAF',
       to_name: 'SICAF',
-      to_email: 'contact@sicaf.cm',
+      to_email: 'sicaf@chimistry.com',
       reply_to: data.email,
     });
   } catch (error) {
