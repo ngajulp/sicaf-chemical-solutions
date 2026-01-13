@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Award, Users, Truck, ChevronRight } from 'lucide-react';
+import { ArrowRight, Shield, Award, Users, Truck, ChevronRight, MessageCircle } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { categories } from '@/data/products';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import WhatsAppButton from '@/components/WhatsAppButton';
 
 const Index = () => {
   const { language, t } = useLanguage();
@@ -18,8 +19,11 @@ const Index = () => {
 
   return (
     <Layout>
+      {/* Floating WhatsApp Button */}
+      <WhatsAppButton variant="floating" />
+
       {/* Hero Section */}
-      <section className="gradient-hero text-primary-foreground py-20 md:py-32">
+      <section className="gradient-hero text-primary-foreground py-20 md:py-32 relative">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
@@ -28,18 +32,23 @@ const Index = () => {
             <p className="text-xl md:text-2xl text-primary-foreground/90 mb-8">
               {t('hero.subtitle')}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/catalog">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+              <Link to="/quote">
                 <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold w-full sm:w-auto">
-                  {t('hero.cta')}
+                  {t('nav.quote')}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Link to="/contact">
+              <Link to="/catalog">
                 <Button size="lg" variant="outline" className="border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary w-full sm:w-auto">
-                  {t('hero.contact')}
+                  {t('hero.cta')}
                 </Button>
               </Link>
+            </div>
+            
+            {/* WhatsApp Hero Button */}
+            <div className="pt-4">
+              <WhatsAppButton variant="hero" />
             </div>
           </div>
         </div>
@@ -153,7 +162,7 @@ const Index = () => {
               ? 'Notre équipe d\'experts est prête à vous accompagner dans vos projets'
               : 'Our team of experts is ready to assist you with your projects'}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
             <Link to="/quote">
               <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold w-full sm:w-auto">
                 {t('nav.quote')}
@@ -165,6 +174,11 @@ const Index = () => {
                 {t('nav.contact')}
               </Button>
             </Link>
+          </div>
+          
+          {/* WhatsApp CTA */}
+          <div className="pt-4">
+            <WhatsAppButton variant="hero" />
           </div>
         </div>
       </section>

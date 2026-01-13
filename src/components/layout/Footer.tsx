@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, Globe } from 'lucide-react';
+import { MapPin, Phone, Mail, Globe, MessageCircle } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { categories } from '@/data/products';
 import logo from '@/assets/logo.png';
+import WhatsAppButton from '@/components/WhatsAppButton';
 
 const Footer = () => {
   const { language, t } = useLanguage();
@@ -105,6 +106,10 @@ const Footer = () => {
                 <a href="https://www.sicaf-chemical.com" target="_blank" rel="noopener noreferrer" className="text-sm text-background/80 hover:text-accent">
                   www.sicaf-chemical.com
                 </a>
+              </li>
+              <li className="flex items-center gap-3 pt-2">
+                <MessageCircle className="h-5 w-5 text-[#25D366] flex-shrink-0" />
+                <WhatsAppButton variant="inline" className="!bg-transparent !p-0 !text-background/80 hover:!text-[#25D366] !font-normal !text-sm" />
               </li>
             </ul>
           </div>
