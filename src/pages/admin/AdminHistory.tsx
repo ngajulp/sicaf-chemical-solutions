@@ -115,18 +115,6 @@ const AdminHistory = () => {
             Rapport détaillé des connexions administrateur
           </p>
         </div>
-
-        <Alert className="border-amber-500 bg-amber-50 dark:bg-amber-950/20">
-          <AlertTriangle className="h-4 w-4 text-amber-600" />
-          <AlertTitle className="text-amber-800 dark:text-amber-400">
-            Accès Restreint
-          </AlertTitle>
-          <AlertDescription className="text-amber-700 dark:text-amber-300">
-            Cette page est réservée aux utilisateurs avec le niveau administrateur. 
-            Les données proviennent du fichier <code className="bg-amber-200/50 px-1 rounded">history.json</code> sur GitHub.
-          </AlertDescription>
-        </Alert>
-
         {/* Summary Cards */}
         <div className="grid gap-4 md:grid-cols-3">
           <Card>
@@ -240,23 +228,6 @@ const AdminHistory = () => {
                 </TableBody>
               </Table>
             )}
-          </CardContent>
-        </Card>
-
-        {/* Info Card */}
-        <Card className="border-blue-200 bg-blue-50/50 dark:bg-blue-950/20">
-          <CardHeader>
-            <CardTitle className="text-blue-800 dark:text-blue-300 text-lg">
-              📋 Format du fichier history.json
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="text-blue-700 dark:text-blue-300 text-sm">
-            <p className="mb-2">Chaque entrée doit contenir :</p>
-            <ul className="list-disc list-inside space-y-1">
-              <li><code className="bg-blue-200/50 px-1 rounded">id</code> - Identifiant de l'utilisateur (correspond à l'ID dans users.json)</li>
-              <li><code className="bg-blue-200/50 px-1 rounded">date</code> - Date et heure de connexion (format: YYYY-MM-DD HH:MM:SS)</li>
-              <li><code className="bg-blue-200/50 px-1 rounded">action</code> - (Optionnel) Type d'action effectuée</li>
-            </ul>
           </CardContent>
         </Card>
       </div>
