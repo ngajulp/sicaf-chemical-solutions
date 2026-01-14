@@ -188,24 +188,6 @@ const AdminDashboard = () => {
             ))}
           </div>
         </div>
-
-        {/* Info Notice */}
-        <Card className="border-primary/20 bg-primary/5">
-          <CardContent className="p-6">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                <FileText className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="font-heading font-semibold mb-1">Mode lecture seule</h3>
-                <p className="text-sm text-muted-foreground">
-                  Les données sont chargées depuis GitHub. Les modifications (ajout, suppression) 
-                  nécessitent une mise à jour directe des fichiers JSON sur le dépôt GitHub.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </AdminLayout>
   );
