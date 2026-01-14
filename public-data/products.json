@@ -1,0 +1,213 @@
+[
+  {
+    "categorie": "Eaux traitées",
+    "datas": [
+      {
+        "reference": "WF-EAU-001",
+        "produit": "Eau déminéralisée",
+        "applications": ["Laboratoires", "Industries pharmaceutique", "Industries électronique"],
+        "specifications": "Conductivité < 1 µS/cm",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-EAU-002",
+        "produit": "Eau distillée",
+        "applications": ["Analyses scientifiques", "Batteries", "Systèmes de refroidissement"],
+        "specifications": "Pureté > 99.9%",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-EAU-003",
+        "produit": "Eau alcaline",
+        "applications": ["Traitement des eaux", "Industries alimentaire", "Industries pharmaceutique"],
+        "specifications": "pH 8.5 – 9.5",
+        "qty": 1,
+        "prix_unit": 2000
+      }
+    ]
+  },
+
+  {
+    "categorie": "Acides minéraux",
+    "datas": [
+      {
+        "reference": "WF-AC-101",
+        "produit": "Acide chlorhydrique",
+        "applications": ["Décapage métallurgique", "Traitement des eaux", "Ajustement du pH"],
+        "specifications": "Concentration 30 – 33%",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-AC-102",
+        "produit": "Acide sulfurique",
+        "applications": ["Industries chimiques", "Batteries", "Traitement des métaux"],
+        "specifications": "Concentration 96 – 98%",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-AC-103",
+        "produit": "Acide nitrique",
+        "applications": ["Engrais", "Explosifs", "Métallurgie", "Gravure"],
+        "specifications": "Concentration 65 – 68%",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-AC-104",
+        "produit": "Acide phosphorique",
+        "applications": ["Engrais", "Détergents", "Traitement des métaux", "Alimentaire"],
+        "specifications": "Concentration 75 – 85%",
+        "qty": 1,
+        "prix_unit": 2000
+      }
+    ]
+  },
+
+  {
+    "categorie": "Acides organiques",
+    "datas": [
+      {
+        "reference": "WF-AC-201",
+        "produit": "Acide acétique",
+        "applications": ["Industrie alimentaire", "Textile", "Produits pharmaceutiques"],
+        "specifications": "Concentration 80 – 99%",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-AC-202",
+        "produit": "Acide citrique",
+        "applications": ["Alimentaire", "Pharmaceutique", "Détergents", "Adoucissants"],
+        "specifications": "Qualité USP / BP",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-AC-203",
+        "produit": "Acide laurique",
+        "applications": ["Cosmétiques", "Détergents", "Produits pharmaceutiques"],
+        "specifications": "Pureté > 98%",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-AC-204",
+        "produit": "Acide ascorbique",
+        "applications": ["Industrie alimentaire", "Pharmaceutique", "Cosmétique"],
+        "specifications": "Qualité USP / BP",
+        "qty": 1,
+        "prix_unit": 2000
+      }
+    ]
+  },
+
+  {
+    "categorie": "Bases & Hydroxydes",
+    "datas": [
+      {
+        "reference": "WF-BS-301",
+        "produit": "Soude caustique",
+        "applications": ["Fabrication de savons", "Traitement des eaux", "Industrie papetière"],
+        "specifications": "Pureté > 99%",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-BS-302",
+        "produit": "Hydroxyde de potassium",
+        "applications": ["Engrais", "Détergents", "Produits pharmaceutiques"],
+        "specifications": "Concentration 45 – 85%",
+        "qty": 1,
+        "prix_unit": 2000
+      }
+    ]
+  },
+
+  {
+    "categorie": "Sels & composés minéraux",
+    "datas": [
+      {
+        "reference": "WF-SL-401",
+        "produit": "Bicarbonate de sodium",
+        "applications": ["Alimentaire", "Pharmaceutique", "Extincteurs", "Traitement des eaux"],
+        "specifications": "Qualité alimentaire / technique",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-SL-402",
+        "produit": "Carbonate de sodium",
+        "applications": ["Verrerie", "Détergents", "Traitement des eaux"],
+        "specifications": "Pureté > 99%",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-SL-403",
+        "produit": "Sulfate d’aluminium",
+        "applications": ["Traitement des eaux", "Papier", "Textiles"],
+        "specifications": "Qualité technique",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-SL-404",
+        "produit": "Permanganate de potassium",
+        "applications": ["Traitement des eaux", "Désinfection", "Analyses chimiques"],
+        "specifications": "Pureté > 99%",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-SL-405",
+        "produit": "Phosphate de zinc",
+        "applications": ["Anticorrosion", "Peintures", "Ciments dentaires"],
+        "specifications": "Qualité technique",
+        "qty": 1,
+        "prix_unit": 2000
+      }
+    ]
+  },
+
+  {
+    "categorie": "Résines & Adsorbants",
+    "datas": [
+      {
+        "reference": "WF-RS-501",
+        "produit": "Charbon actif",
+        "applications": ["Filtration eau/air", "Purification", "Or"],
+        "specifications": "Granulométrie variée",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-RS-502",
+        "produit": "Résine échangeuse d’ions",
+        "applications": ["Adoucissement eau", "Déminéralisation", "Purification"],
+        "specifications": "Type anionique / cationique",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-RS-503",
+        "produit": "Bentonite",
+        "applications": ["Forage", "Fonderies", "Clarification des vins"],
+        "specifications": "Qualité technique / alimentaire",
+        "qty": 1,
+        "prix_unit": 2000
+      },
+      {
+        "reference": "WF-RS-504",
+        "produit": "Terre décolorante",
+        "applications": ["Raffinage des huiles", "Clarification", "Filtration"],
+        "specifications": "Blancheur > 85%",
+        "qty": 1,
+        "prix_unit": 2000
+      }
+    ]
+  }
+]
