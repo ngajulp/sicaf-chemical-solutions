@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Globe } from 'lucide-react';
+import { Menu, X, ChevronDown, Globe, Settings } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { categories } from '@/data/products';
 import { Button } from '@/components/ui/button';
@@ -119,6 +119,10 @@ const Header = () => {
                 {t('nav.quote')}
               </Button>
             </Link>
+
+            <Link to="/admin" title="Administration">
+              <Settings className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors" />
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -168,6 +172,15 @@ const Header = () => {
                 <Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90 font-semibold">
                   {t('nav.quote')}
                 </Button>
+              </Link>
+
+              <Link 
+                to="/admin" 
+                onClick={() => setIsOpen(false)}
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary py-2"
+              >
+                <Settings className="h-5 w-5" />
+                <span>Administration</span>
               </Link>
             </div>
           </div>

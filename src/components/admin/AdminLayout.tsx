@@ -10,7 +10,8 @@ import {
   LogOut, 
   Menu, 
   X,
-  ChevronRight
+  ChevronRight,
+  History
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -65,6 +66,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     { path: '/admin/products', label: 'Produits', icon: Package },
     { path: '/admin/proforma', label: 'Proforma / Devis', icon: FileText },
     { path: '/admin/users', label: 'Utilisateurs', icon: Users, adminOnly: true },
+    { path: '/admin/history', label: 'Historique', icon: History, adminOnly: true },
   ];
 
   const filteredMenuItems = menuItems.filter(
