@@ -118,7 +118,6 @@ const AdminProducts = () => {
                           <TableHead className="font-semibold">Produit</TableHead>
                           <TableHead className="font-semibold">Applications</TableHead>
                           <TableHead className="font-semibold">Spécifications</TableHead>
-                          <TableHead className="font-semibold text-right">Prix Unit.</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -146,9 +145,6 @@ const AdminProducts = () => {
                             </TableCell>
                             <TableCell className="text-sm text-muted-foreground">
                               {product.specifications}
-                            </TableCell>
-                            <TableCell className="text-right font-semibold">
-                              {product.prix_unit.toLocaleString('fr-FR')} FCFA
                             </TableCell>
                           </TableRow>
                         ))}

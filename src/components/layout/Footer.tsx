@@ -121,6 +121,12 @@ const Footer = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-background/60">
             <p>© {currentYear} SICAF - Société des Industries Chimiques d'Afrique. {t('footer.rights')}.</p>
+            <Link 
+              to="/admin" 
+              className="text-background/40 hover:text-background/70 transition-colors text-xs"
+            >
+              Administration
+            </Link>
           </div>
         </div>
       </div>
