@@ -60,15 +60,6 @@ const AdminUsers = () => {
           </p>
         </div>
 
-        <Alert>
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>
-            Les modifications des utilisateurs nécessitent une mise à jour directe du fichier 
-            <code className="mx-1 px-1 py-0.5 bg-muted rounded text-sm">users.json</code> 
-            sur GitHub.
-          </AlertDescription>
-        </Alert>
-
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -126,25 +117,6 @@ const AdminUsers = () => {
                 </Table>
               </div>
             )}
-          </CardContent>
-        </Card>
-
-        {/* Info about MD5 */}
-        <Card className="border-primary/20 bg-primary/5">
-          <CardContent className="p-6">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                <Shield className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="font-heading font-semibold mb-1">Authentification MD5</h3>
-                <p className="text-sm text-muted-foreground">
-                  Les mots de passe sont stockés en hash MD5 dans le fichier users.json. 
-                  Pour créer un nouveau mot de passe, générez le hash MD5 correspondant et 
-                  mettez à jour le fichier sur GitHub.
-                </p>
-              </div>
-            </div>
           </CardContent>
         </Card>
       </div>
