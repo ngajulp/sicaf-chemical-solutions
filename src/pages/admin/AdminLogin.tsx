@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAdminAuth } from '@/contexts/AdminAuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Lock, User, AlertCircle, Loader2 } from 'lucide-react';
+import { Lock, User, AlertCircle, Loader2, Home } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { addConnectionLog } from '@/lib/github';
 
 const AdminLogin = () => {
   const [username, setUsername] = useState('');
@@ -24,6 +25,12 @@ const AdminLogin = () => {
     try {
       const success = await login(username, password);
       if (success) {
+        // Log connection in history
+        const storedUser = localStorage.getItem('sicaf_admin_user');
+        if (storedUser) {
+          const userData = JSON.parse(storedUser);
+          addConnectionLog(userData.id, 'connexion').catch(console.error);
+        }
         navigate('/admin/dashboard');
       } else {
         setError('Identifiants invalides. Veuillez réessayer.');
@@ -37,6 +44,14 @@ const AdminLogin = () => {
 
   return (
     <div className="min-h-screen gradient-hero flex items-center justify-center p-4">
+      {/* Back to Home Button */}
+      <Link to="/" className="absolute top-4 left-4">
+        <Button variant="outline" className="flex items-center gap-2">
+          <Home className="h-4 w-4" />
+          Retour à l'accueil
+        </Button>
+      </Link>
+      
       <Card className="w-full max-w-md shadow-2xl">
         <CardHeader className="text-center">
           <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">

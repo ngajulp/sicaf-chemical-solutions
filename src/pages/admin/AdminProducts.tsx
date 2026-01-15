@@ -3,9 +3,16 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Search, Package, Loader2 } from 'lucide-react';
+import { Search, Package, Loader2, Plus, Edit, Trash2, Save, X } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { toast } from 'sonner';
+import { getProducts, updateProducts } from '@/lib/github';
 
 interface ProductData {
   reference: string;
@@ -21,30 +28,200 @@ interface ProductCategory {
   datas: ProductData[];
 }
 
-const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data';
-
 const AdminProducts = () => {
   const [products, setProducts] = useState<ProductCategory[]>([]);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [sha, setSha] = useState('');
+  
+  // Modal states
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
+  
+  // Form states
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [editingProduct, setEditingProduct] = useState<ProductData | null>(null);
+  const [editingCategoryIndex, setEditingCategoryIndex] = useState<number>(-1);
+  const [newCategory, setNewCategory] = useState('');
+  const [formData, setFormData] = useState<ProductData>({
+    reference: '',
+    produit: '',
+    applications: [],
+    specifications: '',
+    qty: 1,
+    prix_unit: 0
+  });
+  const [applicationsText, setApplicationsText] = useState('');
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(`${GITHUB_BASE_URL}/products.json`);
-        if (response.ok) {
-          const data = await response.json();
-          setProducts(data);
-        }
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchProducts();
   }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const { content, sha: fileSha } = await getProducts();
+      setProducts(content);
+      setSha(fileSha);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      toast.error('Erreur lors du chargement des produits');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      reference: '',
+      produit: '',
+      applications: [],
+      specifications: '',
+      qty: 1,
+      prix_unit: 0
+    });
+    setApplicationsText('');
+    setSelectedCategory('');
+    setEditingProduct(null);
+    setEditingCategoryIndex(-1);
+  };
+
+  const handleAddProduct = async () => {
+    if (!selectedCategory || !formData.reference || !formData.produit) {
+      toast.error('Veuillez remplir tous les champs obligatoires');
+      return;
+    }
+
+    setSaving(true);
+    try {
+      const newProduct: ProductData = {
+        ...formData,
+        applications: applicationsText.split('\n').filter(a => a.trim())
+      };
+
+      const updatedProducts = products.map(cat => {
+        if (cat.categorie === selectedCategory) {
+          return { ...cat, datas: [...cat.datas, newProduct] };
+        }
+        return cat;
+      });
+
+      await updateProducts(updatedProducts, sha, `Ajout produit: ${formData.produit}`);
+      toast.success('Produit ajouté avec succès');
+      setShowAddModal(false);
+      resetForm();
+      fetchProducts();
+    } catch (error) {
+      console.error('Error adding product:', error);
+      toast.error('Erreur lors de l\'ajout du produit');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleEditProduct = async () => {
+    if (!formData.reference || !formData.produit) {
+      toast.error('Veuillez remplir tous les champs obligatoires');
+      return;
+    }
+
+    setSaving(true);
+    try {
+      const updatedProduct: ProductData = {
+        ...formData,
+        applications: applicationsText.split('\n').filter(a => a.trim())
+      };
+
+      const updatedProducts = products.map((cat, catIndex) => {
+        if (catIndex === editingCategoryIndex) {
+          return {
+            ...cat,
+            datas: cat.datas.map(p =>
+              p.reference === editingProduct?.reference ? updatedProduct : p
+            )
+          };
+        }
+        return cat;
+      });
+
+      await updateProducts(updatedProducts, sha, `Modification produit: ${formData.produit}`);
+      toast.success('Produit modifié avec succès');
+      setShowEditModal(false);
+      resetForm();
+      fetchProducts();
+    } catch (error) {
+      console.error('Error updating product:', error);
+      toast.error('Erreur lors de la modification du produit');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDeleteProduct = async () => {
+    if (!editingProduct) return;
+
+    setSaving(true);
+    try {
+      const updatedProducts = products.map((cat, catIndex) => {
+        if (catIndex === editingCategoryIndex) {
+          return {
+            ...cat,
+            datas: cat.datas.filter(p => p.reference !== editingProduct.reference)
+          };
+        }
+        return cat;
+      });
+
+      await updateProducts(updatedProducts, sha, `Suppression produit: ${editingProduct.produit}`);
+      toast.success('Produit supprimé avec succès');
+      setShowDeleteModal(false);
+      resetForm();
+      fetchProducts();
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      toast.error('Erreur lors de la suppression du produit');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleAddCategory = async () => {
+    if (!newCategory.trim()) {
+      toast.error('Veuillez saisir un nom de catégorie');
+      return;
+    }
+
+    setSaving(true);
+    try {
+      const updatedProducts = [...products, { categorie: newCategory, datas: [] }];
+      await updateProducts(updatedProducts, sha, `Ajout catégorie: ${newCategory}`);
+      toast.success('Catégorie ajoutée avec succès');
+      setShowAddCategoryModal(false);
+      setNewCategory('');
+      fetchProducts();
+    } catch (error) {
+      console.error('Error adding category:', error);
+      toast.error('Erreur lors de l\'ajout de la catégorie');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const openEditModal = (product: ProductData, categoryIndex: number) => {
+    setEditingProduct(product);
+    setEditingCategoryIndex(categoryIndex);
+    setFormData(product);
+    setApplicationsText(product.applications.join('\n'));
+    setShowEditModal(true);
+  };
+
+  const openDeleteModal = (product: ProductData, categoryIndex: number) => {
+    setEditingProduct(product);
+    setEditingCategoryIndex(categoryIndex);
+    setShowDeleteModal(true);
+  };
 
   const filteredProducts = products.map(category => ({
     ...category,
@@ -66,6 +243,16 @@ const AdminProducts = () => {
             <p className="text-muted-foreground mt-1">
               {totalProducts} produits dans {products.length} catégories
             </p>
+          </div>
+          <div className="flex gap-2">
+            <Button onClick={() => setShowAddCategoryModal(true)} variant="outline">
+              <Plus className="h-4 w-4 mr-2" />
+              Catégorie
+            </Button>
+            <Button onClick={() => setShowAddModal(true)}>
+              <Plus className="h-4 w-4 mr-2" />
+              Produit
+            </Button>
           </div>
         </div>
 
@@ -120,6 +307,7 @@ const AdminProducts = () => {
                           <TableHead className="font-semibold">Spécifications</TableHead>
                           <TableHead className="font-semibold text-right">Qté</TableHead>
                           <TableHead className="font-semibold text-right">Prix Unit.</TableHead>
+                          <TableHead className="font-semibold text-center">Actions</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -154,6 +342,26 @@ const AdminProducts = () => {
                             <TableCell className="text-right font-semibold">
                               {product.prix_unit.toLocaleString('fr-FR')} FCFA
                             </TableCell>
+                            <TableCell>
+                              <div className="flex items-center justify-center gap-1">
+                                <Button
+                                  size="icon"
+                                  variant="ghost"
+                                  className="h-8 w-8"
+                                  onClick={() => openEditModal(product, products.findIndex(p => p.categorie === category.categorie))}
+                                >
+                                  <Edit className="h-4 w-4" />
+                                </Button>
+                                <Button
+                                  size="icon"
+                                  variant="ghost"
+                                  className="h-8 w-8 text-destructive hover:text-destructive"
+                                  onClick={() => openDeleteModal(product, products.findIndex(p => p.categorie === category.categorie))}
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -177,6 +385,209 @@ const AdminProducts = () => {
           </Card>
         )}
       </div>
+
+      {/* Add Product Modal */}
+      <Dialog open={showAddModal} onOpenChange={setShowAddModal}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Ajouter un produit</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label>Catégorie *</Label>
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Sélectionner une catégorie" />
+                </SelectTrigger>
+                <SelectContent>
+                  {products.map((cat, i) => (
+                    <SelectItem key={i} value={cat.categorie}>{cat.categorie}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Référence *</Label>
+                <Input
+                  value={formData.reference}
+                  onChange={(e) => setFormData({ ...formData, reference: e.target.value })}
+                  placeholder="Ex: WF-EAU-001"
+                />
+              </div>
+              <div>
+                <Label>Nom du produit *</Label>
+                <Input
+                  value={formData.produit}
+                  onChange={(e) => setFormData({ ...formData, produit: e.target.value })}
+                  placeholder="Nom du produit"
+                />
+              </div>
+            </div>
+            <div>
+              <Label>Applications (une par ligne)</Label>
+              <Textarea
+                value={applicationsText}
+                onChange={(e) => setApplicationsText(e.target.value)}
+                placeholder="Application 1&#10;Application 2"
+                rows={3}
+              />
+            </div>
+            <div>
+              <Label>Spécifications</Label>
+              <Input
+                value={formData.specifications}
+                onChange={(e) => setFormData({ ...formData, specifications: e.target.value })}
+                placeholder="Spécifications techniques"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Quantité</Label>
+                <Input
+                  type="number"
+                  value={formData.qty}
+                  onChange={(e) => setFormData({ ...formData, qty: parseInt(e.target.value) || 1 })}
+                />
+              </div>
+              <div>
+                <Label>Prix unitaire (FCFA)</Label>
+                <Input
+                  type="number"
+                  value={formData.prix_unit}
+                  onChange={(e) => setFormData({ ...formData, prix_unit: parseInt(e.target.value) || 0 })}
+                />
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => { setShowAddModal(false); resetForm(); }}>
+              Annuler
+            </Button>
+            <Button onClick={handleAddProduct} disabled={saving}>
+              {saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
+              Ajouter
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Product Modal */}
+      <Dialog open={showEditModal} onOpenChange={setShowEditModal}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Modifier le produit</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Référence *</Label>
+                <Input
+                  value={formData.reference}
+                  onChange={(e) => setFormData({ ...formData, reference: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label>Nom du produit *</Label>
+                <Input
+                  value={formData.produit}
+                  onChange={(e) => setFormData({ ...formData, produit: e.target.value })}
+                />
+              </div>
+            </div>
+            <div>
+              <Label>Applications (une par ligne)</Label>
+              <Textarea
+                value={applicationsText}
+                onChange={(e) => setApplicationsText(e.target.value)}
+                rows={3}
+              />
+            </div>
+            <div>
+              <Label>Spécifications</Label>
+              <Input
+                value={formData.specifications}
+                onChange={(e) => setFormData({ ...formData, specifications: e.target.value })}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Quantité</Label>
+                <Input
+                  type="number"
+                  value={formData.qty}
+                  onChange={(e) => setFormData({ ...formData, qty: parseInt(e.target.value) || 1 })}
+                />
+              </div>
+              <div>
+                <Label>Prix unitaire (FCFA)</Label>
+                <Input
+                  type="number"
+                  value={formData.prix_unit}
+                  onChange={(e) => setFormData({ ...formData, prix_unit: parseInt(e.target.value) || 0 })}
+                />
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => { setShowEditModal(false); resetForm(); }}>
+              Annuler
+            </Button>
+            <Button onClick={handleEditProduct} disabled={saving}>
+              {saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
+              Enregistrer
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Modal */}
+      <Dialog open={showDeleteModal} onOpenChange={setShowDeleteModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirmer la suppression</DialogTitle>
+          </DialogHeader>
+          <p className="text-muted-foreground">
+            Êtes-vous sûr de vouloir supprimer le produit <strong>{editingProduct?.produit}</strong> ?
+            Cette action est irréversible.
+          </p>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowDeleteModal(false)}>
+              Annuler
+            </Button>
+            <Button variant="destructive" onClick={handleDeleteProduct} disabled={saving}>
+              {saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Trash2 className="h-4 w-4 mr-2" />}
+              Supprimer
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Add Category Modal */}
+      <Dialog open={showAddCategoryModal} onOpenChange={setShowAddCategoryModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Ajouter une catégorie</DialogTitle>
+          </DialogHeader>
+          <div>
+            <Label>Nom de la catégorie</Label>
+            <Input
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+              placeholder="Nom de la catégorie"
+            />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowAddCategoryModal(false)}>
+              Annuler
+            </Button>
+            <Button onClick={handleAddCategory} disabled={saving}>
+              {saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Plus className="h-4 w-4 mr-2" />}
+              Ajouter
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </AdminLayout>
   );
 };
