@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Download, Filter, ChevronRight } from 'lucide-react';
+import { Search, Download, Filter, ChevronRight, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { products, categories, searchProducts } from '@/data/products';
+import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -25,6 +25,7 @@ import {
 
 const Catalog = () => {
   const { t, language } = useLanguage();
+  const { products, categories, loading, searchProducts, getProductsByCategory } = useGitHubProducts();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
@@ -33,7 +34,7 @@ const Catalog = () => {
 
     // Filter by category
     if (selectedCategory !== 'all') {
-      result = result.filter(p => p.category === selectedCategory);
+      result = getProductsByCategory(selectedCategory);
     }
 
     // Filter by search query
@@ -45,10 +46,9 @@ const Catalog = () => {
     }
 
     return result;
-  }, [searchQuery, selectedCategory, language]);
+  }, [searchQuery, selectedCategory, language, products, searchProducts, getProductsByCategory]);
 
   const handleDownloadBrochure = () => {
-    // In a real app, this would download a PDF
     alert(language === 'fr' 
       ? 'Le téléchargement de la brochure va commencer...'
       : 'Brochure download will start...');
@@ -118,91 +118,99 @@ const Catalog = () => {
 
       <section className="py-8 md:py-12 bg-background">
         <div className="container mx-auto px-4">
-          {/* Category Cards */}
-          {selectedCategory === 'all' && !searchQuery && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-              {categories.map((category) => {
-                const count = products.filter(p => p.category === category.id).length;
-                return (
-                  <Link key={category.id} to={`/products/${category.id}`}>
-                    <Card className="hover:shadow-md transition-shadow group">
-                      <CardContent className="p-4 flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className="text-2xl">{category.icon}</span>
-                          <div>
-                            <h3 className="font-medium group-hover:text-primary transition-colors">
-                              {category.name[language]}
-                            </h3>
-                            <p className="text-sm text-muted-foreground">
-                              {count} {language === 'fr' ? 'produits' : 'products'}
-                            </p>
-                          </div>
-                        </div>
-                        <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                      </CardContent>
-                    </Card>
-                  </Link>
-                );
-              })}
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
+          ) : (
+            <>
+              {/* Category Cards */}
+              {selectedCategory === 'all' && !searchQuery && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                  {categories.map((category) => {
+                    const count = products.filter(p => p.category === category.id).length;
+                    return (
+                      <Link key={category.id} to={`/products/${category.id}`}>
+                        <Card className="hover:shadow-md transition-shadow group">
+                          <CardContent className="p-4 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <span className="text-2xl">{category.icon}</span>
+                              <div>
+                                <h3 className="font-medium group-hover:text-primary transition-colors">
+                                  {category.name[language]}
+                                </h3>
+                                <p className="text-sm text-muted-foreground">
+                                  {count} {language === 'fr' ? 'produits' : 'products'}
+                                </p>
+                              </div>
+                            </div>
+                            <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Products Table */}
+              <Card className="shadow-lg overflow-hidden">
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="bg-primary hover:bg-primary">
+                        <TableHead className="text-primary-foreground font-semibold">
+                          {t('table.reference')}
+                        </TableHead>
+                        <TableHead className="text-primary-foreground font-semibold">
+                          {t('table.product')}
+                        </TableHead>
+                        <TableHead className="text-primary-foreground font-semibold hidden md:table-cell">
+                          {t('table.applications')}
+                        </TableHead>
+                        <TableHead className="text-primary-foreground font-semibold hidden sm:table-cell">
+                          {t('table.specifications')}
+                        </TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredProducts.map((product, index) => (
+                        <TableRow 
+                          key={product.reference}
+                          className={index % 2 === 0 ? 'bg-background' : 'bg-muted/50'}
+                        >
+                          <TableCell className="font-mono text-sm font-medium text-primary">
+                            {product.reference}
+                          </TableCell>
+                          <TableCell className="font-medium">
+                            {product.name[language]}
+                          </TableCell>
+                          <TableCell className="text-muted-foreground hidden md:table-cell">
+                            {product.applications[language]}
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <span className="inline-block bg-secondary/20 text-secondary-foreground px-2 py-1 rounded text-sm">
+                              {product.specifications}
+                            </span>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+
+                {filteredProducts.length === 0 && (
+                  <div className="p-12 text-center">
+                    <p className="text-muted-foreground">
+                      {language === 'fr' 
+                        ? 'Aucun produit trouvé pour cette recherche.'
+                        : 'No products found for this search.'}
+                    </p>
+                  </div>
+                )}
+              </Card>
+            </>
           )}
-
-          {/* Products Table */}
-          <Card className="shadow-lg overflow-hidden">
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow className="bg-primary hover:bg-primary">
-                    <TableHead className="text-primary-foreground font-semibold">
-                      {t('table.reference')}
-                    </TableHead>
-                    <TableHead className="text-primary-foreground font-semibold">
-                      {t('table.product')}
-                    </TableHead>
-                    <TableHead className="text-primary-foreground font-semibold hidden md:table-cell">
-                      {t('table.applications')}
-                    </TableHead>
-                    <TableHead className="text-primary-foreground font-semibold hidden sm:table-cell">
-                      {t('table.specifications')}
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredProducts.map((product, index) => (
-                    <TableRow 
-                      key={product.reference}
-                      className={index % 2 === 0 ? 'bg-background' : 'bg-muted/50'}
-                    >
-                      <TableCell className="font-mono text-sm font-medium text-primary">
-                        {product.reference}
-                      </TableCell>
-                      <TableCell className="font-medium">
-                        {product.name[language]}
-                      </TableCell>
-                      <TableCell className="text-muted-foreground hidden md:table-cell">
-                        {product.applications[language]}
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <span className="inline-block bg-secondary/20 text-secondary-foreground px-2 py-1 rounded text-sm">
-                          {product.specifications}
-                        </span>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-
-            {filteredProducts.length === 0 && (
-              <div className="p-12 text-center">
-                <p className="text-muted-foreground">
-                  {language === 'fr' 
-                    ? 'Aucun produit trouvé pour cette recherche.'
-                    : 'No products found for this search.'}
-                </p>
-              </div>
-            )}
-          </Card>
         </div>
       </section>
     </Layout>

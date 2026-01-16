@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { getProductsByCategory, getCategoryById, categories } from '@/data/products';
+import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -17,6 +17,7 @@ import {
 const ProductCategory = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
   const { t, language } = useLanguage();
+  const { categories, loading, getProductsByCategory, getCategoryById } = useGitHubProducts();
 
   const category = getCategoryById(categoryId || '');
   const products = getProductsByCategory(categoryId || '');
@@ -25,6 +26,16 @@ const ProductCategory = () => {
   const currentIndex = categories.findIndex(c => c.id === categoryId);
   const prevCategory = currentIndex > 0 ? categories[currentIndex - 1] : null;
   const nextCategory = currentIndex < categories.length - 1 ? categories[currentIndex + 1] : null;
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-20 text-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto" />
+        </div>
+      </Layout>
+    );
+  }
 
   if (!category) {
     return (
