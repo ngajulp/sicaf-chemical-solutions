@@ -1,28 +1,28 @@
 [
   {
-    "categorie": "Eaux traitÃ©es",
+    "categorie": "Eaux traitÃÂ©es",
     "datas": [
       {
         "reference": "WF-EAU-001",
-        "produit": "Eau dÃ©minÃ©ralisÃ©e",
+        "produit": "Eau dÃÂ©minÃÂ©ralisÃÂ©e",
         "applications": [
           "Laboratoires",
           "Industries pharmaceutique",
-          "Industries Ã©lectronique"
+          "Industries ÃÂ©lectronique"
         ],
-        "specifications": "ConductivitÃ© < 1 ÂµS/cm",
+        "specifications": "ConductivitÃÂ© < 1 ÃÂµS/cm",
         "qty": 1,
         "prix_unit": 2000
       },
       {
         "reference": "WF-EAU-002",
-        "produit": "Eau distillÃ©e",
+        "produit": "Eau distillÃÂ©e",
         "applications": [
           "Analyses scientifiques",
           "Batteries",
-          "SystÃ¨mes de refroidissement"
+          "SystÃÂ¨mes de refroidissement"
         ],
-        "specifications": "PuretÃ© > 99.9%",
+        "specifications": "PuretÃÂ© > 99.9%",
         "qty": 1,
         "prix_unit": 2000
       },
@@ -34,24 +34,24 @@
           "Industries alimentaire",
           "Industries pharmaceutique"
         ],
-        "specifications": "pH 8.5 â 9.5",
+        "specifications": "pH 8.5 Ã¢ÂÂ 9.5",
         "qty": 1,
         "prix_unit": 2000
       }
     ]
   },
   {
-    "categorie": "Acides minÃ©raux",
+    "categorie": "Acides minÃÂ©raux",
     "datas": [
       {
         "reference": "WF-AC-101",
         "produit": "Acide chlorhydrique",
         "applications": [
-          "DÃ©capage mÃ©tallurgique",
+          "DÃÂ©capage mÃÂ©tallurgique",
           "Traitement des eaux",
           "Ajustement du pH"
         ],
-        "specifications": "Concentration 30 â 33%",
+        "specifications": "Concentration 30 Ã¢ÂÂ 33%",
         "qty": 1,
         "prix_unit": 2000
       },
@@ -61,9 +61,9 @@
         "applications": [
           "Industries chimiques",
           "Batteries",
-          "Traitement des mÃ©taux"
+          "Traitement des mÃÂ©taux"
         ],
-        "specifications": "Concentration 96 â 98%",
+        "specifications": "Concentration 96 Ã¢ÂÂ 98%",
         "qty": 1,
         "prix_unit": 2000
       },
@@ -73,10 +73,10 @@
         "applications": [
           "Engrais",
           "Explosifs",
-          "MÃ©tallurgie",
+          "MÃÂ©tallurgie",
           "Gravure"
         ],
-        "specifications": "Concentration 65 â 68%",
+        "specifications": "Concentration 65 Ã¢ÂÂ 68%",
         "qty": 1,
         "prix_unit": 2000
       },
@@ -85,11 +85,11 @@
         "produit": "Acide phosphorique",
         "applications": [
           "Engrais",
-          "DÃ©tergents",
-          "Traitement des mÃ©taux",
+          "DÃÂ©tergents",
+          "Traitement des mÃÂ©taux",
           "Alimentaire"
         ],
-        "specifications": "Concentration 75 â 85%",
+        "specifications": "Concentration 75 Ã¢ÂÂ 85%",
         "qty": 1,
         "prix_unit": 2000
       }
@@ -100,13 +100,13 @@
     "datas": [
       {
         "reference": "WF-AC-201",
-        "produit": "Acide acÃ©tique",
+        "produit": "Acide acÃÂ©tique",
         "applications": [
           "Industrie alimentaire",
           "Textile",
           "Produits pharmaceutiques"
         ],
-        "specifications": "Concentration 80 â 99%",
+        "specifications": "Concentration 80 Ã¢ÂÂ 99%",
         "qty": 1,
         "prix_unit": 2000
       },
@@ -116,10 +116,10 @@
         "applications": [
           "Alimentaire",
           "Pharmaceutique",
-          "DÃ©tergents",
+          "DÃÂ©tergents",
           "Adoucissants"
         ],
-        "specifications": "QualitÃ© USP / BP",
+        "specifications": "QualitÃÂ© USP / BP",
         "qty": 1,
         "prix_unit": 2000
       },
@@ -127,11 +127,11 @@
         "reference": "WF-AC-203",
         "produit": "Acide laurique",
         "applications": [
-          "CosmÃ©tiques",
-          "DÃ©tergents",
+          "CosmÃÂ©tiques",
+          "DÃÂ©tergents",
           "Produits pharmaceutiques"
         ],
-        "specifications": "PuretÃ© > 98%",
+        "specifications": "PuretÃÂ© > 98%",
         "qty": 1,
         "prix_unit": 2000
       },
@@ -141,11 +141,19 @@
         "applications": [
           "Industrie alimentaire",
           "Pharmaceutique",
-          "CosmÃ©tique"
+          "CosmÃÂ©tique"
         ],
-        "specifications": "QualitÃ© USP / BP",
+        "specifications": "QualitÃÂ© USP / BP",
         "qty": 1,
         "prix_unit": 2000
+      },
+      {
+        "reference": "WF-02-001",
+        "produit": "Acide Oxalique ",
+        "applications": [],
+        "specifications": "",
+        "qty": 14,
+        "prix_unit": 2500
       }
     ]
   },
@@ -158,9 +166,9 @@
         "applications": [
           "Fabrication de savons",
           "Traitement des eaux",
-          "Industrie papetiÃ¨re"
+          "Industrie papetiÃÂ¨re"
         ],
-        "specifications": "PuretÃ© > 99%",
+        "specifications": "PuretÃÂ© > 99%",
         "qty": 1,
         "prix_unit": 2000
       },
@@ -169,17 +177,17 @@
         "produit": "Hydroxyde de potassium",
         "applications": [
           "Engrais",
-          "DÃ©tergents",
+          "DÃÂ©tergents",
           "Produits pharmaceutiques"
         ],
-        "specifications": "Concentration 45 â 85%",
+        "specifications": "Concentration 45 Ã¢ÂÂ 85%",
         "qty": 1,
         "prix_unit": 2000
       }
     ]
   },
   {
-    "categorie": "Sels & composÃ©s minÃ©raux",
+    "categorie": "Sels & composÃÂ©s minÃÂ©raux",
     "datas": [
       {
         "reference": "WF-SL-401",
@@ -190,7 +198,7 @@
           "Extincteurs",
           "Traitement des eaux"
         ],
-        "specifications": "QualitÃ© alimentaire / technique",
+        "specifications": "QualitÃÂ© alimentaire / technique",
         "qty": 1,
         "prix_unit": 2000
       },
@@ -199,22 +207,22 @@
         "produit": "Carbonate de sodium",
         "applications": [
           "Verrerie",
-          "DÃ©tergents",
+          "DÃÂ©tergents",
           "Traitement des eaux"
         ],
-        "specifications": "PuretÃ© > 99%",
+        "specifications": "PuretÃÂ© > 99%",
         "qty": 1,
         "prix_unit": 2000
       },
       {
         "reference": "WF-SL-403",
-        "produit": "Sulfate dâaluminium",
+        "produit": "Sulfate dÃ¢ÂÂaluminium",
         "applications": [
           "Traitement des eaux",
           "Papier",
           "Textiles"
         ],
-        "specifications": "QualitÃ© technique",
+        "specifications": "QualitÃÂ© technique",
         "qty": 1,
         "prix_unit": 2000
       },
@@ -223,10 +231,10 @@
         "produit": "Permanganate de potassium",
         "applications": [
           "Traitement des eaux",
-          "DÃ©sinfection",
+          "DÃÂ©sinfection",
           "Analyses chimiques"
         ],
-        "specifications": "PuretÃ© > 99%",
+        "specifications": "PuretÃÂ© > 99%",
         "qty": 1,
         "prix_unit": 2000
       },
@@ -238,14 +246,14 @@
           "Peintures",
           "Ciments dentaires"
         ],
-        "specifications": "QualitÃ© technique",
+        "specifications": "QualitÃÂ© technique",
         "qty": 1,
         "prix_unit": 2000
       }
     ]
   },
   {
-    "categorie": "RÃ©sines & Adsorbants",
+    "categorie": "RÃÂ©sines & Adsorbants",
     "datas": [
       {
         "reference": "WF-RS-501",
@@ -255,16 +263,16 @@
           "Purification",
           "Or"
         ],
-        "specifications": "GranulomÃ©trie variÃ©e",
+        "specifications": "GranulomÃÂ©trie variÃÂ©e",
         "qty": 1,
         "prix_unit": 2000
       },
       {
         "reference": "WF-RS-502",
-        "produit": "RÃ©sine Ã©changeuse dâions",
+        "produit": "RÃÂ©sine ÃÂ©changeuse dÃ¢ÂÂions",
         "applications": [
           "Adoucissement eau",
-          "DÃ©minÃ©ralisation",
+          "DÃÂ©minÃÂ©ralisation",
           "Purification"
         ],
         "specifications": "Type anionique / cationique",
@@ -279,13 +287,13 @@
           "Fonderies",
           "Clarification des vins"
         ],
-        "specifications": "QualitÃ© technique / alimentaire",
+        "specifications": "QualitÃÂ© technique / alimentaire",
         "qty": 1,
         "prix_unit": 2000
       },
       {
         "reference": "WF-RS-504",
-        "produit": "Terre dÃ©colorante",
+        "produit": "Terre dÃÂ©colorante",
         "applications": [
           "Raffinage des huiles",
           "Clarification",
