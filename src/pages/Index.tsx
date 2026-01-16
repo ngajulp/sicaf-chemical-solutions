@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Award, Users, Truck, ChevronRight, MessageCircle } from 'lucide-react';
+import { ArrowRight, Shield, Award, Users, Truck, ChevronRight, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { categories } from '@/data/products';
+import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -9,6 +9,7 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 
 const Index = () => {
   const { language, t } = useLanguage();
+  const { categories, loading } = useGitHubProducts();
 
   const features = [
     { icon: Shield, titleKey: 'home.quality', descKey: 'home.quality_desc' },
@@ -80,33 +81,39 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categories.map((category) => (
-              <Link key={category.id} to={`/products/${category.id}`}>
-                <Card className="group h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 border-transparent hover:border-primary/20">
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="text-4xl p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                        {category.icon}
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-heading font-semibold text-lg text-foreground mb-2 group-hover:text-primary transition-colors">
-                          {category.name[language]}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          {category.description[language]}
-                        </p>
-                        <div className="flex items-center text-primary font-medium text-sm mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                          {t('common.view_products')}
-                          <ChevronRight className="h-4 w-4 ml-1" />
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {categories.map((category) => (
+                <Link key={category.id} to={`/products/${category.id}`}>
+                  <Card className="group h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 border-transparent hover:border-primary/20">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="text-4xl p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                          {category.icon}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-heading font-semibold text-lg text-foreground mb-2 group-hover:text-primary transition-colors">
+                            {category.name[language]}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            {category.description[language]}
+                          </p>
+                          <div className="flex items-center text-primary font-medium text-sm mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                            {t('common.view_products')}
+                            <ChevronRight className="h-4 w-4 ml-1" />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          )}
 
           <div className="text-center mt-10">
             <Link to="/catalog">
