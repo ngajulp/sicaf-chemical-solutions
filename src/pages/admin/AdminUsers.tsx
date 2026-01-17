@@ -55,9 +55,16 @@ const AdminUsers = () => {
   const fetchUsers = async () => {
     try {
       const content = await getUsers();
-      const fileSha = await getUsersSha();
       setUsers(content || []);
-      setSha(fileSha);
+      
+      // Try to get SHA for write operations (may fail with invalid token)
+      try {
+        const fileSha = await getUsersSha();
+        setSha(fileSha);
+      } catch (shaError) {
+        console.warn('Could not fetch SHA (read-only mode):', shaError);
+        setSha('');
+      }
     } catch (error) {
       console.error('Error fetching users:', error);
       toast.error('Erreur lors du chargement des utilisateurs');
