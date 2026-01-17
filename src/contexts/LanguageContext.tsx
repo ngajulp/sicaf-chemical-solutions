@@ -16,7 +16,7 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.products': 'Produits',
     'nav.catalog': 'Catalogue',
     'nav.contact': 'Contact',
-    'nav.quote': 'Demande de Devis',
+    'nav.quote': 'Demandez un Dévis',
     
     // Categories
     'cat.treated_water': 'Eaux Traitées',
@@ -69,7 +69,7 @@ const translations: Record<Language, Record<string, string>> = {
     'contact.success': 'Message envoyé avec succès !',
     
     // Quote
-    'quote.title': 'Demande de Devis',
+    'quote.title': 'Demandez un Dévis',
     'quote.subtitle': 'Sélectionnez les produits qui vous intéressent et recevez un devis personnalisé',
     'quote.select_products': 'Sélectionnez les produits',
     'quote.quantity': 'Quantité estimée',
