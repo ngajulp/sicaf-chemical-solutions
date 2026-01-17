@@ -35,6 +35,8 @@ interface CompanyInfo {
   Telephone: string;
   email: string;
   siteweb: string;
+  rc?: string;
+  niu?: string;
 }
 
 interface SelectedProduct extends ProductData {
@@ -237,6 +239,8 @@ const InvoicePDF = ({
             <Text style={pdfStyles.infoRow}>Tél: {companyInfo?.Telephone}</Text>
             <Text style={pdfStyles.infoRow}>{companyInfo?.email}</Text>
             <Text style={pdfStyles.infoRow}>{companyInfo?.siteweb}</Text>
+            {companyInfo?.niu && (<Text style={pdfStyles.infoRow}>NIU : {companyInfo.niu}</Text>)}
+            {companyInfo?.rc && (<Text style={pdfStyles.infoRow}>RC : {companyInfo.rc}</Text>)}
           </View>
           <View style={pdfStyles.clientInfo}>
             <Text style={{ fontWeight: 'bold', marginBottom: 4 }}>CLIENT:</Text>
@@ -934,6 +938,8 @@ const AdminProforma = () => {
                 <div>Tél: {companyInfo?.Telephone}</div>
                 <div>{companyInfo?.email}</div>
                 <div>{companyInfo?.siteweb}</div>
+                {companyInfo?.niu && <div>NIU : {companyInfo.niu}</div>}
+                {companyInfo?.rc && <div>RC : {companyInfo.rc}</div>}
               </div>
               <div className="client-info">
                 <strong>CLIENT:</strong><br />
