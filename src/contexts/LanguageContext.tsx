@@ -31,7 +31,7 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Hero
     'hero.title': 'Excellence en Chimie Industrielle',
-    'hero.subtitle': 'Votre partenaire de confiance pour les produits chimiques de haute qualité en Afrique',
+    'hero.subtitle': 'Votre partenaire de confiance pour la distribution des produits chimique de haute qualité ',
     'hero.cta': 'Découvrir nos produits',
     'hero.contact': 'Nous contacter',
     
