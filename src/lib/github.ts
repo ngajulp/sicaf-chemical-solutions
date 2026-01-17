@@ -205,6 +205,111 @@ export const getCompanyInfo = async () => {
   return fetchRawFile('infospersonnelles.json');
 };
 
+// Document Counters for sequential numbering
+export interface DocumentCounters {
+  proforma: number;
+  devis: number;
+  facture: number;
+  lastUpdate: string;
+}
+
+export const getCounters = async (): Promise<DocumentCounters> => {
+  try {
+    return await fetchRawFile('counters.json');
+  } catch {
+    // Return default counters if file doesn't exist
+    return { proforma: 0, devis: 0, facture: 0, lastUpdate: new Date().toISOString() };
+  }
+};
+
+export const getCountersSha = async (): Promise<string> => {
+  const token = await fetchGitHubToken();
+
+  const response = await fetch(`${GITHUB_API_URL}/counters.json`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+    },
+  });
+
+  if (!response.ok) {
+    // File may not exist, we'll create it
+    throw new Error('Counters file not found');
+  }
+
+  const data = await response.json();
+  return data.sha;
+};
+
+export const updateCounters = async (counters: DocumentCounters, sha: string, message: string) => {
+  return updateFileContent('counters.json', counters, sha, message);
+};
+
+export const createCountersFile = async (): Promise<{ success: boolean; sha: string }> => {
+  const token = await fetchGitHubToken();
+  const initialCounters: DocumentCounters = {
+    proforma: 0,
+    devis: 0,
+    facture: 0,
+    lastUpdate: new Date().toISOString()
+  };
+
+  const encodedContent = btoa(unescape(encodeURIComponent(JSON.stringify(initialCounters, null, 2))));
+
+  const response = await fetch(`${GITHUB_API_URL}/counters.json`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      message: 'Création fichier compteurs documents',
+      content: encodedContent,
+      branch: GITHUB_BRANCH,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to create counters file');
+  }
+
+  const result = await response.json();
+  return { success: true, sha: result.content.sha };
+};
+
+// Increment counter and return new number
+export const getNextDocumentNumber = async (type: 'proforma' | 'devis' | 'facture'): Promise<{ number: string; newCounters: DocumentCounters }> => {
+  let counters = await getCounters();
+  let sha: string;
+  
+  try {
+    sha = await getCountersSha();
+  } catch {
+    // Create file if it doesn't exist
+    const result = await createCountersFile();
+    sha = result.sha;
+    counters = { proforma: 0, devis: 0, facture: 0, lastUpdate: new Date().toISOString() };
+  }
+  
+  // Increment the counter
+  counters[type] = counters[type] + 1;
+  counters.lastUpdate = new Date().toISOString();
+  
+  // Update on GitHub
+  const result = await updateCounters(counters, sha, `Incrémentation compteur ${type}: ${counters[type]}`);
+  
+  // Format number with padding
+  const year = new Date().getFullYear();
+  const prefix = type === 'proforma' ? 'PRO' : type === 'devis' ? 'DEV' : 'FAC';
+  const paddedNumber = counters[type].toString().padStart(5, '0');
+  
+  return {
+    number: `${prefix}-${year}-${paddedNumber}`,
+    newCounters: counters
+  };
+};
+
 // Add connection log
 export const addConnectionLog = async (userId: number, action: string = 'connexion') => {
   try {

@@ -10,7 +10,7 @@ import { Search, Plus, Minus, Trash2, FileText, Printer, Loader2, Upload, Image,
 import { Separator } from '@/components/ui/separator';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
-import { getProductsRaw, getCompanyInfo } from '@/lib/github';
+import { getProductsRaw, getCompanyInfo, getNextDocumentNumber, getCounters, DocumentCounters } from '@/lib/github';
 import { pdf, Document, Page, Text, View, StyleSheet, Image as PDFImage } from '@react-pdf/renderer';
 
 interface ProductData {
@@ -346,6 +346,9 @@ const AdminProforma = () => {
   const [clientNIU, setClientNIU] = useState('');
   const [clientRC, setClientRC] = useState('');
   const [clientVille, setClientVille] = useState('');
+  const [documentNumber, setDocumentNumber] = useState('');
+  const [counters, setCounters] = useState<DocumentCounters | null>(null);
+  const [generatingNumber, setGeneratingNumber] = useState(false);
   
   useEffect(() => {
     const fetchData = async () => {
@@ -569,7 +572,46 @@ const AdminProforma = () => {
     year: 'numeric'
   });
 
-  const documentNumber = `${Date.now().toString().slice(-8)}`;
+  // Load counters on mount
+  useEffect(() => {
+    const loadCounters = async () => {
+      try {
+        const data = await getCounters();
+        setCounters(data);
+      } catch (error) {
+        console.warn('Could not load counters:', error);
+      }
+    };
+    loadCounters();
+  }, []);
+
+  // Generate document number when user clicks generate
+  const generateDocumentNumber = async () => {
+    setGeneratingNumber(true);
+    try {
+      const docType = documentType === 'PROFORMA' ? 'proforma' : documentType === 'DEVIS' ? 'devis' : 'facture';
+      const result = await getNextDocumentNumber(docType);
+      setDocumentNumber(result.number);
+      setCounters(result.newCounters);
+      toast.success(`Numéro de document généré: ${result.number}`);
+    } catch (error) {
+      console.error('Error generating document number:', error);
+      toast.error('Erreur lors de la génération du numéro. Vérifiez le token GitHub.');
+      // Fallback to timestamp-based number
+      const prefix = documentType === 'PROFORMA' ? 'PRO' : documentType === 'DEVIS' ? 'DEV' : 'FAC';
+      setDocumentNumber(`${prefix}-${Date.now().toString().slice(-8)}`);
+    } finally {
+      setGeneratingNumber(false);
+    }
+  };
+
+  // Auto-generate number when document type changes (if no number yet)
+  useEffect(() => {
+    if (!documentNumber) {
+      const prefix = documentType === 'PROFORMA' ? 'PRO' : documentType === 'DEVIS' ? 'DEV' : 'FAC';
+      setDocumentNumber(`${prefix}-BROUILLON`);
+    }
+  }, [documentType]);
 
   return (
     <AdminLayout>
@@ -641,7 +683,12 @@ const AdminProforma = () => {
               {/* Document Type */}
               <div className="space-y-2">
                 <Label>Type de document *</Label>
-                <Select value={documentType} onValueChange={(v) => setDocumentType(v as DocumentType)}>
+                <Select value={documentType} onValueChange={(v) => {
+                  setDocumentType(v as DocumentType);
+                  // Reset document number when type changes
+                  const prefix = v === 'PROFORMA' ? 'PRO' : v === 'DEVIS' ? 'DEV' : 'FAC';
+                  setDocumentNumber(`${prefix}-BROUILLON`);
+                }}>
                   <SelectTrigger className="bg-background">
                     <SelectValue />
                   </SelectTrigger>
@@ -651,6 +698,35 @@ const AdminProforma = () => {
                     <SelectItem value="FACTURE">Facture</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+
+              {/* Document Number */}
+              <div className="space-y-2">
+                <Label>Numéro de document</Label>
+                <div className="flex gap-2">
+                  <Input
+                    value={documentNumber}
+                    readOnly
+                    className="bg-muted font-mono"
+                    placeholder="Générer un numéro..."
+                  />
+                  <Button
+                    onClick={generateDocumentNumber}
+                    disabled={generatingNumber}
+                    variant="secondary"
+                  >
+                    {generatingNumber ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      'Générer N°'
+                    )}
+                  </Button>
+                </div>
+                {counters && (
+                  <p className="text-xs text-muted-foreground">
+                    Compteurs: PRO: {counters.proforma} | DEV: {counters.devis} | FAC: {counters.facture}
+                  </p>
+                )}
               </div>
 
               {/* Client Info */}
