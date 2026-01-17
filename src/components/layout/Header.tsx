@@ -62,8 +62,7 @@ const Header = () => {
           <Link to="/" className="flex items-center gap-3">
             <img src={logo} alt="SICAF Logo" className="h-12 w-auto" />
             <div className="hidden sm:block">
-              <h1 className="font-heading font-bold text-lg text-primary leading-tight">SICAF</h1>
-              <p className="text-xs text-muted-foreground leading-tight">Industries Chimiques d'Afrique</p>
+              <p className="text-xs text-muted-foreground leading-tight">Société des industries chimiques d'afrique</p>
             </div>
           </Link>
 
