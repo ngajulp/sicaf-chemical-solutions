@@ -63,41 +63,43 @@ export const fetchFileContent = async (filename: string): Promise<{ content: any
   return { content, sha: data.sha };
 };
 
+// Update file content on GitHub (UTF-8 SAFE)
 export const updateFileContent = async (
-  filename: string, 
-  content: any, 
-  sha: string, 
+  filename: string,
+  content: any,
+  sha: string,
   message: string
 ): Promise<{ success: boolean; newSha: string }> => {
   const token = await fetchGitHubToken();
-  
+
+  const encodedContent = Buffer
+    .from(JSON.stringify(content, null, 2), 'utf-8')
+    .toString('base64');
+
   const response = await fetch(`${GITHUB_API_URL}/${filename}`, {
     method: 'PUT',
     headers: {
-      'Authorization': `Bearer ${token}`,
-      'Accept': 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json'
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       message,
-      content: btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2)))),
+      content: encodedContent,
       sha,
-      branch: GITHUB_BRANCH
-    })
+      branch: GITHUB_BRANCH,
+    }),
   });
-  
+
   if (!response.ok) {
-    const error = await response.json();
-    console.error('GitHub API error:', error);
-    if (response.status === 401) {
-      clearTokenCache();
-    }
-    throw new Error(`Failed to update ${filename}: ${error.message}`);
+    const err = await response.json();
+    throw new Error(err.message || 'GitHub update failed');
   }
-  
+
   const result = await response.json();
   return { success: true, newSha: result.content.sha };
 };
+
 
 // Products CRUD
 export const getProducts = async () => {
