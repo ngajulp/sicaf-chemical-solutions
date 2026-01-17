@@ -183,7 +183,7 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Catalog
     'catalog.title': 'Complete Catalog',
-    'catalog.subtitle': 'Explore our complete range of 39 chemical products',
+    'catalog.subtitle': 'Explore our complete chemical products',
     'catalog.search': 'Search for a product...',
     'catalog.filter': 'Filter by category',
     'catalog.all': 'All categories',
