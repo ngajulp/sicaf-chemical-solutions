@@ -12,7 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Users, Shield, User, Loader2, Plus, Edit, Trash2, Save } from 'lucide-react';
 import { toast } from 'sonner';
-import { getUsers, updateUsers } from '@/lib/github';
+import { getUsers, getUsersSha, updateUsers } from '@/lib/github';
 import { md5 } from 'js-md5';
 
 interface UserData {
@@ -54,8 +54,9 @@ const AdminUsers = () => {
 
   const fetchUsers = async () => {
     try {
-      const { content, sha: fileSha } = await getUsers();
-      setUsers(content);
+      const content = await getUsers();
+      const fileSha = await getUsersSha();
+      setUsers(content || []);
       setSha(fileSha);
     } catch (error) {
       console.error('Error fetching users:', error);

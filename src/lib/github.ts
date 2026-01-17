@@ -149,6 +149,42 @@ export const updateUsers = async (users: any[], sha: string, message: string) =>
   return updateFileContent('users.json', users, sha, message);
 };
 
+export const getUsersSha = async (): Promise<string> => {
+  const token = await fetchGitHubToken();
+
+  const response = await fetch(`${GITHUB_API_URL}/users.json`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Impossible de récupérer le SHA users');
+  }
+
+  const data = await response.json();
+  return data.sha;
+};
+
+export const getHistorySha = async (): Promise<string> => {
+  const token = await fetchGitHubToken();
+
+  const response = await fetch(`${GITHUB_API_URL}/history.json`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Impossible de récupérer le SHA history');
+  }
+
+  const data = await response.json();
+  return data.sha;
+};
+
 // History CRUD
 //export const getHistory = async () => {
 //  return fetchFileContent('history.json');
