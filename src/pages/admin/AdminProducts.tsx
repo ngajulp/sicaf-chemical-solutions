@@ -64,21 +64,20 @@ const AdminProducts = () => {
     try {
       const content = await getProducts();
       setProducts(content || []);
-      
-      // Try to get SHA for write operations (may fail with invalid token)
-      try {
-        const fileSha = await getProductsSha();
-        setSha(fileSha);
-      } catch (shaError) {
-        console.warn('Could not fetch SHA (read-only mode):', shaError);
-        setSha('');
-      }
     } catch (error) {
       console.error('Error fetching products:', error);
       toast.error('Erreur lors du chargement des produits');
     } finally {
       setLoading(false);
     }
+  };
+
+  // Get SHA only when needed for write operations
+  const getShaForWrite = async (): Promise<string> => {
+    if (sha) return sha;
+    const fileSha = await getProductsSha();
+    setSha(fileSha);
+    return fileSha;
   };
 
   const resetForm = () => {
@@ -104,6 +103,7 @@ const AdminProducts = () => {
 
     setSaving(true);
     try {
+      const currentSha = await getShaForWrite();
       const newProduct: ProductData = {
         ...formData,
         applications: applicationsText.split('\n').filter(a => a.trim())
@@ -116,7 +116,8 @@ const AdminProducts = () => {
         return cat;
       });
 
-      await updateProducts(updatedProducts, sha, `Ajout produit: ${formData.produit}`);
+      const result = await updateProducts(updatedProducts, currentSha, `Ajout produit: ${formData.produit}`);
+      setSha(result.newSha);
       toast.success('Produit ajouté avec succès');
       setShowAddModal(false);
       resetForm();
@@ -137,6 +138,7 @@ const AdminProducts = () => {
 
     setSaving(true);
     try {
+      const currentSha = await getShaForWrite();
       const updatedProduct: ProductData = {
         ...formData,
         applications: applicationsText.split('\n').filter(a => a.trim())
@@ -154,7 +156,8 @@ const AdminProducts = () => {
         return cat;
       });
 
-      await updateProducts(updatedProducts, sha, `Modification produit: ${formData.produit}`);
+      const result = await updateProducts(updatedProducts, currentSha, `Modification produit: ${formData.produit}`);
+      setSha(result.newSha);
       toast.success('Produit modifié avec succès');
       setShowEditModal(false);
       resetForm();
@@ -172,6 +175,7 @@ const AdminProducts = () => {
 
     setSaving(true);
     try {
+      const currentSha = await getShaForWrite();
       const updatedProducts = products.map((cat, catIndex) => {
         if (catIndex === editingCategoryIndex) {
           return {
@@ -182,7 +186,8 @@ const AdminProducts = () => {
         return cat;
       });
 
-      await updateProducts(updatedProducts, sha, `Suppression produit: ${editingProduct.produit}`);
+      const result = await updateProducts(updatedProducts, currentSha, `Suppression produit: ${editingProduct.produit}`);
+      setSha(result.newSha);
       toast.success('Produit supprimé avec succès');
       setShowDeleteModal(false);
       resetForm();
@@ -203,8 +208,10 @@ const AdminProducts = () => {
 
     setSaving(true);
     try {
+      const currentSha = await getShaForWrite();
       const updatedProducts = [...products, { categorie: newCategory, datas: [] }];
-      await updateProducts(updatedProducts, sha, `Ajout catégorie: ${newCategory}`);
+      const result = await updateProducts(updatedProducts, currentSha, `Ajout catégorie: ${newCategory}`);
+      setSha(result.newSha);
       toast.success('Catégorie ajoutée avec succès');
       setShowAddCategoryModal(false);
       setNewCategory('');
