@@ -13,46 +13,59 @@ const Footer = () => {
     <footer className="bg-foreground text-background">
       {/* Main Footer */}
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* 👉 text-sm ici garantit l’uniformité globale */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
+
           {/* Company Info */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <img src={logo} alt="SICAF Logo" className="h-12 w-auto bg-white rounded p-1" />
+              <img
+                src={logo}
+                alt="SICAF Logo"
+                className="h-12 w-auto bg-white rounded p-1"
+              />
               <div>
-                <p className="text-sm text-background/70">Société des industries chimiques d'afrique</p>
+                <p className="text-background/70">
+                  Société des industries chimiques d&apos;Afrique
+                </p>
               </div>
             </div>
-            <p className="text-background/80 text-sm leading-relaxed">
+
+            <p className="text-background/80 leading-relaxed">
               {t('footer.description')}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-heading font-semibold text-lg mb-4">{t('footer.quick_links')}</h4>
-            <ul className="space-y-2">
+            <h4 className="font-heading font-semibold text-lg mb-4 tracking-wide">
+              {t('footer.quick_links')}
+            </h4>
+
+            {/* 👉 même densité que Products */}
+            <ul className="space-y-2 text-background/80">
               <li>
-                <Link to="/" className="text-background/80 hover:text-accent transition-colors">
+                <Link to="/" className="hover:text-accent transition-colors">
                   {t('nav.home')}
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-background/80 hover:text-accent transition-colors">
+                <Link to="/about" className="hover:text-accent transition-colors">
                   {t('nav.about')}
                 </Link>
               </li>
               <li>
-                <Link to="/catalog" className="text-background/80 hover:text-accent transition-colors">
+                <Link to="/catalog" className="hover:text-accent transition-colors">
                   {t('nav.catalog')}
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-background/80 hover:text-accent transition-colors">
+                <Link to="/contact" className="hover:text-accent transition-colors">
                   {t('nav.contact')}
                 </Link>
               </li>
               <li>
-                <Link to="/quote" className="text-background/80 hover:text-accent transition-colors">
+                <Link to="/quote" className="hover:text-accent transition-colors">
                   {t('nav.quote')}
                 </Link>
               </li>
@@ -61,16 +74,20 @@ const Footer = () => {
 
           {/* Products */}
           <div>
-            <h4 className="font-heading font-semibold text-lg mb-4">{t('footer.our_products')}</h4>
-            <ul className="space-y-2">
+            <h4 className="font-heading font-semibold text-lg mb-4 tracking-wide">
+              {t('footer.our_products')}
+            </h4>
+
+            {/* 👉 aligné exactement comme Quick Links */}
+            <ul className="space-y-2 text-background/80">
               {categories.slice(0, 6).map((category) => (
                 <li key={category.id}>
                   <Link
                     to={`/products/${category.id}`}
-                    className="text-background/80 hover:text-accent transition-colors flex items-center gap-2"
+                    className="flex items-center gap-2 hover:text-accent transition-colors"
                   >
                     <span>{category.icon}</span>
-                    <span className="text-sm">{category.name[language]}</span>
+                    <span>{category.name[language]}</span>
                   </Link>
                 </li>
               ))}
@@ -79,50 +96,75 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-heading font-semibold text-lg mb-4">{t('footer.contact_us')}</h4>
-            <ul className="space-y-3">
+            <h4 className="font-heading font-semibold text-lg mb-4 tracking-wide">
+              {t('footer.contact_us')}
+            </h4>
+
+            <ul className="space-y-3 text-background/80">
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
-                <div className="text-sm text-background/80">
+                <div>
                   <p>BP : 13135, Akwa</p>
                   <p>Siège Social : Douala, Cameroun</p>
                 </div>
               </li>
+
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-accent flex-shrink-0" />
-                <a href="tel:+237651254307" className="text-sm text-background/80 hover:text-accent">
-                  +237 651 25 43 07 / +237622215391
+                <a
+                  href="tel:+237651254307"
+                  className="hover:text-accent transition-colors"
+                >
+                  +237 651 25 43 07 / +237 622 21 53 91
                 </a>
               </li>
+
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-accent flex-shrink-0" />
-                <a href="mailto:sicaf@chimistry.com" className="text-sm text-background/80 hover:text-accent">
+                <a
+                  href="mailto:sicaf@chimistry.com"
+                  className="hover:text-accent transition-colors"
+                >
                   sicaf@chimistry.com
                 </a>
               </li>
+
               <li className="flex items-center gap-3">
                 <Globe className="h-5 w-5 text-accent flex-shrink-0" />
-                <a href="https://www.sicaf-chemical.com" target="_blank" rel="noopener noreferrer" className="text-sm text-background/80 hover:text-accent">
+                <a
+                  href="https://www.sicaf-chemical.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-accent transition-colors"
+                >
                   www.sicaf-chemical.com
                 </a>
               </li>
-              <li className="flex items-center gap-3 pt-2">
+
+              <li className="flex items-center gap-3 pt-1">
                 <MessageCircle className="h-5 w-5 text-[#25D366] flex-shrink-0" />
-                <WhatsAppButton variant="inline" className="!bg-transparent !p-0 !text-background/80 hover:!text-[#25D366] !font-normal !text-sm" />
+                <WhatsAppButton
+                  variant="inline"
+                  className="!bg-transparent !p-0 !text-background/80 hover:!text-[#25D366] !font-normal"
+                />
               </li>
             </ul>
           </div>
+
         </div>
       </div>
 
       {/* Bottom Footer */}
       <div className="border-t border-background/10">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-background/60">
-            <p>© {currentYear} SICAF - Société des Industries Chimiques d'Afrique. {t('footer.rights')}.</p>
-            <Link 
-              to="/admin" 
-              className="text-background/40 hover:text-background/70 transition-colors text-xs"
+          <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-xs text-background/60">
+            <p>
+              © {currentYear} SICAF – Société des Industries Chimiques d&apos;Afrique.{' '}
+              {t('footer.rights')}.
+            </p>
+            <Link
+              to="/admin"
+              className="hover:text-background/80 transition-colors"
             >
               Administration
             </Link>
