@@ -62,9 +62,10 @@ const AdminProducts = () => {
 
   const fetchProducts = async () => {
     try {
-      const { content, sha: fileSha } = await getProducts();
-      setProducts(content);
-      setSha(fileSha);
+       const content = await getProducts();      // RAW JSON
+       const fileSha = await getProductsSha();   // API (sha uniquement)
+       setProducts(content);
+       setSha(fileSha);
     } catch (error) {
       console.error('Error fetching products:', error);
       toast.error('Erreur lors du chargement des produits');
