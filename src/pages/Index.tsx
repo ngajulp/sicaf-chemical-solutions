@@ -34,22 +34,17 @@ const Index = () => {
               {t('hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-              <Link to="/quote">
-                <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold w-full sm:w-auto">
-                  {t('nav.quote')}
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
               <Link to="/catalog">
                 <Button size="lg" variant="outline" className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full sm:w-auto">
                   {t('hero.cta')}
                 </Button>
               </Link>
-            </div>
-            
-            {/* WhatsApp Hero Button */}
-            <div className="pt-4">
-              <WhatsAppButton variant="hero" />
+              <Link to="/quote">
+                <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold w-full sm:w-auto">
+                  {t('nav.quote')}
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>      
             </div>
           </div>
         </div>
