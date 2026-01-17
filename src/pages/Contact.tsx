@@ -259,10 +259,6 @@ const Contact = () => {
               
                 {/* WhatsApp Contact */}
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#25D366]/10 flex items-center justify-center">
-                    <MessageCircle className="h-6 w-6 text-[#25D366]" />
-                  </div>
-                  
                 </div>
               </div>
   
