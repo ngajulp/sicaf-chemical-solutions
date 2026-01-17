@@ -115,6 +115,25 @@ export const updateProducts = async (products: any[], sha: string, message: stri
   return updateFileContent('products.json', products, sha, message);
 };
 
+export const getProductsSha = async (): Promise<string> => {
+  const token = await fetchGitHubToken();
+
+  const response = await fetch(`${GITHUB_API_URL}/products.json`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Impossible de récupérer le SHA produits');
+  }
+
+  const data = await response.json();
+  return data.sha;
+};
+
+
 // Users CRUD
 //export const getUsers = async () => {
 //  return fetchFileContent('users.json');
