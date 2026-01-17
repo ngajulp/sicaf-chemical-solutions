@@ -19,7 +19,7 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.quote': 'Demandez un Dévis',
     
     // Categories
-    'cat.treated_water': 'Eaux Traitées',
+    'cat.treated_water': 'Eaux Et Environenemt',
     'cat.mineral_acids': 'Acides Minéraux',
     'cat.organic_acids': 'Acides Organiques',
     'cat.bases': 'Bases & Hydroxydes',
@@ -36,8 +36,8 @@ const translations: Record<Language, Record<string, string>> = {
     'hero.contact': 'Nous contacter',
     
     // Home sections
-    'home.products_title': 'Nos Catégories de Produits',
-    'home.products_subtitle': 'Une gamme complète de produits chimiques pour répondre à tous vos besoins industriels',
+    'home.products_title': 'Nos Produits',
+    'home.products_subtitle': 'Une gamme complète de produits chimiques pour répondre à tous vos besoins',
     'home.why_title': 'Pourquoi Choisir SICAF ?',
     'home.why_subtitle': 'Notre engagement envers l\'excellence nous distingue',
     'home.quality': 'Qualité Supérieure',
@@ -78,7 +78,7 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Catalog
     'catalog.title': 'Catalogue Complet',
-    'catalog.subtitle': 'Explorez notre gamme complète de 39 produits chimiques',
+    'catalog.subtitle': 'Explorez notre gamme complète de produits chimiques',
     'catalog.search': 'Rechercher un produit...',
     'catalog.filter': 'Filtrer par catégorie',
     'catalog.all': 'Toutes les catégories',
