@@ -186,7 +186,10 @@ const InvoicePDF = ({
   totalDiscount,
   subtotal,
   discountAmount,
-  totalAmount 
+  totalAmount,
+  clientNIU,
+  clientRC,
+  clientVille
 }: {
   documentType: DocumentType;
   documentNumber: string;
@@ -202,6 +205,9 @@ const InvoicePDF = ({
   subtotal: number;
   discountAmount: number;
   totalAmount: number;
+  clientNIU: string;
+  clientRC: string;
+  clientVille: string;
 }) => {
   const getDocTitle = () => {
     switch (documentType) {
@@ -238,6 +244,9 @@ const InvoicePDF = ({
             {clientAddress && <Text style={pdfStyles.infoRow}>{clientAddress}</Text>}
             {clientPhone && <Text style={pdfStyles.infoRow}>Tél: {clientPhone}</Text>}
             {clientEmail && <Text style={pdfStyles.infoRow}>{clientEmail}</Text>}
+            {clientNIU && <Text style={pdfStyles.infoRow}>NIU: {clientNIU}</Text>}
+            {clientRC && <Text style={pdfStyles.infoRow}>RC: {clientRC}</Text>}
+            {clientVille && <Text style={pdfStyles.infoRow}>Ville: {clientVille}</Text>}
             <Text style={{ ...pdfStyles.infoRow, marginTop: 8 }}>N° {getDocPrefix()}: {documentNumber}</Text>
             <Text style={pdfStyles.infoRow}>Date: {currentDate}</Text>
           </View>
@@ -330,7 +339,10 @@ const AdminProforma = () => {
   const [showPreview, setShowPreview] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  const [clientNIU, setClientNIU] = useState('');
+  const [clientRC, setClientRC] = useState('');
+  const [clientVille, setClientVille] = useState('');
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -476,6 +488,9 @@ const AdminProforma = () => {
           subtotal={subtotal}
           discountAmount={discountAmount}
           totalAmount={totalAmount}
+          clientNIU={clientNIU}
+          clientRC={clientRC}
+          clientVille={clientVille}
         />
       ).toBlob();
       
@@ -665,20 +680,60 @@ const AdminProforma = () => {
                     <Label htmlFor="clientPhone">Téléphone</Label>
                     <Input
                       id="clientPhone"
-                      placeholder="Téléphone"
                       value={clientPhone}
                       onChange={(e) => setClientPhone(e.target.value)}
                       className="bg-background"
                     />
                   </div>
+                  
                   <div>
                     <Label htmlFor="clientEmail">Email</Label>
                     <Input
                       id="clientEmail"
                       type="email"
-                      placeholder="Email"
                       value={clientEmail}
                       onChange={(e) => setClientEmail(e.target.value)}
+                      className="bg-background"
+                    />
+                  </div>
+                  
+                  {/* NIU & RC */}
+                  <div>
+                    <Label htmlFor="clientNIU">
+                      NIU <span className="text-muted-foreground">(optionnel)</span>
+                    </Label>
+                    <Input
+                      id="clientNIU"
+                      placeholder="Numéro d'identification unique"
+                      value={clientNIU}
+                      onChange={(e) => setClientNIU(e.target.value)}
+                      className="bg-background"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="clientRC">
+                      Registre de commerce <span className="text-muted-foreground">(optionnel)</span>
+                    </Label>
+                    <Input
+                      id="clientRC"
+                      placeholder="RC / RCCM"
+                      value={clientRC}
+                      onChange={(e) => setClientRC(e.target.value)}
+                      className="bg-background"
+                    />
+                  </div>
+                  
+                  {/* Ville */}
+                  <div className="col-span-2">
+                    <Label htmlFor="clientVille">
+                      Ville <span className="text-muted-foreground">(optionnel)</span>
+                    </Label>
+                    <Input
+                      id="clientVille"
+                      placeholder="Ville"
+                      value={clientVille}
+                      onChange={(e) => setClientVille(e.target.value)}
                       className="bg-background"
                     />
                   </div>
@@ -886,6 +941,9 @@ const AdminProforma = () => {
                 {clientAddress && <>{clientAddress}<br /></>}
                 {clientPhone && <>Tél: {clientPhone}<br /></>}
                 {clientEmail && <>{clientEmail}<br /></>}
+                {clientNIU && <>NIU: {clientNIU}<br /></>}
+                {clientRC && <>RC: {clientRC}<br /></>}
+                {clientVille && <>Ville: {clientVille}<br /></>}
                 <br />
                 <strong>N° {getDocPrefix()}:</strong> {documentNumber}<br />
                 <strong>Date:</strong> {currentDate}
@@ -997,6 +1055,9 @@ const AdminProforma = () => {
                           {clientAddress && <span className="text-muted-foreground">{clientAddress}<br /></span>}
                           {clientPhone && <span className="text-muted-foreground">Tél: {clientPhone}<br /></span>}
                           {clientEmail && <span className="text-muted-foreground">{clientEmail}</span>}
+                          {clientNIU && <span className="text-muted-foreground">NIU: {clientNIU}<br /></span>}
+                          {clientRC && <span className="text-muted-foreground">RC: {clientRC}<br /></span>}
+                          {clientVille && <span className="text-muted-foreground">Ville: {clientVille}</span>}
                         </div>
                       </div>
                       <div className="mt-4 pt-2 border-t">
