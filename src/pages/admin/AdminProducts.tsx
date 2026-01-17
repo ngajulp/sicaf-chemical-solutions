@@ -62,10 +62,17 @@ const AdminProducts = () => {
 
   const fetchProducts = async () => {
     try {
-       const content = await getProducts();      // RAW JSON
-       const fileSha = await getProductsSha();   // API (sha uniquement)
-       setProducts(content);
-       setSha(fileSha);
+      const content = await getProducts();
+      setProducts(content || []);
+      
+      // Try to get SHA for write operations (may fail with invalid token)
+      try {
+        const fileSha = await getProductsSha();
+        setSha(fileSha);
+      } catch (shaError) {
+        console.warn('Could not fetch SHA (read-only mode):', shaError);
+        setSha('');
+      }
     } catch (error) {
       console.error('Error fetching products:', error);
       toast.error('Erreur lors du chargement des produits');
