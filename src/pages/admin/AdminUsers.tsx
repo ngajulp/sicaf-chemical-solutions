@@ -56,21 +56,20 @@ const AdminUsers = () => {
     try {
       const content = await getUsers();
       setUsers(content || []);
-      
-      // Try to get SHA for write operations (may fail with invalid token)
-      try {
-        const fileSha = await getUsersSha();
-        setSha(fileSha);
-      } catch (shaError) {
-        console.warn('Could not fetch SHA (read-only mode):', shaError);
-        setSha('');
-      }
     } catch (error) {
       console.error('Error fetching users:', error);
       toast.error('Erreur lors du chargement des utilisateurs');
     } finally {
       setLoading(false);
     }
+  };
+
+  // Get SHA only when needed for write operations
+  const getShaForWrite = async (): Promise<string> => {
+    if (sha) return sha;
+    const fileSha = await getUsersSha();
+    setSha(fileSha);
+    return fileSha;
   };
 
   const resetForm = () => {
@@ -92,6 +91,7 @@ const AdminUsers = () => {
 
     setSaving(true);
     try {
+      const currentSha = await getShaForWrite();
       const newUser: UserData = {
         id: Math.max(...users.map(u => u.id), 0) + 1,
         login: formData.login,
@@ -100,7 +100,8 @@ const AdminUsers = () => {
       };
 
       const updatedUsers = [...users, newUser];
-      await updateUsers(updatedUsers, sha, `Ajout utilisateur: ${formData.login}`);
+      const result = await updateUsers(updatedUsers, currentSha, `Ajout utilisateur: ${formData.login}`);
+      setSha(result.newSha);
       toast.success('Utilisateur ajouté avec succès');
       setShowAddModal(false);
       resetForm();
@@ -123,6 +124,7 @@ const AdminUsers = () => {
 
     setSaving(true);
     try {
+      const currentSha = await getShaForWrite();
       const updatedUser: UserData = {
         ...editingUser,
         login: formData.login,
@@ -134,7 +136,8 @@ const AdminUsers = () => {
         u.id === editingUser.id ? updatedUser : u
       );
 
-      await updateUsers(updatedUsers, sha, `Modification utilisateur: ${formData.login}`);
+      const result = await updateUsers(updatedUsers, currentSha, `Modification utilisateur: ${formData.login}`);
+      setSha(result.newSha);
       toast.success('Utilisateur modifié avec succès');
       setShowEditModal(false);
       resetForm();
@@ -159,8 +162,10 @@ const AdminUsers = () => {
 
     setSaving(true);
     try {
+      const currentSha = await getShaForWrite();
       const updatedUsers = users.filter(u => u.id !== editingUser.id);
-      await updateUsers(updatedUsers, sha, `Suppression utilisateur: ${editingUser.login}`);
+      const result = await updateUsers(updatedUsers, currentSha, `Suppression utilisateur: ${editingUser.login}`);
+      setSha(result.newSha);
       toast.success('Utilisateur supprimé avec succès');
       setShowDeleteModal(false);
       resetForm();
