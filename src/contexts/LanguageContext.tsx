@@ -15,7 +15,7 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.about': 'À Propos',
     'nav.products': 'Produits',
     'nav.catalog': 'Catalogue',
-    'nav.contact': 'Contact',
+    'nav.contact': 'Contacts',
     'nav.quote': 'Demandez un Dévis',
     
     // Categories
