@@ -328,8 +328,12 @@ const AdminProducts = () => {
                       <TableBody>
                         {category.datas.map((product, pIndex) => (
                           <TableRow key={pIndex}>
-                            <TableCell>
-                              <Badge variant="outline" className="font-mono">
+                            <TableCell className="max-w-[120px]">
+                              <Badge
+                                variant="outline"
+                                className="font-mono whitespace-nowrap truncate block"
+                                title={product.reference}
+                              >
                                 {product.reference}
                               </Badge>
                             </TableCell>
