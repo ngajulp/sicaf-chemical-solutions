@@ -101,10 +101,12 @@ export const updateFileContent = async (
 
 
 // Products CRUD
+//export const getProducts = async () => {
+//  return fetchFileContent('products.json');
+//};
 export const getProducts = async () => {
-  return fetchFileContent('products.json');
+  return fetchRawFile('products.json');
 };
-
 export const getProductsRaw = async () => {
   return fetchRawFile('products.json');
 };
@@ -114,10 +116,12 @@ export const updateProducts = async (products: any[], sha: string, message: stri
 };
 
 // Users CRUD
+//export const getUsers = async () => {
+//  return fetchFileContent('users.json');
+//};
 export const getUsers = async () => {
-  return fetchFileContent('users.json');
+  return fetchRawFile('users.json');
 };
-
 export const getUsersRaw = async () => {
   return fetchRawFile('users.json');
 };
@@ -127,10 +131,12 @@ export const updateUsers = async (users: any[], sha: string, message: string) =>
 };
 
 // History CRUD
+//export const getHistory = async () => {
+//  return fetchFileContent('history.json');
+//};
 export const getHistory = async () => {
-  return fetchFileContent('history.json');
+  return fetchRawFile('history.json');
 };
-
 export const getHistoryRaw = async () => {
   return fetchRawFile('history.json');
 };
