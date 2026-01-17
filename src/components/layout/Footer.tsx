@@ -19,8 +19,7 @@ const Footer = () => {
             <div className="flex items-center gap-3 mb-4">
               <img src={logo} alt="SICAF Logo" className="h-12 w-auto bg-white rounded p-1" />
               <div>
-                <h3 className="font-heading font-bold text-lg">SICAF</h3>
-                <p className="text-sm text-background/70">Industries Chimiques d'Afrique</p>
+                <p className="text-sm text-background/70">Société des industries chimiques d'afrique</p>
               </div>
             </div>
             <p className="text-background/80 text-sm leading-relaxed">
