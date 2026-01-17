@@ -6,43 +6,6 @@ const GITHUB_BASE_URL = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GIT
 const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/public-data`;
 
 let cachedToken: string | null = null;
-export interface CompanyInfo {
-  nomentreprise: string;
-  boitepostate: string;
-  siege: string;
-  Telephone: string;
-  email: string;
-  siteweb: string;
-  rc?: string;
-  niu?: string;
-}
-export const getCompanyInfo = async (): Promise<CompanyInfo> => {
-  const res = await fetch(
-    `${GITHUB_BASE_URL}/infospersonnelles.json?t=${Date.now()}`
-  );
-
-  if (!res.ok) {
-    throw new Error('Impossible de charger les informations de la société');
-  }
-
-  const raw = await res.json();
-
-  /**
-   * 🔹 Mapping centralisé
-   * 🔹 Sécurisé (fallback)
-   * 🔹 Normalisé
-   */
-  return {
-    nomentreprise: raw.nomentreprise ?? '',
-    boitepostate: raw.boitepostate ?? '',
-    siege: raw.siege ?? '',
-    Telephone: raw.Telephone ?? '',
-    email: raw.email ?? '',
-    siteweb: raw.siteweb ?? '',
-    rc: raw.rc || undefined,
-    niu: raw.niu || undefined,
-  };
-};
 export const fetchGitHubToken = async (): Promise<string> => {
   if (cachedToken) return cachedToken;
   
