@@ -54,8 +54,12 @@ export const fetchFileContent = async (filename: string): Promise<{ content: any
   }
   
   const data = await response.json();
-  const content = JSON.parse(atob(data.content));
-  
+  //const content = JSON.parse(atob(data.content));
+  const content = JSON.parse(
+  decodeURIComponent(
+    escape(atob(data.content))
+  )
+);
   return { content, sha: data.sha };
 };
 
