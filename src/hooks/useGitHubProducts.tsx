@@ -8,10 +8,13 @@ export interface GitHubProduct {
   specifications: string;
   qty: number;
   prix_unit: number;
+  img?: string;
+  pdf?: string;
 }
 
 export interface GitHubProductCategory {
   categorie: string;
+  img?: string;
   datas: GitHubProduct[];
 }
 
@@ -21,6 +24,8 @@ export interface FormattedProduct {
   applications: { fr: string; en: string };
   specifications: string;
   category: string;
+  img?: string;
+  pdf?: string;
 }
 
 export interface FormattedCategory {
@@ -28,6 +33,7 @@ export interface FormattedCategory {
   name: { fr: string; en: string };
   icon: string;
   description: { fr: string; en: string };
+  img?: string;
 }
 
 // Map category names to IDs and icons
@@ -69,7 +75,8 @@ export const useGitHubProducts = () => {
             id: mapping.id,
             name: { fr: cat.categorie, en: cat.categorie },
             icon: mapping.icon,
-            description: { fr: mapping.descFr, en: mapping.descEn }
+            description: { fr: mapping.descFr, en: mapping.descEn },
+            img: cat.img
           };
         });
         setCategories(formattedCategories);
@@ -85,7 +92,9 @@ export const useGitHubProducts = () => {
               en: p.applications.join(', ')
             },
             specifications: p.specifications,
-            category: mapping.id
+            category: mapping.id,
+            img: p.img,
+            pdf: p.pdf
           }));
         });
         setProducts(formattedProducts);

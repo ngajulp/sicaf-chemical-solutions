@@ -126,25 +126,35 @@ const Catalog = () => {
             <>
               {/* Category Cards */}
               {selectedCategory === 'all' && !searchQuery && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                   {categories.map((category) => {
                     const count = products.filter(p => p.category === category.id).length;
                     return (
                       <Link key={category.id} to={`/products/${category.id}`}>
-                        <Card className="hover:shadow-md transition-shadow group">
-                          <CardContent className="p-4 flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                              <span className="text-2xl">{category.icon}</span>
-                              <div>
-                                <h3 className="font-medium group-hover:text-primary transition-colors">
-                                  {category.name[language]}
-                                </h3>
-                                <p className="text-sm text-muted-foreground">
-                                  {count} {language === 'fr' ? 'produits' : 'products'}
-                                </p>
-                              </div>
+                        <Card className="category-card group h-48 relative overflow-hidden">
+                          {category.img ? (
+                            <img 
+                              src={category.img} 
+                              alt={category.name[language]}
+                              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 gradient-hero" />
+                          )}
+                          <div className="category-card-overlay" />
+                          <CardContent className="relative z-10 h-full flex flex-col justify-end p-6">
+                            <div className="flex items-center gap-3 mb-2">
+                              <span className="text-3xl drop-shadow-lg">{category.icon}</span>
+                              <h3 className="font-heading font-bold text-xl text-white drop-shadow-lg">
+                                {category.name[language]}
+                              </h3>
                             </div>
-                            <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                            <div className="flex items-center justify-between">
+                              <p className="text-sm text-white/80">
+                                {count} {language === 'fr' ? 'produits' : 'products'}
+                              </p>
+                              <ChevronRight className="h-5 w-5 text-white group-hover:translate-x-1 transition-transform" />
+                            </div>
                           </CardContent>
                         </Card>
                       </Link>
