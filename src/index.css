@@ -128,4 +128,64 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
+  /* Watermark background */
+  .watermark-bg {
+    position: relative;
+  }
+  
+  .watermark-bg::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/src/assets/watermark-chemical.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    opacity: 0.06;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Product card styles */
+  .product-card {
+    @apply relative overflow-hidden rounded-xl border bg-card shadow-sm transition-all duration-300;
+  }
+  
+  .product-card:hover {
+    @apply shadow-lg -translate-y-1;
+  }
+
+  .product-card-image {
+    @apply w-full h-48 object-cover;
+  }
+
+  /* Category card styles */
+  .category-card {
+    @apply relative overflow-hidden rounded-2xl border bg-card shadow-md transition-all duration-300;
+  }
+  
+  .category-card:hover {
+    @apply shadow-xl -translate-y-2;
+  }
+
+  .category-card-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent;
+  }
+
+  /* Elegant image hover effect */
+  .image-hover-zoom {
+    @apply overflow-hidden;
+  }
+  
+  .image-hover-zoom img {
+    @apply transition-transform duration-500;
+  }
+  
+  .image-hover-zoom:hover img {
+    @apply scale-110;
+  }
 }

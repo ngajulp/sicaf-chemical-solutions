@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Search, Package, Loader2, Plus, Edit, Trash2, Save, X } from 'lucide-react';
+import { Search, Package, Loader2, Plus, Edit, Trash2, Save, X, Upload, Image, FileText, Download, Eye } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
-import { getProducts, getProductsSha, updateProducts } from '@/lib/github';
+import { getProducts, getProductsSha, updateProducts, uploadImageToGitHub, uploadPdfToGitHub } from '@/lib/github';
 
 interface ProductData {
   reference: string;
@@ -21,10 +21,13 @@ interface ProductData {
   specifications: string;
   qty: number;
   prix_unit: number;
+  img?: string;
+  pdf?: string;
 }
 
 interface ProductCategory {
   categorie: string;
+  img?: string;
   datas: ProductData[];
 }
 
@@ -40,21 +43,35 @@ const AdminProducts = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
+  const [showImagePreview, setShowImagePreview] = useState(false);
+  const [previewImageUrl, setPreviewImageUrl] = useState('');
   
   // Form states
   const [selectedCategory, setSelectedCategory] = useState('');
   const [editingProduct, setEditingProduct] = useState<ProductData | null>(null);
   const [editingCategoryIndex, setEditingCategoryIndex] = useState<number>(-1);
   const [newCategory, setNewCategory] = useState('');
+  const [newCategoryImage, setNewCategoryImage] = useState<File | null>(null);
   const [formData, setFormData] = useState<ProductData>({
     reference: '',
     produit: '',
     applications: [],
     specifications: '',
     qty: 1,
-    prix_unit: 0
+    prix_unit: 0,
+    img: '',
+    pdf: ''
   });
   const [applicationsText, setApplicationsText] = useState('');
+  const [productImage, setProductImage] = useState<File | null>(null);
+  const [productPdf, setProductPdf] = useState<File | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadingPdf, setUploadingPdf] = useState(false);
+
+  // Refs for file inputs
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const pdfInputRef = useRef<HTMLInputElement>(null);
+  const categoryImageInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchProducts();
@@ -87,12 +104,51 @@ const AdminProducts = () => {
       applications: [],
       specifications: '',
       qty: 1,
-      prix_unit: 0
+      prix_unit: 0,
+      img: '',
+      pdf: ''
     });
     setApplicationsText('');
     setSelectedCategory('');
     setEditingProduct(null);
     setEditingCategoryIndex(-1);
+    setProductImage(null);
+    setProductPdf(null);
+    setNewCategoryImage(null);
+  };
+
+  const handleImageUpload = async (file: File): Promise<string> => {
+    setUploadingImage(true);
+    try {
+      const timestamp = Date.now();
+      const fileName = `product_${timestamp}_${file.name}`;
+      const result = await uploadImageToGitHub(file, fileName);
+      toast.success('Image uploadée avec succès');
+      return result.url;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      toast.error('Erreur lors de l\'upload de l\'image');
+      throw error;
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const handlePdfUpload = async (file: File): Promise<string> => {
+    setUploadingPdf(true);
+    try {
+      const timestamp = Date.now();
+      const fileName = `product_${timestamp}_${file.name}`;
+      const result = await uploadPdfToGitHub(file, fileName);
+      toast.success('PDF uploadé avec succès');
+      return result.url;
+    } catch (error) {
+      console.error('Error uploading PDF:', error);
+      toast.error('Erreur lors de l\'upload du PDF');
+      throw error;
+    } finally {
+      setUploadingPdf(false);
+    }
   };
 
   const handleAddProduct = async () => {
@@ -104,9 +160,25 @@ const AdminProducts = () => {
     setSaving(true);
     try {
       const currentSha = await getShaForWrite();
+      
+      let imgUrl = formData.img;
+      let pdfUrl = formData.pdf;
+      
+      // Upload image if selected
+      if (productImage) {
+        imgUrl = await handleImageUpload(productImage);
+      }
+      
+      // Upload PDF if selected
+      if (productPdf) {
+        pdfUrl = await handlePdfUpload(productPdf);
+      }
+      
       const newProduct: ProductData = {
         ...formData,
-        applications: applicationsText.split('\n').filter(a => a.trim())
+        applications: applicationsText.split('\n').filter(a => a.trim()),
+        img: imgUrl,
+        pdf: pdfUrl
       };
 
       const updatedProducts = products.map(cat => {
@@ -139,9 +211,25 @@ const AdminProducts = () => {
     setSaving(true);
     try {
       const currentSha = await getShaForWrite();
+      
+      let imgUrl = formData.img;
+      let pdfUrl = formData.pdf;
+      
+      // Upload new image if selected
+      if (productImage) {
+        imgUrl = await handleImageUpload(productImage);
+      }
+      
+      // Upload new PDF if selected
+      if (productPdf) {
+        pdfUrl = await handlePdfUpload(productPdf);
+      }
+      
       const updatedProduct: ProductData = {
         ...formData,
-        applications: applicationsText.split('\n').filter(a => a.trim())
+        applications: applicationsText.split('\n').filter(a => a.trim()),
+        img: imgUrl,
+        pdf: pdfUrl
       };
 
       const updatedProducts = products.map((cat, catIndex) => {
@@ -209,12 +297,22 @@ const AdminProducts = () => {
     setSaving(true);
     try {
       const currentSha = await getShaForWrite();
-      const updatedProducts = [...products, { categorie: newCategory, datas: [] }];
+      
+      let categoryImgUrl = '';
+      if (newCategoryImage) {
+        const timestamp = Date.now();
+        const fileName = `category_${timestamp}_${newCategoryImage.name}`;
+        const result = await uploadImageToGitHub(newCategoryImage, fileName);
+        categoryImgUrl = result.url;
+      }
+      
+      const updatedProducts = [...products, { categorie: newCategory, img: categoryImgUrl, datas: [] }];
       const result = await updateProducts(updatedProducts, currentSha, `Ajout catégorie: ${newCategory}`);
       setSha(result.newSha);
       toast.success('Catégorie ajoutée avec succès');
       setShowAddCategoryModal(false);
       setNewCategory('');
+      setNewCategoryImage(null);
       fetchProducts();
     } catch (error) {
       console.error('Error adding category:', error);
@@ -238,6 +336,11 @@ const AdminProducts = () => {
     setShowDeleteModal(true);
   };
 
+  const openImagePreview = (url: string) => {
+    setPreviewImageUrl(url);
+    setShowImagePreview(true);
+  };
+
   const filteredProducts = products.map(category => ({
     ...category,
     datas: category.datas.filter(product =>
@@ -248,6 +351,163 @@ const AdminProducts = () => {
   })).filter(category => category.datas.length > 0);
 
   const totalProducts = products.reduce((acc, cat) => acc + cat.datas.length, 0);
+
+  // Product Form Component
+  const ProductForm = ({ isEdit = false }: { isEdit?: boolean }) => (
+    <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
+      {!isEdit && (
+        <div>
+          <Label>Catégorie *</Label>
+          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+            <SelectTrigger>
+              <SelectValue placeholder="Sélectionner une catégorie" />
+            </SelectTrigger>
+            <SelectContent>
+              {products.map((cat, i) => (
+                <SelectItem key={i} value={cat.categorie}>{cat.categorie}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+      
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Label>Référence *</Label>
+          <Input
+            value={formData.reference}
+            onChange={(e) => setFormData({ ...formData, reference: e.target.value })}
+            placeholder="Ex: WF-EAU-001"
+          />
+        </div>
+        <div>
+          <Label>Nom du produit *</Label>
+          <Input
+            value={formData.produit}
+            onChange={(e) => setFormData({ ...formData, produit: e.target.value })}
+            placeholder="Nom du produit"
+          />
+        </div>
+      </div>
+      
+      <div>
+        <Label>Applications (une par ligne)</Label>
+        <Textarea
+          value={applicationsText}
+          onChange={(e) => setApplicationsText(e.target.value)}
+          placeholder="Application 1&#10;Application 2"
+          rows={3}
+        />
+      </div>
+      
+      <div>
+        <Label>Spécifications</Label>
+        <Input
+          value={formData.specifications}
+          onChange={(e) => setFormData({ ...formData, specifications: e.target.value })}
+          placeholder="Spécifications techniques"
+        />
+      </div>
+      
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Label>Quantité</Label>
+          <Input
+            type="number"
+            value={formData.qty}
+            onChange={(e) => setFormData({ ...formData, qty: parseInt(e.target.value) || 1 })}
+          />
+        </div>
+        <div>
+          <Label>Prix unitaire (FCFA)</Label>
+          <Input
+            type="number"
+            value={formData.prix_unit}
+            onChange={(e) => setFormData({ ...formData, prix_unit: parseInt(e.target.value) || 0 })}
+          />
+        </div>
+      </div>
+
+      {/* Image Upload */}
+      <div className="space-y-2 p-4 border rounded-lg bg-muted/30">
+        <Label className="flex items-center gap-2">
+          <Image className="h-4 w-4" />
+          Image du produit
+        </Label>
+        <div className="flex items-center gap-3">
+          <input
+            ref={imageInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => setProductImage(e.target.files?.[0] || null)}
+          />
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => imageInputRef.current?.click()}
+            disabled={uploadingImage}
+          >
+            {uploadingImage ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Upload className="h-4 w-4 mr-2" />}
+            {productImage ? 'Changer' : 'Sélectionner'}
+          </Button>
+          {productImage && (
+            <span className="text-sm text-muted-foreground truncate max-w-[200px]">
+              {productImage.name}
+            </span>
+          )}
+          {formData.img && !productImage && (
+            <div className="flex items-center gap-2">
+              <img src={formData.img} alt="Aperçu" className="h-10 w-10 object-cover rounded" />
+              <span className="text-xs text-green-600">Image existante</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* PDF Upload */}
+      <div className="space-y-2 p-4 border rounded-lg bg-muted/30">
+        <Label className="flex items-center gap-2">
+          <FileText className="h-4 w-4" />
+          Fiche technique (PDF)
+        </Label>
+        <div className="flex items-center gap-3">
+          <input
+            ref={pdfInputRef}
+            type="file"
+            accept=".pdf"
+            className="hidden"
+            onChange={(e) => setProductPdf(e.target.files?.[0] || null)}
+          />
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => pdfInputRef.current?.click()}
+            disabled={uploadingPdf}
+          >
+            {uploadingPdf ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Upload className="h-4 w-4 mr-2" />}
+            {productPdf ? 'Changer' : 'Sélectionner'}
+          </Button>
+          {productPdf && (
+            <span className="text-sm text-muted-foreground truncate max-w-[200px]">
+              {productPdf.name}
+            </span>
+          )}
+          {formData.pdf && !productPdf && (
+            <div className="flex items-center gap-2">
+              <FileText className="h-5 w-5 text-red-500" />
+              <span className="text-xs text-green-600">PDF existant</span>
+              <a href={formData.pdf} target="_blank" rel="noopener noreferrer" className="text-xs text-primary underline">
+                Voir
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <AdminLayout>
@@ -300,9 +560,17 @@ const AdminProducts = () => {
               >
                 <AccordionTrigger className="px-6 py-4 hover:no-underline">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Package className="h-5 w-5 text-primary" />
-                    </div>
+                    {category.img ? (
+                      <img 
+                        src={category.img} 
+                        alt={category.categorie}
+                        className="w-10 h-10 rounded-lg object-cover"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <Package className="h-5 w-5 text-primary" />
+                      </div>
+                    )}
                     <div className="text-left">
                       <h3 className="font-heading font-semibold">{category.categorie}</h3>
                       <p className="text-sm text-muted-foreground">
@@ -316,19 +584,34 @@ const AdminProducts = () => {
                     <Table>
                       <TableHeader>
                         <TableRow className="bg-muted/50">
+                          <TableHead className="font-semibold w-16">Image</TableHead>
                           <TableHead className="font-semibold">Référence</TableHead>
                           <TableHead className="font-semibold">Produit</TableHead>
                           <TableHead className="font-semibold">Applications</TableHead>
                           <TableHead className="font-semibold">Spécifications</TableHead>
-                          <TableHead className="font-semibold text-right">Qté</TableHead>
-                          <TableHead className="font-semibold text-right">Prix Unit.</TableHead>
+                          <TableHead className="font-semibold text-right">Prix</TableHead>
+                          <TableHead className="font-semibold text-center">PDF</TableHead>
                           <TableHead className="font-semibold text-center">Actions</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {category.datas.map((product, pIndex) => (
                           <TableRow key={pIndex}>
-                            <TableCell className="max-w-[120px]">
+                            <TableCell>
+                              {product.img ? (
+                                <img 
+                                  src={product.img} 
+                                  alt={product.produit}
+                                  className="w-12 h-12 object-cover rounded cursor-pointer hover:opacity-80 transition-opacity"
+                                  onClick={() => openImagePreview(product.img!)}
+                                />
+                              ) : (
+                                <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+                                  <Image className="h-5 w-5 text-muted-foreground" />
+                                </div>
+                              )}
+                            </TableCell>
+                            <TableCell className="max-w-[100px]">
                               <Badge
                                 variant="outline"
                                 className="font-mono whitespace-nowrap truncate block"
@@ -355,11 +638,24 @@ const AdminProducts = () => {
                             <TableCell className="text-sm text-muted-foreground">
                               {product.specifications}
                             </TableCell>
-                            <TableCell className="text-right font-medium">
-                              {product.qty}
-                            </TableCell>
                             <TableCell className="text-right font-semibold">
                               {product.prix_unit.toLocaleString('fr-FR')} FCFA
+                            </TableCell>
+                            <TableCell className="text-center">
+                              {product.pdf ? (
+                                <a
+                                  href={product.pdf}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center justify-center"
+                                >
+                                  <Button size="icon" variant="ghost" className="h-8 w-8 text-red-500">
+                                    <Download className="h-4 w-4" />
+                                  </Button>
+                                </a>
+                              ) : (
+                                <span className="text-muted-foreground text-xs">—</span>
+                              )}
                             </TableCell>
                             <TableCell>
                               <div className="flex items-center justify-center gap-1">
@@ -411,79 +707,12 @@ const AdminProducts = () => {
           <DialogHeader>
             <DialogTitle>Ajouter un produit</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label>Catégorie *</Label>
-              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Sélectionner une catégorie" />
-                </SelectTrigger>
-                <SelectContent>
-                  {products.map((cat, i) => (
-                    <SelectItem key={i} value={cat.categorie}>{cat.categorie}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label>Référence *</Label>
-                <Input
-                  value={formData.reference}
-                  onChange={(e) => setFormData({ ...formData, reference: e.target.value })}
-                  placeholder="Ex: WF-EAU-001"
-                />
-              </div>
-              <div>
-                <Label>Nom du produit *</Label>
-                <Input
-                  value={formData.produit}
-                  onChange={(e) => setFormData({ ...formData, produit: e.target.value })}
-                  placeholder="Nom du produit"
-                />
-              </div>
-            </div>
-            <div>
-              <Label>Applications (une par ligne)</Label>
-              <Textarea
-                value={applicationsText}
-                onChange={(e) => setApplicationsText(e.target.value)}
-                placeholder="Application 1&#10;Application 2"
-                rows={3}
-              />
-            </div>
-            <div>
-              <Label>Spécifications</Label>
-              <Input
-                value={formData.specifications}
-                onChange={(e) => setFormData({ ...formData, specifications: e.target.value })}
-                placeholder="Spécifications techniques"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label>Quantité</Label>
-                <Input
-                  type="number"
-                  value={formData.qty}
-                  onChange={(e) => setFormData({ ...formData, qty: parseInt(e.target.value) || 1 })}
-                />
-              </div>
-              <div>
-                <Label>Prix unitaire (FCFA)</Label>
-                <Input
-                  type="number"
-                  value={formData.prix_unit}
-                  onChange={(e) => setFormData({ ...formData, prix_unit: parseInt(e.target.value) || 0 })}
-                />
-              </div>
-            </div>
-          </div>
+          <ProductForm />
           <DialogFooter>
             <Button variant="outline" onClick={() => { setShowAddModal(false); resetForm(); }}>
               Annuler
             </Button>
-            <Button onClick={handleAddProduct} disabled={saving}>
+            <Button onClick={handleAddProduct} disabled={saving || uploadingImage || uploadingPdf}>
               {saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
               Ajouter
             </Button>
@@ -497,62 +726,12 @@ const AdminProducts = () => {
           <DialogHeader>
             <DialogTitle>Modifier le produit</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label>Référence *</Label>
-                <Input
-                  value={formData.reference}
-                  onChange={(e) => setFormData({ ...formData, reference: e.target.value })}
-                />
-              </div>
-              <div>
-                <Label>Nom du produit *</Label>
-                <Input
-                  value={formData.produit}
-                  onChange={(e) => setFormData({ ...formData, produit: e.target.value })}
-                />
-              </div>
-            </div>
-            <div>
-              <Label>Applications (une par ligne)</Label>
-              <Textarea
-                value={applicationsText}
-                onChange={(e) => setApplicationsText(e.target.value)}
-                rows={3}
-              />
-            </div>
-            <div>
-              <Label>Spécifications</Label>
-              <Input
-                value={formData.specifications}
-                onChange={(e) => setFormData({ ...formData, specifications: e.target.value })}
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label>Quantité</Label>
-                <Input
-                  type="number"
-                  value={formData.qty}
-                  onChange={(e) => setFormData({ ...formData, qty: parseInt(e.target.value) || 1 })}
-                />
-              </div>
-              <div>
-                <Label>Prix unitaire (FCFA)</Label>
-                <Input
-                  type="number"
-                  value={formData.prix_unit}
-                  onChange={(e) => setFormData({ ...formData, prix_unit: parseInt(e.target.value) || 0 })}
-                />
-              </div>
-            </div>
-          </div>
+          <ProductForm isEdit />
           <DialogFooter>
             <Button variant="outline" onClick={() => { setShowEditModal(false); resetForm(); }}>
               Annuler
             </Button>
-            <Button onClick={handleEditProduct} disabled={saving}>
+            <Button onClick={handleEditProduct} disabled={saving || uploadingImage || uploadingPdf}>
               {saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
               Enregistrer
             </Button>
@@ -588,16 +767,49 @@ const AdminProducts = () => {
           <DialogHeader>
             <DialogTitle>Ajouter une catégorie</DialogTitle>
           </DialogHeader>
-          <div>
-            <Label>Nom de la catégorie</Label>
-            <Input
-              value={newCategory}
-              onChange={(e) => setNewCategory(e.target.value)}
-              placeholder="Nom de la catégorie"
-            />
+          <div className="space-y-4">
+            <div>
+              <Label>Nom de la catégorie *</Label>
+              <Input
+                value={newCategory}
+                onChange={(e) => setNewCategory(e.target.value)}
+                placeholder="Nom de la catégorie"
+              />
+            </div>
+            
+            {/* Category Image Upload */}
+            <div className="space-y-2 p-4 border rounded-lg bg-muted/30">
+              <Label className="flex items-center gap-2">
+                <Image className="h-4 w-4" />
+                Image de la catégorie
+              </Label>
+              <div className="flex items-center gap-3">
+                <input
+                  ref={categoryImageInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => setNewCategoryImage(e.target.files?.[0] || null)}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => categoryImageInputRef.current?.click()}
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  {newCategoryImage ? 'Changer' : 'Sélectionner'}
+                </Button>
+                {newCategoryImage && (
+                  <span className="text-sm text-muted-foreground truncate max-w-[200px]">
+                    {newCategoryImage.name}
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowAddCategoryModal(false)}>
+            <Button variant="outline" onClick={() => { setShowAddCategoryModal(false); setNewCategory(''); setNewCategoryImage(null); }}>
               Annuler
             </Button>
             <Button onClick={handleAddCategory} disabled={saving}>
@@ -605,6 +817,22 @@ const AdminProducts = () => {
               Ajouter
             </Button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Image Preview Modal */}
+      <Dialog open={showImagePreview} onOpenChange={setShowImagePreview}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Aperçu de l'image</DialogTitle>
+          </DialogHeader>
+          <div className="flex justify-center">
+            <img 
+              src={previewImageUrl} 
+              alt="Aperçu" 
+              className="max-w-full max-h-[70vh] object-contain rounded-lg"
+            />
+          </div>
         </DialogContent>
       </Dialog>
     </AdminLayout>

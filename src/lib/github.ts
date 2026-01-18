@@ -329,3 +329,102 @@ export const addConnectionLog = async (userId: number, action: string = 'connexi
     return false;
   }
 };
+
+// ==================== FILE UPLOAD FUNCTIONS ====================
+
+const GITHUB_UPLOAD_API = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents`;
+
+// Convert file to base64
+export const fileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const result = reader.result as string;
+      // Remove data:*/*;base64, prefix
+      const base64 = result.split(',')[1];
+      resolve(base64);
+    };
+    reader.onerror = reject;
+  });
+};
+
+// Upload image to GitHub
+export const uploadImageToGitHub = async (
+  file: File,
+  fileName: string
+): Promise<{ success: boolean; url: string }> => {
+  const token = await fetchGitHubToken();
+  const base64Content = await fileToBase64(file);
+  
+  // Clean filename
+  const cleanFileName = fileName.replace(/[^a-zA-Z0-9.-]/g, '_');
+  const filePath = `public-data/img/${cleanFileName}`;
+  
+  const response = await fetch(`${GITHUB_UPLOAD_API}/${filePath}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      message: `Upload image: ${cleanFileName}`,
+      content: base64Content,
+      branch: GITHUB_BRANCH,
+    }),
+  });
+
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.message || 'Image upload failed');
+  }
+
+  const rawUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${filePath}`;
+  return { success: true, url: rawUrl };
+};
+
+// Upload PDF to GitHub
+export const uploadPdfToGitHub = async (
+  file: File,
+  fileName: string
+): Promise<{ success: boolean; url: string }> => {
+  const token = await fetchGitHubToken();
+  const base64Content = await fileToBase64(file);
+  
+  // Clean filename
+  const cleanFileName = fileName.replace(/[^a-zA-Z0-9.-]/g, '_');
+  const filePath = `public-data/pdf/${cleanFileName}`;
+  
+  const response = await fetch(`${GITHUB_UPLOAD_API}/${filePath}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      message: `Upload PDF: ${cleanFileName}`,
+      content: base64Content,
+      branch: GITHUB_BRANCH,
+    }),
+  });
+
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.message || 'PDF upload failed');
+  }
+
+  const rawUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${filePath}`;
+  return { success: true, url: rawUrl };
+};
+
+// Get default product image URL
+export const getDefaultProductImage = (reference: string): string => {
+  return `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/public-data/img/default-product.png`;
+};
+
+// Get default category image URL  
+export const getDefaultCategoryImage = (categoryName: string): string => {
+  return `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/public-data/img/default-category.png`;
+};
