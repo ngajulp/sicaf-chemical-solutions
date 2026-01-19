@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Upload, FileText, Download, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
-import { uploadImageToGitHub, uploadPdfToGitHub } from '@/lib/github';
+import { updateProductWithFile } from '@/lib/github';
 
 interface ProductData {
   reference: string;
@@ -27,51 +27,32 @@ interface EditProductModalProps {
 export default function EditProductModal({ product, onClose, onSave }: EditProductModalProps) {
   const [formData, setFormData] = useState<ProductData>({ ...product });
   const [applicationsText, setApplicationsText] = useState(product.applications.join('\n'));
-  const [uploadingImage, setUploadingImage] = useState(false);
-  const [uploadingPdf, setUploadingPdf] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const pdfInputRef = useRef<HTMLInputElement>(null);
 
-  // Upload handlers
-  const handleImageUpload = async (file: File) => {
-    setUploadingImage(true);
+  const handleSave = async () => {
+    setUploading(true);
     try {
-      const timestamp = Date.now();
-      const fileName = `product_${timestamp}_${file.name}`;
-      const result = await uploadImageToGitHub(file, fileName);
-      toast.success('Image uploadée avec succès');
-      setFormData(prev => ({ ...prev, img: result.url }));
-    } catch (error) {
-      console.error(error);
-      toast.error('Erreur lors de l\'upload de l\'image');
-    } finally {
-      setUploadingImage(false);
-    }
-  };
+      const updatedProduct = await updateProductWithFile(
+        product.reference,
+        {
+          ...formData,
+          applications: applicationsText.split('\n').filter(a => a.trim())
+        },
+        imageInputRef.current?.files?.[0],
+        pdfInputRef.current?.files?.[0]
+      );
 
-  const handlePdfUpload = async (file: File) => {
-    setUploadingPdf(true);
-    try {
-      const timestamp = Date.now();
-      const fileName = `product_${timestamp}_${file.name}`;
-      const result = await uploadPdfToGitHub(file, fileName);
-      toast.success('PDF uploadé avec succès');
-      setFormData(prev => ({ ...prev, pdf: result.url }));
-    } catch (error) {
-      console.error(error);
-      toast.error('Erreur lors de l\'upload du PDF');
+      toast.success('Produit mis à jour avec succès !');
+      onSave(updatedProduct);
+      onClose();
+    } catch (err) {
+      console.error(err);
+      toast.error('Erreur lors de la mise à jour du produit');
     } finally {
-      setUploadingPdf(false);
+      setUploading(false);
     }
-  };
-
-  const handleSave = () => {
-    const updatedProduct: ProductData = {
-      ...formData,
-      applications: applicationsText.split('\n').filter(a => a.trim())
-    };
-    onSave(updatedProduct);
-    onClose();
   };
 
   return (
@@ -142,8 +123,7 @@ export default function EditProductModal({ product, onClose, onSave }: EditProdu
           {/* Image */}
           <div className="space-y-2 p-4 border rounded-lg bg-muted/30">
             <label className="flex items-center gap-2 font-medium">
-              <Upload className="h-4 w-4" />
-              Image du produit
+              <Upload className="h-4 w-4" /> Image du produit
             </label>
             <div className="flex items-center gap-3">
               <input
@@ -151,16 +131,13 @@ export default function EditProductModal({ product, onClose, onSave }: EditProdu
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={(e) => e.target.files?.[0] && handleImageUpload(e.target.files[0])}
               />
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={() => imageInputRef.current?.click()}
-                disabled={uploadingImage}
               >
-                {uploadingImage ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Upload className="h-4 w-4 mr-2" />}
                 {formData.img ? 'Changer' : 'Sélectionner'}
               </Button>
               {formData.img && (
@@ -172,8 +149,7 @@ export default function EditProductModal({ product, onClose, onSave }: EditProdu
           {/* PDF */}
           <div className="space-y-2 p-4 border rounded-lg bg-muted/30">
             <label className="flex items-center gap-2 font-medium">
-              <FileText className="h-4 w-4" />
-              Fiche technique (PDF)
+              <FileText className="h-4 w-4" /> Fiche technique (PDF)
             </label>
             <div className="flex items-center gap-3">
               <input
@@ -181,19 +157,15 @@ export default function EditProductModal({ product, onClose, onSave }: EditProdu
                 type="file"
                 accept=".pdf"
                 className="hidden"
-                onChange={(e) => e.target.files?.[0] && handlePdfUpload(e.target.files[0])}
               />
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={() => pdfInputRef.current?.click()}
-                disabled={uploadingPdf}
               >
-                {uploadingPdf ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Upload className="h-4 w-4 mr-2" />}
                 {formData.pdf ? 'Changer' : 'Sélectionner'}
               </Button>
-
               {formData.pdf && (
                 <a
                   href={formData.pdf}
@@ -210,8 +182,8 @@ export default function EditProductModal({ product, onClose, onSave }: EditProdu
 
         <DialogFooter className="flex justify-end gap-2">
           <Button variant="outline" onClick={onClose}>Annuler</Button>
-          <Button onClick={handleSave} disabled={uploadingImage || uploadingPdf}>
-            {uploadingImage || uploadingPdf ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+          <Button onClick={handleSave} disabled={uploading}>
+            {uploading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
             Enregistrer
           </Button>
         </DialogFooter>
