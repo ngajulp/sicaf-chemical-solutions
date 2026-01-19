@@ -5,11 +5,11 @@ import logo from '@/assets/logo.png';
 //import { categories } from '@/data/products';
 import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import WhatsAppButton from '@/components/WhatsAppButton';
-const { categories } = useGitHubProducts();
+
 const Footer = () => {
   const { language, t } = useLanguage();
   const currentYear = new Date().getFullYear();
-
+  const { categories } = useGitHubProducts();
   return (
     <footer className="bg-foreground text-background">
       {/* Main Footer */}
