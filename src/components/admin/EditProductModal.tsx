@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Upload, FileText, Download, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
-import { uploadImageToGitHub, uploadPdfToGitHub, updateProductWithFile } from '@/lib/github';
+import { updateProductWithFile } from '@/lib/github';
 
 interface ProductData {
   reference: string;
@@ -34,37 +34,8 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
 
   const imageInputRef = useRef<HTMLInputElement>(null);
   const pdfInputRef = useRef<HTMLInputElement>(null);
-
-  // --- Upload handlers avec limite de taille ---
-  const handleImageUpload = async (file: File) => {
-    if (file.size > 1 * 1024 * 1024) return toast.error("L'image doit être inférieure à 1MB");
-    setUploadingImage(true);
-    try {
-      const result = await uploadImageToGitHub(file, product.reference);
-      setFormData(prev => ({ ...prev, img: result.url }));
-      toast.success("Image uploadée avec succès");
-    } catch (error) {
-      console.error(error);
-      toast.error("Erreur lors de l'upload de l'image");
-    } finally {
-      setUploadingImage(false);
-    }
-  };
-
-  const handlePdfUpload = async (file: File) => {
-    if (file.size > 5 * 1024 * 1024) return toast.error("Le PDF doit être inférieur à 5MB");
-    setUploadingPdf(true);
-    try {
-      const result = await uploadPdfToGitHub(file, product.reference);
-      setFormData(prev => ({ ...prev, pdf: result.url }));
-      toast.success("PDF uploadé avec succès");
-    } catch (error) {
-      console.error(error);
-      toast.error("Erreur lors de l'upload du PDF");
-    } finally {
-      setUploadingPdf(false);
-    }
-  };
+  const droppedImageRef = useRef<File | null>(null);
+  const droppedPdfRef = useRef<File | null>(null);
 
   // --- Drag & drop handlers ---
   const handleDrag = (e: DragEvent<HTMLDivElement>, type: 'image' | 'pdf') => {
@@ -79,11 +50,12 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
     e.stopPropagation();
     if (type === 'image') setDragActive(false);
     else setDragPdfActive(false);
+
     const files = e.dataTransfer.files;
     if (files.length) {
       const file = files[0];
-      if (type === 'image') handleImageUpload(file);
-      else handlePdfUpload(file);
+      if (type === 'image') droppedImageRef.current = file;
+      else droppedPdfRef.current = file;
     }
   };
 
@@ -92,15 +64,18 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
     try {
       const updatedProduct: ProductData = {
         ...formData,
-        applications: applicationsText.split('\n').filter(a => a.trim())
+        applications: applicationsText.split('\n').filter(a => a.trim()),
       };
 
-      // Mettre à jour sur GitHub
+      // Upload & update product, écrase les fichiers existants si nécessaire
+      if (droppedImageRef.current) setUploadingImage(true);
+      if (droppedPdfRef.current) setUploadingPdf(true);
+
       const finalProduct = await updateProductWithFile(
         product.reference,
         updatedProduct,
-        undefined,
-        undefined
+        droppedImageRef.current || undefined,
+        droppedPdfRef.current || undefined
       );
 
       onUpdate(finalProduct);
@@ -109,6 +84,9 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
     } catch (error: any) {
       console.error(error);
       toast.error(error.message || "Erreur lors de la mise à jour du produit");
+    } finally {
+      setUploadingImage(false);
+      setUploadingPdf(false);
     }
   };
 
@@ -193,7 +171,7 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={e => e.target.files?.[0] && handleImageUpload(e.target.files[0])}
+                onChange={e => e.target.files?.[0] && (droppedImageRef.current = e.target.files[0])}
               />
               <Button
                 type="button"
@@ -226,7 +204,7 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
                 type="file"
                 accept=".pdf"
                 className="hidden"
-                onChange={e => e.target.files?.[0] && handlePdfUpload(e.target.files[0])}
+                onChange={e => e.target.files?.[0] && (droppedPdfRef.current = e.target.files[0])}
               />
               <Button
                 type="button"
