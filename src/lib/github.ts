@@ -6,21 +6,30 @@ const GITHUB_BASE_URL = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GIT
 const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/public-data`;
 
 let cachedToken: string | null = null;
+//export const fetchGitHubToken = async (): Promise<string> => {
+//  if (cachedToken) return cachedToken;
+//  
+//  try {
+//    const response = await fetch(`${GITHUB_BASE_URL}/tokens.json?t=${Date.now()}`);
+//    if (!response.ok) throw new Error('Failed to fetch token');
+//    const data = await response.json();
+//    cachedToken = data.tokengit;
+//    return cachedToken || '';
+//  } catch (error) {
+//    console.error('Error fetching GitHub token:', error);
+//    throw error;
+//  }
+//};
 export const fetchGitHubToken = async (): Promise<string> => {
   if (cachedToken) return cachedToken;
-  
-  try {
-    const response = await fetch(`${GITHUB_BASE_URL}/tokens.json?t=${Date.now()}`);
-    if (!response.ok) throw new Error('Failed to fetch token');
-    const data = await response.json();
-    cachedToken = data.tokengit;
-    return cachedToken || '';
-  } catch (error) {
-    console.error('Error fetching GitHub token:', error);
-    throw error;
-  }
-};
 
+  const response = await fetch("/.netlify/functions/githubs");
+  if (!response.ok) throw new Error("Failed to fetch GitHub token");
+
+  const data = await response.json();
+  cachedToken = data.token;
+  return cachedToken;
+};
 // Clear cached token (useful when token expires)
 export const clearTokenCache = () => {
   cachedToken = null;
