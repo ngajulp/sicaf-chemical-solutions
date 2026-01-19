@@ -3,12 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Upload, X } from 'lucide-react';
+import { X } from 'lucide-react';
 
 interface EditProductModalProps {
   product: any;
   onClose: () => void;
-  onSave: (updatedProduct: any) => void; // callback pour mise à jour immédiate
+  onSave: (updatedProduct: any) => void;
 }
 
 const EditProductModal = ({ product, onClose, onSave }: EditProductModalProps) => {
@@ -22,7 +22,6 @@ const EditProductModal = ({ product, onClose, onSave }: EditProductModalProps) =
   const [previewImg, setPreviewImg] = useState<string | undefined>(product.img);
   const [previewPdf, setPreviewPdf] = useState<string | undefined>(product.pdf);
 
-  // Prévisualisation image
   useEffect(() => {
     if (!imgFile) return;
     const reader = new FileReader();
@@ -30,15 +29,11 @@ const EditProductModal = ({ product, onClose, onSave }: EditProductModalProps) =
     reader.readAsDataURL(imgFile);
   }, [imgFile]);
 
-  // Prévisualisation PDF (nom de fichier)
   useEffect(() => {
-    if (pdfFile) {
-      setPreviewPdf(pdfFile.name);
-    }
+    if (pdfFile) setPreviewPdf(pdfFile.name);
   }, [pdfFile]);
 
   const handleSave = () => {
-    // Création objet produit mis à jour
     const updatedProduct = {
       ...product,
       produit: name,
@@ -46,26 +41,25 @@ const EditProductModal = ({ product, onClose, onSave }: EditProductModalProps) =
       specifications,
       img: previewImg,
       pdf: previewPdf,
-      _imgFile: imgFile,   // peut être utilisé côté serveur si upload réel
+      _imgFile: imgFile,
       _pdfFile: pdfFile,
     };
-
-    onSave(updatedProduct); // callback pour mettre à jour la page
+    onSave(updatedProduct);
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <Card className="w-full max-w-xl">
-        <CardHeader className="flex justify-between items-center">
-          <CardTitle className="text-lg font-semibold">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fadeIn">
+      <Card className="w-full max-w-xl rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+        <CardHeader className="flex justify-between items-center bg-primary/10 p-4">
+          <CardTitle className="text-lg font-bold">
             {language === 'fr' ? 'Modifier le produit' : 'Edit Product'}
           </CardTitle>
           <Button variant="ghost" size="sm" onClick={onClose}>
-            <X className="h-4 w-4" />
+            <X className="h-5 w-5 text-muted-foreground" />
           </Button>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-6">
           <div className="space-y-2">
             <label className="font-medium">{language === 'fr' ? 'Nom' : 'Name'}</label>
             <Input value={name} onChange={e => setName(e.target.value)} />
@@ -74,7 +68,7 @@ const EditProductModal = ({ product, onClose, onSave }: EditProductModalProps) =
           <div className="space-y-2">
             <label className="font-medium">{language === 'fr' ? 'Applications (une par ligne)' : 'Applications (one per line)'}</label>
             <textarea
-              className="w-full p-2 border rounded"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 resize-none"
               rows={4}
               value={applications}
               onChange={e => setApplications(e.target.value)}
@@ -93,9 +87,14 @@ const EditProductModal = ({ product, onClose, onSave }: EditProductModalProps) =
               type="file"
               accept="image/*"
               onChange={e => setImgFile(e.target.files?.[0] || null)}
+              className="w-full text-sm text-gray-600"
             />
             {previewImg && (
-              <img src={previewImg} alt="Preview" className="w-32 h-32 object-cover mt-2 border rounded" />
+              <img
+                src={previewImg}
+                alt="Preview"
+                className="w-32 h-32 object-cover mt-2 border rounded-lg shadow-sm"
+              />
             )}
           </div>
 
@@ -106,15 +105,16 @@ const EditProductModal = ({ product, onClose, onSave }: EditProductModalProps) =
               type="file"
               accept="application/pdf"
               onChange={e => setPdfFile(e.target.files?.[0] || null)}
+              className="w-full text-sm text-gray-600"
             />
-            {previewPdf && <p className="text-sm mt-1">{previewPdf}</p>}
+            {previewPdf && <p className="text-sm mt-1 text-primary font-medium">{previewPdf}</p>}
           </div>
 
           <div className="flex justify-end gap-4 mt-4">
-            <Button variant="secondary" onClick={handleSave}>
+            <Button variant="secondary" onClick={handleSave} className="bg-primary text-white hover:bg-primary/90">
               {language === 'fr' ? 'Enregistrer' : 'Save'}
             </Button>
-            <Button variant="ghost" onClick={onClose}>
+            <Button variant="outline" onClick={onClose}>
               {language === 'fr' ? 'Annuler' : 'Cancel'}
             </Button>
           </div>
