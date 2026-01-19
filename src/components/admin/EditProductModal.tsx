@@ -21,9 +21,21 @@ const EditProductModal = ({ product, onClose }: EditProductModalProps) => {
     Array.isArray(product.applications) ? product.applications.join('\n') : product.applications
   );
   const [specifications, setSpecifications] = useState(product.specifications || '');
-  const [img, setImg] = useState(product.img || '');
-  const [pdf, setPdf] = useState(product.pdf || '');
+  const [img, setImg] = useState<string>(product.img || '');
+  const [pdf, setPdf] = useState<string>(product.pdf || '');
   const [saving, setSaving] = useState(false);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, type: 'img' | 'pdf') => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (type === 'img') setImg(reader.result as string);
+      if (type === 'pdf') setPdf(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSave = async () => {
     setSaving(true);
@@ -80,10 +92,10 @@ const EditProductModal = ({ product, onClose }: EditProductModalProps) => {
             <Textarea value={specifications} onChange={e => setSpecifications(e.target.value)} rows={3} />
           </div>
 
-          {/* Image URL + Prévisualisation */}
+          {/* Image file input + Preview */}
           <div className="space-y-1">
-            <label className="font-medium">{language === 'fr' ? 'Image URL' : 'Image URL'}</label>
-            <Input value={img} onChange={e => setImg(e.target.value)} placeholder="https://..." />
+            <label className="font-medium">{language === 'fr' ? 'Image' : 'Image'}</label>
+            <Input type="file" accept="image/*" onChange={e => handleFileChange(e, 'img')} />
             {img ? (
               <div className="mt-2 w-full h-48 bg-muted flex items-center justify-center overflow-hidden rounded">
                 <img src={img} alt="Prévisualisation" className="object-contain w-full h-full" />
@@ -96,24 +108,19 @@ const EditProductModal = ({ product, onClose }: EditProductModalProps) => {
             )}
           </div>
 
-          {/* PDF URL + Prévisualisation */}
+          {/* PDF file input + Preview */}
           <div className="space-y-1">
             <label className="font-medium">{language === 'fr' ? 'Fichier PDF' : 'PDF File'}</label>
-            <Input value={pdf} onChange={e => setPdf(e.target.value)} placeholder="https://..." />
+            <Input type="file" accept="application/pdf" onChange={e => handleFileChange(e, 'pdf')} />
             {pdf && (
-              <a
-                href={pdf}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 inline-flex items-center gap-2 text-primary font-medium"
-              >
+              <p className="mt-2 inline-flex items-center gap-2 text-primary font-medium truncate">
                 <FileText className="h-5 w-5" />
-                {language === 'fr' ? 'Voir le PDF' : 'View PDF'}
-              </a>
+                {language === 'fr' ? 'PDF sélectionné' : 'PDF selected'}
+              </p>
             )}
           </div>
 
-          {/* Boutons */}
+          {/* Buttons */}
           <div className="flex justify-end gap-4 mt-4">
             <Button variant="secondary" onClick={handleSave} disabled={saving}>
               {saving ? (language === 'fr' ? 'Enregistrement...' : 'Saving...') : (language === 'fr' ? 'Enregistrer' : 'Save')}
