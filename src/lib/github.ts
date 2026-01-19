@@ -468,20 +468,26 @@ export const updateProductWithFile = async (
   const productIndex = products.findIndex((p: any) => p.reference === reference);
   if (productIndex === -1) throw new Error('Produit non trouvé');
 
-  // 3️⃣ Upload nouveau fichier si fourni
+  // 3️⃣ Upload nouveau fichier si fourni, en écrasant l'existant
   if (newImage) {
-    const { url } = await uploadFileToGitHub(newImage, 'img');
+    // Nom basé sur la référence (toujours le même)
+    const fileName = `${reference}.png`; // ou jpg selon ton standard
+    const { url } = await uploadImageToGitHub(newImage, fileName);
     updatedData.img = url;
   }
+
   if (newPdf) {
-    const { url } = await uploadFileToGitHub(newPdf, 'pdf');
+    // Nom basé sur la référence
+    const fileName = `${reference}.pdf`;
+    const { url } = await uploadPdfToGitHub(newPdf, fileName);
     updatedData.pdf = url;
   }
 
-  // 4️⃣ Mettre à jour le produit
+  // 4️⃣ Mettre à jour le produit dans le tableau
   products[productIndex] = { ...products[productIndex], ...updatedData };
 
   // 5️⃣ Envoyer sur GitHub
   await updateFileContent('products.json', products, sha, `Update product ${reference}`);
+
   return products[productIndex];
 };
