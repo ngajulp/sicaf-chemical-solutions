@@ -1,11 +1,12 @@
 import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Search, Package, Loader2, Plus, Edit, Trash2, Save, X, Upload, Image, FileText, Download, Eye } from 'lucide-react';
+import { Search, Package, Loader2, Plus, Edit, Trash2, Save, X, Upload, Image, FileText, Download, Eye, ExternalLink, FolderX } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
@@ -32,6 +33,7 @@ interface ProductCategory {
 }
 
 const AdminProducts = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState<ProductCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -43,6 +45,8 @@ const AdminProducts = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
+  const [showDeleteCategoryModal, setShowDeleteCategoryModal] = useState(false);
+  const [deletingCategoryIndex, setDeletingCategoryIndex] = useState<number>(-1);
   const [showImagePreview, setShowImagePreview] = useState(false);
   const [previewImageUrl, setPreviewImageUrl] = useState('');
   
@@ -341,6 +345,38 @@ const AdminProducts = () => {
     setShowImagePreview(true);
   };
 
+  const openDeleteCategoryModal = (categoryIndex: number) => {
+    setDeletingCategoryIndex(categoryIndex);
+    setShowDeleteCategoryModal(true);
+  };
+
+  const handleDeleteCategory = async () => {
+    if (deletingCategoryIndex < 0) return;
+
+    setSaving(true);
+    try {
+      const currentSha = await getShaForWrite();
+      const categoryName = products[deletingCategoryIndex].categorie;
+      const updatedProducts = products.filter((_, index) => index !== deletingCategoryIndex);
+
+      const result = await updateProducts(updatedProducts, currentSha, `Suppression catégorie: ${categoryName}`);
+      setSha(result.newSha);
+      toast.success('Catégorie supprimée avec succès');
+      setShowDeleteCategoryModal(false);
+      setDeletingCategoryIndex(-1);
+      fetchProducts();
+    } catch (error) {
+      console.error('Error deleting category:', error);
+      toast.error('Erreur lors de la suppression de la catégorie');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const navigateToProductDetail = (categoryId: string, productRef: string) => {
+    navigate(`/admin/products/${encodeURIComponent(categoryId)}/${encodeURIComponent(productRef)}`);
+  };
+
   const filteredProducts = products.map(category => ({
     ...category,
     datas: category.datas.filter(product =>
@@ -559,24 +595,38 @@ const AdminProducts = () => {
                 className="border rounded-lg bg-card shadow-sm"
               >
                 <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                  <div className="flex items-center gap-3">
-                    {category.img ? (
-                      <img 
-                        src={category.img} 
-                        alt={category.categorie}
-                        className="w-10 h-10 rounded-lg object-cover"
-                      />
-                    ) : (
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Package className="h-5 w-5 text-primary" />
+                  <div className="flex items-center justify-between w-full pr-4">
+                    <div className="flex items-center gap-3">
+                      {category.img ? (
+                        <img 
+                          src={category.img} 
+                          alt={category.categorie}
+                          className="w-10 h-10 rounded-lg object-cover"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                          <Package className="h-5 w-5 text-primary" />
+                        </div>
+                      )}
+                      <div className="text-left">
+                        <h3 className="font-heading font-semibold">{category.categorie}</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {category.datas.length} produit{category.datas.length > 1 ? 's' : ''}
+                        </p>
                       </div>
-                    )}
-                    <div className="text-left">
-                      <h3 className="font-heading font-semibold">{category.categorie}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {category.datas.length} produit{category.datas.length > 1 ? 's' : ''}
-                      </p>
                     </div>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openDeleteCategoryModal(products.findIndex(p => p.categorie === category.categorie));
+                      }}
+                    >
+                      <FolderX className="h-4 w-4 mr-1" />
+                      Supprimer
+                    </Button>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-4">
@@ -590,8 +640,8 @@ const AdminProducts = () => {
                           <TableHead className="font-semibold">Applications</TableHead>
                           <TableHead className="font-semibold">Spécifications</TableHead>
                           <TableHead className="font-semibold text-right">Prix</TableHead>
-                          <TableHead className="font-semibold text-center">PDF</TableHead>
-                          <TableHead className="font-semibold text-center">Actions</TableHead>
+                          <TableHead className="font-semibold text-center">Fichiers</TableHead>
+                          <TableHead className="font-semibold text-center w-32">Actions</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -642,28 +692,52 @@ const AdminProducts = () => {
                               {product.prix_unit.toLocaleString('fr-FR')} FCFA
                             </TableCell>
                             <TableCell className="text-center">
-                              {product.pdf ? (
-                                <a
-                                  href={product.pdf}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center justify-center"
-                                >
-                                  <Button size="icon" variant="ghost" className="h-8 w-8 text-red-500">
-                                    <Download className="h-4 w-4" />
+                              <div className="flex items-center justify-center gap-1">
+                                {product.img && (
+                                  <Button
+                                    size="icon"
+                                    variant="ghost"
+                                    className="h-8 w-8 text-blue-500"
+                                    onClick={() => openImagePreview(product.img!)}
+                                    title="Voir l'image"
+                                  >
+                                    <Eye className="h-4 w-4" />
                                   </Button>
-                                </a>
-                              ) : (
-                                <span className="text-muted-foreground text-xs">—</span>
-                              )}
+                                )}
+                                {product.pdf && (
+                                  <a
+                                    href={product.pdf}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    download
+                                  >
+                                    <Button size="icon" variant="ghost" className="h-8 w-8 text-red-500" title="Télécharger PDF">
+                                      <Download className="h-4 w-4" />
+                                    </Button>
+                                  </a>
+                                )}
+                                {!product.img && !product.pdf && (
+                                  <span className="text-muted-foreground text-xs">—</span>
+                                )}
+                              </div>
                             </TableCell>
                             <TableCell>
                               <div className="flex items-center justify-center gap-1">
                                 <Button
                                   size="icon"
                                   variant="ghost"
+                                  className="h-8 w-8 text-primary"
+                                  onClick={() => navigateToProductDetail(category.categorie, product.reference)}
+                                  title="Voir détails"
+                                >
+                                  <ExternalLink className="h-4 w-4" />
+                                </Button>
+                                <Button
+                                  size="icon"
+                                  variant="ghost"
                                   className="h-8 w-8"
                                   onClick={() => openEditModal(product, products.findIndex(p => p.categorie === category.categorie))}
+                                  title="Modifier"
                                 >
                                   <Edit className="h-4 w-4" />
                                 </Button>
@@ -672,6 +746,7 @@ const AdminProducts = () => {
                                   variant="ghost"
                                   className="h-8 w-8 text-destructive hover:text-destructive"
                                   onClick={() => openDeleteModal(product, products.findIndex(p => p.categorie === category.categorie))}
+                                  title="Supprimer"
                                 >
                                   <Trash2 className="h-4 w-4" />
                                 </Button>
@@ -833,6 +908,54 @@ const AdminProducts = () => {
               className="max-w-full max-h-[70vh] object-contain rounded-lg"
             />
           </div>
+          <DialogFooter>
+            <a href={previewImageUrl} download target="_blank" rel="noopener noreferrer">
+              <Button variant="outline">
+                <Download className="h-4 w-4 mr-2" />
+                Télécharger
+              </Button>
+            </a>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Category Confirmation Modal */}
+      <Dialog open={showDeleteCategoryModal} onOpenChange={setShowDeleteCategoryModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-destructive">
+              <FolderX className="h-5 w-5" />
+              Supprimer la catégorie
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              Êtes-vous sûr de vouloir supprimer la catégorie{' '}
+              <strong className="text-foreground">
+                {deletingCategoryIndex >= 0 ? products[deletingCategoryIndex]?.categorie : ''}
+              </strong> ?
+            </p>
+            {deletingCategoryIndex >= 0 && products[deletingCategoryIndex]?.datas.length > 0 && (
+              <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+                <p className="text-sm text-destructive font-medium">
+                  ⚠️ Attention : Cette catégorie contient{' '}
+                  {products[deletingCategoryIndex]?.datas.length} produit(s) qui seront également supprimés.
+                </p>
+              </div>
+            )}
+            <p className="text-sm text-muted-foreground">
+              Cette action est irréversible.
+            </p>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => { setShowDeleteCategoryModal(false); setDeletingCategoryIndex(-1); }}>
+              Annuler
+            </Button>
+            <Button variant="destructive" onClick={handleDeleteCategory} disabled={saving}>
+              {saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Trash2 className="h-4 w-4 mr-2" />}
+              Supprimer la catégorie
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </AdminLayout>
