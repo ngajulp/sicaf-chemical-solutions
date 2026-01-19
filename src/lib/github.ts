@@ -200,9 +200,31 @@ export const updateHistory = async (history: any[], sha: string, message: string
   return updateFileContent('history.json', history, sha, message);
 };
 
-// Company Info
+// Company Info CRUD
 export const getCompanyInfo = async () => {
   return fetchRawFile('infospersonnelles.json');
+};
+
+export const getCompanyInfoSha = async (): Promise<string> => {
+  const token = await fetchGitHubToken();
+
+  const response = await fetch(`${GITHUB_API_URL}/infospersonnelles.json`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Impossible de récupérer le SHA company info');
+  }
+
+  const data = await response.json();
+  return data.sha;
+};
+
+export const updateCompanyInfo = async (info: any, sha: string, message: string) => {
+  return updateFileContent('infospersonnelles.json', info, sha, message);
 };
 
 // Document Counters for sequential numbering
