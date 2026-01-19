@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Globe, Settings } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { categories } from '@/data/products';
+//import { categories } from '@/data/products';
+import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -17,7 +18,7 @@ const Header = () => {
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
   const location = useLocation();
-
+  const { categories } = useGitHubProducts(); // ✅ hook à l’intérieur
   const isActive = (path: string) => location.pathname === path;
 
   const navLinks = [
@@ -99,7 +100,6 @@ const Header = () => {
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
-            </DropdownMenu>
 
             {navLinks.slice(2).map((link) => (
               <Link
