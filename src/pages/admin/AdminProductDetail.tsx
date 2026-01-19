@@ -49,7 +49,6 @@ const AdminProductDetail = () => {
         setLoading(false);
       }
     };
-
     fetchProduct();
   }, [categoryName, reference]);
 
@@ -77,6 +76,7 @@ const AdminProductDetail = () => {
     );
   }
 
+  // Callback après modification depuis le modal
   const handleUpdate = (updatedProduct: ProductData) => {
     setProduct(updatedProduct);
     console.log('Produit mis à jour:', updatedProduct);
@@ -97,7 +97,9 @@ const AdminProductDetail = () => {
               <p className="text-muted-foreground font-mono">{product.reference}</p>
             </div>
           </div>
+
           <div className="flex gap-2">
+            {/* PDF */}
             {product.pdf && (
               <a href={product.pdf} target="_blank" rel="noopener noreferrer">
                 <Button variant="outline" className="gap-2">
@@ -106,7 +108,8 @@ const AdminProductDetail = () => {
                 </Button>
               </a>
             )}
-            {/* Bouton Modifier admin */}
+
+            {/* Modifier (Admin uniquement) */}
             <Button onClick={() => setIsEditing(true)}>
               <Edit className="h-4 w-4 mr-2" />
               Modifier
@@ -116,15 +119,10 @@ const AdminProductDetail = () => {
 
         {/* Product details */}
         <div className="grid lg:grid-cols-2 gap-6">
-          {/* Image */}
           <Card className="overflow-hidden">
             <CardContent className="p-0">
               {product.img ? (
-                <img 
-                  src={product.img} 
-                  alt={product.produit}
-                  className="w-full h-[400px] object-cover"
-                />
+                <img src={product.img} alt={product.produit} className="w-full h-[400px] object-cover" />
               ) : (
                 <div className="w-full h-[400px] bg-muted flex items-center justify-center">
                   <Package className="h-24 w-24 text-muted-foreground" />
@@ -133,8 +131,8 @@ const AdminProductDetail = () => {
             </CardContent>
           </Card>
 
-          {/* Infos produit */}
           <div className="space-y-4">
+            {/* Infos générales */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg">Informations générales</CardTitle>
@@ -163,17 +161,17 @@ const AdminProductDetail = () => {
               </CardContent>
             </Card>
 
+            {/* Spécifications */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg">Spécifications</CardTitle>
               </CardHeader>
               <CardContent>
-                <Badge variant="outline" className="text-base px-4 py-2">
-                  {product.specifications}
-                </Badge>
+                <Badge variant="outline" className="text-base px-4 py-2">{product.specifications}</Badge>
               </CardContent>
             </Card>
 
+            {/* Applications */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg">Applications</CardTitle>
