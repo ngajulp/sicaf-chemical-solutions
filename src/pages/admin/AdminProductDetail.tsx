@@ -78,6 +78,13 @@ const AdminProductDetail = () => {
     );
   }
 
+  // Handler for updating product after modal edit
+  const handleSave = (updatedProduct: ProductData) => {
+    setProduct(updatedProduct);
+    // ici tu peux aussi appeler ton API pour mettre à jour GitHub
+    console.log('Produit mis à jour:', updatedProduct);
+  };
+
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -93,10 +100,20 @@ const AdminProductDetail = () => {
               <p className="text-muted-foreground font-mono">{product.reference}</p>
             </div>
           </div>
-          <Button onClick={() => setIsEditing(true)}>
-            <Edit className="h-4 w-4 mr-2" />
-            Modifier
-          </Button>
+          <div className="flex gap-2">
+            {product.pdf && (
+              <a href={product.pdf} target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" className="gap-2">
+                  <FileText className="h-4 w-4" />
+                  Télécharger PDF
+                </Button>
+              </a>
+            )}
+            <Button onClick={() => setIsEditing(true)}>
+              <Edit className="h-4 w-4 mr-2" />
+              Modifier
+            </Button>
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6">
@@ -173,29 +190,6 @@ const AdminProductDetail = () => {
                 </ul>
               </CardContent>
             </Card>
-
-            {/* PDF Download */}
-            {product.pdf && (
-              <Card className="border-primary/30 bg-primary/5">
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <FileText className="h-8 w-8 text-red-500" />
-                      <div>
-                        <p className="font-medium">Fiche technique</p>
-                        <p className="text-sm text-muted-foreground">Document PDF disponible</p>
-                      </div>
-                    </div>
-                    <a href={product.pdf} target="_blank" rel="noopener noreferrer">
-                      <Button variant="outline" className="gap-2">
-                        <Download className="h-4 w-4" />
-                        Télécharger
-                      </Button>
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
           </div>
         </div>
 
@@ -204,6 +198,7 @@ const AdminProductDetail = () => {
           <EditProductModal
             product={product}
             onClose={() => setIsEditing(false)}
+            onSave={handleSave}
           />
         )}
       </div>
