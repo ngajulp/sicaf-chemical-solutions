@@ -1,131 +1,120 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useGitHubProducts } from '@/hooks/useGitHubProducts';
-import { X, FileText, Package } from 'lucide-react';
+import { Upload, X } from 'lucide-react';
 
 interface EditProductModalProps {
   product: any;
   onClose: () => void;
+  onSave: (updatedProduct: any) => void; // callback pour mise à jour immédiate
 }
 
-const EditProductModal = ({ product, onClose }: EditProductModalProps) => {
+const EditProductModal = ({ product, onClose, onSave }: EditProductModalProps) => {
   const { language } = useLanguage();
-  const { updateProduct } = useGitHubProducts();
 
-  const [name, setName] = useState(product.produit || product.name[language]);
-  const [applications, setApplications] = useState(
-    Array.isArray(product.applications) ? product.applications.join('\n') : product.applications
-  );
-  const [specifications, setSpecifications] = useState(product.specifications || '');
-  const [img, setImg] = useState<string>(product.img || '');
-  const [pdf, setPdf] = useState<string>(product.pdf || '');
-  const [saving, setSaving] = useState(false);
+  const [name, setName] = useState(product.produit);
+  const [applications, setApplications] = useState(product.applications.join('\n'));
+  const [specifications, setSpecifications] = useState(product.specifications);
+  const [imgFile, setImgFile] = useState<File | null>(null);
+  const [pdfFile, setPdfFile] = useState<File | null>(null);
+  const [previewImg, setPreviewImg] = useState<string | undefined>(product.img);
+  const [previewPdf, setPreviewPdf] = useState<string | undefined>(product.pdf);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, type: 'img' | 'pdf') => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
+  // Prévisualisation image
+  useEffect(() => {
+    if (!imgFile) return;
     const reader = new FileReader();
-    reader.onload = () => {
-      if (type === 'img') setImg(reader.result as string);
-      if (type === 'pdf') setPdf(reader.result as string);
-    };
-    reader.readAsDataURL(file);
-  };
+    reader.onload = () => setPreviewImg(reader.result as string);
+    reader.readAsDataURL(imgFile);
+  }, [imgFile]);
 
-  const handleSave = async () => {
-    setSaving(true);
-    try {
-      const updatedProduct = {
-        ...product,
-        produit: name,
-        name: { ...product.name, [language]: name },
-        applications: applications.split('\n').map(a => a.trim()).filter(a => a),
-        specifications,
-        img,
-        pdf
-      };
-      await updateProduct(product.reference, updatedProduct);
-      onClose();
-    } catch (error) {
-      console.error('Erreur lors de la mise à jour du produit:', error);
-    } finally {
-      setSaving(false);
+  // Prévisualisation PDF (nom de fichier)
+  useEffect(() => {
+    if (pdfFile) {
+      setPreviewPdf(pdfFile.name);
     }
+  }, [pdfFile]);
+
+  const handleSave = () => {
+    // Création objet produit mis à jour
+    const updatedProduct = {
+      ...product,
+      produit: name,
+      applications: applications.split('\n'),
+      specifications,
+      img: previewImg,
+      pdf: previewPdf,
+      _imgFile: imgFile,   // peut être utilisé côté serveur si upload réel
+      _pdfFile: pdfFile,
+    };
+
+    onSave(updatedProduct); // callback pour mettre à jour la page
+    onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 overflow-auto">
-      <Card className="w-full max-w-2xl relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <Card className="w-full max-w-xl">
         <CardHeader className="flex justify-between items-center">
-          <CardTitle>{language === 'fr' ? 'Modifier le produit' : 'Edit Product'}</CardTitle>
+          <CardTitle className="text-lg font-semibold">
+            {language === 'fr' ? 'Modifier le produit' : 'Edit Product'}
+          </CardTitle>
           <Button variant="ghost" size="sm" onClick={onClose}>
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
           </Button>
         </CardHeader>
-
         <CardContent className="space-y-4">
-          {/* Nom */}
-          <div className="space-y-1">
+          <div className="space-y-2">
             <label className="font-medium">{language === 'fr' ? 'Nom' : 'Name'}</label>
             <Input value={name} onChange={e => setName(e.target.value)} />
           </div>
 
-          {/* Applications */}
-          <div className="space-y-1">
-            <label className="font-medium">{language === 'fr' ? 'Applications' : 'Applications'}</label>
-            <Textarea
+          <div className="space-y-2">
+            <label className="font-medium">{language === 'fr' ? 'Applications (une par ligne)' : 'Applications (one per line)'}</label>
+            <textarea
+              className="w-full p-2 border rounded"
+              rows={4}
               value={applications}
               onChange={e => setApplications(e.target.value)}
-              placeholder={language === 'fr' ? 'Une application par ligne' : 'One application per line'}
-              rows={4}
             />
           </div>
 
-          {/* Specifications */}
-          <div className="space-y-1">
+          <div className="space-y-2">
             <label className="font-medium">{language === 'fr' ? 'Spécifications' : 'Specifications'}</label>
-            <Textarea value={specifications} onChange={e => setSpecifications(e.target.value)} rows={3} />
+            <Input value={specifications} onChange={e => setSpecifications(e.target.value)} />
           </div>
 
-          {/* Image file input + Preview */}
-          <div className="space-y-1">
-            <label className="font-medium">{language === 'fr' ? 'Image' : 'Image'}</label>
-            <Input type="file" accept="image/*" onChange={e => handleFileChange(e, 'img')} />
-            {img ? (
-              <div className="mt-2 w-full h-48 bg-muted flex items-center justify-center overflow-hidden rounded">
-                <img src={img} alt="Prévisualisation" className="object-contain w-full h-full" />
-              </div>
-            ) : (
-              <div className="mt-2 w-full h-48 bg-muted flex items-center justify-center rounded text-muted-foreground">
-                <Package className="h-10 w-10" />
-                <span className="ml-2">{language === 'fr' ? 'Aucune image' : 'No image'}</span>
-              </div>
+          {/* Upload Image */}
+          <div className="space-y-2">
+            <label className="font-medium">{language === 'fr' ? 'Image du produit' : 'Product Image'}</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={e => setImgFile(e.target.files?.[0] || null)}
+            />
+            {previewImg && (
+              <img src={previewImg} alt="Preview" className="w-32 h-32 object-cover mt-2 border rounded" />
             )}
           </div>
 
-          {/* PDF file input + Preview */}
-          <div className="space-y-1">
-            <label className="font-medium">{language === 'fr' ? 'Fichier PDF' : 'PDF File'}</label>
-            <Input type="file" accept="application/pdf" onChange={e => handleFileChange(e, 'pdf')} />
-            {pdf && (
-              <p className="mt-2 inline-flex items-center gap-2 text-primary font-medium truncate">
-                <FileText className="h-5 w-5" />
-                {language === 'fr' ? 'PDF sélectionné' : 'PDF selected'}
-              </p>
-            )}
+          {/* Upload PDF */}
+          <div className="space-y-2">
+            <label className="font-medium">{language === 'fr' ? 'Fiche technique (PDF)' : 'Technical sheet (PDF)'}</label>
+            <input
+              type="file"
+              accept="application/pdf"
+              onChange={e => setPdfFile(e.target.files?.[0] || null)}
+            />
+            {previewPdf && <p className="text-sm mt-1">{previewPdf}</p>}
           </div>
 
-          {/* Buttons */}
           <div className="flex justify-end gap-4 mt-4">
-            <Button variant="secondary" onClick={handleSave} disabled={saving}>
-              {saving ? (language === 'fr' ? 'Enregistrement...' : 'Saving...') : (language === 'fr' ? 'Enregistrer' : 'Save')}
+            <Button variant="secondary" onClick={handleSave}>
+              {language === 'fr' ? 'Enregistrer' : 'Save'}
             </Button>
-            <Button variant="ghost" onClick={onClose} disabled={saving}>
+            <Button variant="ghost" onClick={onClose}>
               {language === 'fr' ? 'Annuler' : 'Cancel'}
             </Button>
           </div>
