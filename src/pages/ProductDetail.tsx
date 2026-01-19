@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, FileText, Package, Loader2, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -7,14 +6,11 @@ import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import EditProductModal from '@/components/products/EditProductModal'; // ✅ import modal
 
 const ProductDetail = () => {
   const { categoryId, reference } = useParams<{ categoryId: string; reference: string }>();
   const { t, language } = useLanguage();
   const { loading, getProductsByCategory, getCategoryById } = useGitHubProducts();
-
-  const [isEditOpen, setIsEditOpen] = useState(false); // ✅ état modal
 
   const category = getCategoryById(categoryId || '');
   const products = getProductsByCategory(categoryId || '');
@@ -172,16 +168,6 @@ const ProductDetail = () => {
                     </Button>
                   </a>
                 )}
-
-                {/* ✅ Bouton Modifier */}
-                <Button
-                  size="lg"
-                  variant="outline"
-                  onClick={() => setIsEditOpen(true)}
-                  className="flex-1"
-                >
-                  {language === 'fr' ? 'Modifier' : 'Edit'}
-                </Button>
               </div>
             </div>
           </div>
@@ -200,13 +186,6 @@ const ProductDetail = () => {
           </div>
         </div>
       </section>
-
-      {/* ✅ Modal Edit Product */}
-      <EditProductModal
-        product={product}
-        isOpen={isEditOpen}
-        onClose={() => setIsEditOpen(false)}
-      />
     </Layout>
   );
 };
