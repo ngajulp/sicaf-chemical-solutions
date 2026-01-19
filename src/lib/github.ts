@@ -371,19 +371,36 @@ export const fileToBase64 = (file: File): Promise<string> => {
   });
 };
 
-// Upload image to GitHub
+// Upload image en utilisant la référence comme nom de fichier
 export const uploadImageToGitHub = async (
   file: File,
-  fileName: string
+  reference: string
 ): Promise<{ success: boolean; url: string }> => {
   const token = await fetchGitHubToken();
   const base64Content = await fileToBase64(file);
-  
-  // Clean filename
-  const cleanFileName = fileName.replace(/[^a-zA-Z0-9.-]/g, '_');
-  const filePath = `public-data/img/${cleanFileName}`;
-  
-  const response = await fetch(`${GITHUB_UPLOAD_API}/${filePath}`, {
+
+  // Nom du fichier basé sur la référence
+  const fileName = `${reference}.png`; // ou jpg selon ton standard
+  const filePath = `public-data/img/${fileName}`;
+
+  // Vérifier si le fichier existe déjà pour récupérer le SHA
+  let sha: string | undefined;
+  try {
+    const res = await fetch(`${GITHUB_API_URL}/img/${fileName}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github.v3+json',
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      sha = data.sha; // SHA existant pour écrasement
+    }
+  } catch {
+    // Si n'existe pas, SHA reste undefined => création
+  }
+
+  const response = await fetch(`${GITHUB_API_URL}/img/${fileName}`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -391,9 +408,10 @@ export const uploadImageToGitHub = async (
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      message: `Upload image: ${cleanFileName}`,
+      message: `Upload image: ${fileName}`,
       content: base64Content,
       branch: GITHUB_BRANCH,
+      sha, // présent si on écrase
     }),
   });
 
@@ -406,19 +424,36 @@ export const uploadImageToGitHub = async (
   return { success: true, url: rawUrl };
 };
 
-// Upload PDF to GitHub
+// Upload PDF en utilisant la référence comme nom de fichier
 export const uploadPdfToGitHub = async (
   file: File,
-  fileName: string
+  reference: string
 ): Promise<{ success: boolean; url: string }> => {
   const token = await fetchGitHubToken();
   const base64Content = await fileToBase64(file);
-  
-  // Clean filename
-  const cleanFileName = fileName.replace(/[^a-zA-Z0-9.-]/g, '_');
-  const filePath = `public-data/pdf/${cleanFileName}`;
-  
-  const response = await fetch(`${GITHUB_UPLOAD_API}/${filePath}`, {
+
+  // Nom du fichier basé sur la référence
+  const fileName = `${reference}.pdf`;
+  const filePath = `public-data/pdf/${fileName}`;
+
+  // Vérifier si le fichier existe déjà pour récupérer le SHA
+  let sha: string | undefined;
+  try {
+    const res = await fetch(`${GITHUB_API_URL}/pdf/${fileName}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github.v3+json',
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      sha = data.sha; // SHA existant pour écrasement
+    }
+  } catch {
+    // Si n'existe pas, SHA reste undefined => création
+  }
+
+  const response = await fetch(`${GITHUB_API_URL}/pdf/${fileName}`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -426,9 +461,10 @@ export const uploadPdfToGitHub = async (
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      message: `Upload PDF: ${cleanFileName}`,
+      message: `Upload PDF: ${fileName}`,
       content: base64Content,
       branch: GITHUB_BRANCH,
+      sha, // présent si on écrase
     }),
   });
 
@@ -439,16 +475,6 @@ export const uploadPdfToGitHub = async (
 
   const rawUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${filePath}`;
   return { success: true, url: rawUrl };
-};
-
-// Get default product image URL
-export const getDefaultProductImage = (reference: string): string => {
-  return `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/public-data/img/default-product.png`;
-};
-
-// Get default category image URL  
-export const getDefaultCategoryImage = (categoryName: string): string => {
-  return `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/public-data/img/default-category.png`;
 };
 
 
