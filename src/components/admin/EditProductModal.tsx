@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Upload, FileText, Download, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
-import { updateProductWithFile } from '@/lib/github';
+import { uploadImageToGitHub, uploadPdfToGitHub, updateProductWithFile } from '@/lib/github';
 
 interface ProductData {
   reference: string;
@@ -21,55 +21,83 @@ interface ProductData {
 interface EditProductModalProps {
   product: ProductData;
   onClose: () => void;
-  onUpdate: (updatedProduct: ProductData) => void; // callback après sauvegarde
+  onUpdate: (updatedProduct: ProductData) => void;
 }
 
 export default function EditProductModal({ product, onClose, onUpdate }: EditProductModalProps) {
   const [formData, setFormData] = useState<ProductData>({ ...product });
   const [applicationsText, setApplicationsText] = useState(product.applications.join('\n'));
-  const [uploading, setUploading] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadingPdf, setUploadingPdf] = useState(false);
+
   const imageInputRef = useRef<HTMLInputElement>(null);
   const pdfInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileUpload = async (file: File, type: 'img' | 'pdf') => {
-    setUploading(true);
+  // --- Upload handlers avec vérification de taille ---
+  const handleImageUpload = async (file: File) => {
+    if (file.size > 1 * 1024 * 1024) {
+      toast.error("L'image doit être inférieure à 1MB");
+      return;
+    }
+    setUploadingImage(true);
     try {
-      const updatedProduct = await updateProductWithFile(
-        formData.reference,
-        {}, // pas de champs modifiés pour l'instant
-        type === 'img' ? file : undefined,
-        type === 'pdf' ? file : undefined
-      );
-      setFormData(updatedProduct);
-      toast.success(`${type === 'img' ? 'Image' : 'PDF'} uploadé avec succès`);
+      const result = await uploadImageToGitHub(file, product.reference); // Nom basé sur référence
+      setFormData(prev => ({ ...prev, img: result.url }));
+      toast.success("Image uploadée avec succès");
     } catch (error) {
       console.error(error);
-      toast.error(`Erreur lors de l'upload du ${type === 'img' ? 'fichier image' : 'PDF'}`);
+      toast.error("Erreur lors de l'upload de l'image");
     } finally {
-      setUploading(false);
+      setUploadingImage(false);
     }
   };
 
+  const handlePdfUpload = async (file: File) => {
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Le PDF doit être inférieur à 5MB");
+      return;
+    }
+    setUploadingPdf(true);
+    try {
+      const result = await uploadPdfToGitHub(file, product.reference); // Nom basé sur référence
+      setFormData(prev => ({ ...prev, pdf: result.url }));
+      toast.success("PDF uploadé avec succès");
+    } catch (error) {
+      console.error(error);
+      toast.error("Erreur lors de l'upload du PDF");
+    } finally {
+      setUploadingPdf(false);
+    }
+  };
+
+  // --- Save / Update product ---
   const handleSave = async () => {
     try {
-      const updatedProduct = {
+      const updatedProduct: ProductData = {
         ...formData,
         applications: applicationsText.split('\n').filter(a => a.trim())
       };
-      // Ici on met à jour GitHub si d'autres champs changent (sans fichier)
-      await updateProductWithFile(formData.reference, updatedProduct);
-      onUpdate(updatedProduct);
-      toast.success('Produit mis à jour');
+      
+      // Mettre à jour sur GitHub
+      const finalProduct = await updateProductWithFile(
+        product.reference,
+        updatedProduct,
+        imageInputRef.current?.files?.[0],
+        pdfInputRef.current?.files?.[0]
+      );
+
+      onUpdate(finalProduct);
+      toast.success("Produit mis à jour avec succès");
       onClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      toast.error('Erreur lors de la mise à jour du produit');
+      toast.error(error.message || "Erreur lors de la mise à jour du produit");
     }
   };
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="max-w-lg">
+      <DialogContent className="max-w-lg w-full">
         <DialogHeader>
           <DialogTitle>Modifier le produit</DialogTitle>
         </DialogHeader>
@@ -80,7 +108,7 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
             <label className="block font-medium mb-1">Référence</label>
             <Input
               value={formData.reference}
-              onChange={(e) => setFormData({ ...formData, reference: e.target.value })}
+              onChange={e => setFormData({ ...formData, reference: e.target.value })}
             />
           </div>
 
@@ -89,7 +117,7 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
             <label className="block font-medium mb-1">Nom du produit</label>
             <Input
               value={formData.produit}
-              onChange={(e) => setFormData({ ...formData, produit: e.target.value })}
+              onChange={e => setFormData({ ...formData, produit: e.target.value })}
             />
           </div>
 
@@ -98,7 +126,7 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
             <label className="block font-medium mb-1">Applications (une par ligne)</label>
             <Textarea
               value={applicationsText}
-              onChange={(e) => setApplicationsText(e.target.value)}
+              onChange={e => setApplicationsText(e.target.value)}
               rows={3}
             />
           </div>
@@ -108,7 +136,7 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
             <label className="block font-medium mb-1">Spécifications</label>
             <Input
               value={formData.specifications}
-              onChange={(e) => setFormData({ ...formData, specifications: e.target.value })}
+              onChange={e => setFormData({ ...formData, specifications: e.target.value })}
             />
           </div>
 
@@ -119,7 +147,7 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
               <Input
                 type="number"
                 value={formData.qty}
-                onChange={(e) => setFormData({ ...formData, qty: parseInt(e.target.value) || 0 })}
+                onChange={e => setFormData({ ...formData, qty: parseInt(e.target.value) || 0 })}
               />
             </div>
             <div>
@@ -127,7 +155,7 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
               <Input
                 type="number"
                 value={formData.prix_unit}
-                onChange={(e) => setFormData({ ...formData, prix_unit: parseInt(e.target.value) || 0 })}
+                onChange={e => setFormData({ ...formData, prix_unit: parseInt(e.target.value) || 0 })}
               />
             </div>
           </div>
@@ -135,8 +163,7 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
           {/* Image */}
           <div className="space-y-2 p-4 border rounded-lg bg-muted/30">
             <label className="flex items-center gap-2 font-medium">
-              <Upload className="h-4 w-4" />
-              Image du produit
+              <Upload className="h-4 w-4" /> Image du produit
             </label>
             <div className="flex items-center gap-3">
               <input
@@ -144,16 +171,16 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0], 'img')}
+                onChange={e => e.target.files?.[0] && handleImageUpload(e.target.files[0])}
               />
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={() => imageInputRef.current?.click()}
-                disabled={uploading}
+                disabled={uploadingImage}
               >
-                {uploading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Upload className="h-4 w-4 mr-2" />}
+                {uploadingImage ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Upload className="h-4 w-4 mr-2" />}
                 {formData.img ? 'Changer' : 'Sélectionner'}
               </Button>
               {formData.img && (
@@ -165,8 +192,7 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
           {/* PDF */}
           <div className="space-y-2 p-4 border rounded-lg bg-muted/30">
             <label className="flex items-center gap-2 font-medium">
-              <FileText className="h-4 w-4" />
-              Fiche technique (PDF)
+              <FileText className="h-4 w-4" /> Fiche technique (PDF)
             </label>
             <div className="flex items-center gap-3">
               <input
@@ -174,18 +200,16 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
                 type="file"
                 accept=".pdf"
                 className="hidden"
-                onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0], 'pdf')}
+                onChange={e => e.target.files?.[0] && handlePdfUpload(e.target.files[0])}
               />
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={() => pdfInputRef.current?.click()}
-                disabled={uploading}
+                disabled={uploadingPdf}
               >
-                {uploading 
-                  ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> 
-                  : <Upload className="h-4 w-4 mr-2" />}
+                {uploadingPdf ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Upload className="h-4 w-4 mr-2" />}
                 {formData.pdf ? 'Changer' : 'Sélectionner'}
               </Button>
 
@@ -205,8 +229,8 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
 
         <DialogFooter className="flex justify-end gap-2">
           <Button variant="outline" onClick={onClose}>Annuler</Button>
-          <Button onClick={handleSave} disabled={uploading}>
-            {uploading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+          <Button onClick={handleSave} disabled={uploadingImage || uploadingPdf}>
+            {uploadingImage || uploadingPdf ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
             Enregistrer
           </Button>
         </DialogFooter>
