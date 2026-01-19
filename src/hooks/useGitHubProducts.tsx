@@ -38,7 +38,7 @@ export interface FormattedCategory {
 
 // Map category names to IDs and icons
 const categoryMapping: Record<string, { id: string; icon: string; descFr: string; descEn: string }> = {
-  'Eau et environenemt': {
+  'Eau et environnenemt': {
     id: 'treated_water',
     icon: '🧪',
     descFr: 'Eaux purifiées pour applications industrielles et laboratoires',
@@ -76,7 +76,21 @@ const categoryMapping: Record<string, { id: string; icon: string; descFr: string
   }
 };
 
+const normalizeCategoryKey = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize('NFD')                 // enlève accents
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]/g, '_')
+    .replace(/_+/g, '_')
+    .replace(/^_|_$/g, '');
 
+const normalizedCategoryMapping = Object.fromEntries(
+  Object.entries(categoryMapping).map(([key, value]) => [
+    normalizeCategoryKey(key),
+    value
+  ])
+);
 export const useGitHubProducts = () => {
   const [rawCategories, setRawCategories] = useState<GitHubProductCategory[]>([]);
   const [products, setProducts] = useState<FormattedProduct[]>([]);
@@ -90,43 +104,52 @@ export const useGitHubProducts = () => {
         setLoading(true);
         const data: GitHubProductCategory[] = await getProductsRaw();
         setRawCategories(data);
-        
-        // Format categories
+
+        // ---- FORMAT CATEGORIES ----
         const formattedCategories: FormattedCategory[] = data.map(cat => {
-          const mapping = categoryMapping[cat.categorie] || { 
-            id: cat.categorie.toLowerCase().replace(/[^a-z0-9]/g, '_'), 
-            icon: '📦',
-            descFr: cat.categorie,
-            descEn: cat.categorie
-          };
+          const key = normalizeCategoryKey(cat.categorie);
+          const mapping = normalizedCategoryMapping[key];
+
+          const id = mapping?.id || key;
+
+          if (!mapping) {
+            console.warn(`⚠️ Catégorie non mappée : "${cat.categorie}" → "${id}"`);
+          }
+
           return {
-            id: mapping.id,
+            id,
             name: { fr: cat.categorie, en: cat.categorie },
-            icon: mapping.icon,
-            description: { fr: mapping.descFr, en: mapping.descEn },
+            icon: mapping?.icon || '📦',
+            description: {
+              fr: mapping?.descFr || cat.categorie,
+              en: mapping?.descEn || cat.categorie
+            },
             img: cat.img
           };
         });
+
         setCategories(formattedCategories);
-        
-        // Format products
+
+        // ---- FORMAT PRODUCTS ----
         const formattedProducts: FormattedProduct[] = data.flatMap(cat => {
-          const mapping = categoryMapping[cat.categorie] || { id: cat.categorie.toLowerCase().replace(/[^a-z0-9]/g, '_') };
+          const key = normalizeCategoryKey(cat.categorie);
+          const categoryId = normalizedCategoryMapping[key]?.id || key;
+
           return cat.datas.map(p => ({
             reference: p.reference,
             name: { fr: p.produit, en: p.produit },
-            applications: { 
+            applications: {
               fr: p.applications.join(', '),
               en: p.applications.join(', ')
             },
             specifications: p.specifications,
-            category: mapping.id,
+            category: categoryId,
             img: p.img,
             pdf: p.pdf
           }));
         });
+
         setProducts(formattedProducts);
-        
         setError(null);
       } catch (err) {
         console.error('Error fetching GitHub products:', err);
@@ -139,20 +162,18 @@ export const useGitHubProducts = () => {
     fetchProducts();
   }, []);
 
-  const getProductsByCategory = (categoryId: string): FormattedProduct[] => {
-    return products.filter(product => product.category === categoryId);
-  };
+  const getProductsByCategory = (categoryId: string) =>
+    products.filter(p => p.category === categoryId);
 
-  const getCategoryById = (categoryId: string): FormattedCategory | undefined => {
-    return categories.find(cat => cat.id === categoryId);
-  };
+  const getCategoryById = (categoryId: string) =>
+    categories.find(c => c.id === categoryId);
 
-  const searchProducts = (query: string, lang: 'fr' | 'en'): FormattedProduct[] => {
-    const lowerQuery = query.toLowerCase();
-    return products.filter(product => 
-      product.reference.toLowerCase().includes(lowerQuery) ||
-      product.name[lang].toLowerCase().includes(lowerQuery) ||
-      product.applications[lang].toLowerCase().includes(lowerQuery)
+  const searchProducts = (query: string, lang: 'fr' | 'en') => {
+    const q = query.toLowerCase();
+    return products.filter(p =>
+      p.reference.toLowerCase().includes(q) ||
+      p.name[lang].toLowerCase().includes(q) ||
+      p.applications[lang].toLowerCase().includes(q)
     );
   };
 
@@ -167,3 +188,4 @@ export const useGitHubProducts = () => {
     searchProducts
   };
 };
+
