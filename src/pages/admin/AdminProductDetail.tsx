@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Package, FileText, Download, Edit, Loader2 } from 'lucide-react';
 import { getProducts } from '@/lib/github';
+import EditProductModal from '@/components/admin/EditProductModal';
 
 interface ProductData {
   reference: string;
@@ -30,7 +31,9 @@ const AdminProductDetail = () => {
   const [product, setProduct] = useState<ProductData | null>(null);
   const [category, setCategory] = useState<ProductCategory | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
 
+  // Fetch product data
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -90,7 +93,7 @@ const AdminProductDetail = () => {
               <p className="text-muted-foreground font-mono">{product.reference}</p>
             </div>
           </div>
-          <Button onClick={() => navigate('/admin/products')}>
+          <Button onClick={() => setIsEditing(true)}>
             <Edit className="h-4 w-4 mr-2" />
             Modifier
           </Button>
@@ -195,6 +198,14 @@ const AdminProductDetail = () => {
             )}
           </div>
         </div>
+
+        {/* Modal for editing product */}
+        {isEditing && product && (
+          <EditProductModal
+            product={product}
+            onClose={() => setIsEditing(false)}
+          />
+        )}
       </div>
     </AdminLayout>
   );
