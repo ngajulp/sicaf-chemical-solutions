@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Globe, Settings } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-//import { categories } from '@/data/products';
 import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,7 +17,8 @@ const Header = () => {
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
   const location = useLocation();
-  const { categories } = useGitHubProducts(); // ✅ hook à l’intérieur
+  const { categories, loading } = useGitHubProducts(); // ✅ hook à l’intérieur
+
   const isActive = (path: string) => location.pathname === path;
 
   const navLinks = [
@@ -41,14 +41,18 @@ const Header = () => {
             <Globe className="h-4 w-4" />
             <button
               onClick={() => setLanguage('fr')}
-              className={`px-2 py-1 rounded ${language === 'fr' ? 'bg-white/20' : 'hover:bg-white/10'}`}
+              className={`px-2 py-1 rounded ${
+                language === 'fr' ? 'bg-white/20' : 'hover:bg-white/10'
+              }`}
             >
               FR
             </button>
             <span>|</span>
             <button
               onClick={() => setLanguage('en')}
-              className={`px-2 py-1 rounded ${language === 'en' ? 'bg-white/20' : 'hover:bg-white/10'}`}
+              className={`px-2 py-1 rounded ${
+                language === 'en' ? 'bg-white/20' : 'hover:bg-white/10'
+              }`}
             >
               EN
             </button>
@@ -63,7 +67,9 @@ const Header = () => {
           <Link to="/" className="flex items-center gap-3">
             <img src={logo} alt="SICAF Logo" className="h-12 w-auto" />
             <div className="hidden sm:block">
-              <p className="text-xs text-muted-foreground leading-tight">Société des industries chimiques d'afrique</p>
+              <p className="text-xs text-muted-foreground leading-tight">
+                Société des industries chimiques d'afrique
+              </p>
             </div>
           </Link>
 
@@ -85,21 +91,33 @@ const Header = () => {
             <DropdownMenu open={isProductsOpen} onOpenChange={setIsProductsOpen}>
               <DropdownMenuTrigger className="flex items-center gap-1 font-medium transition-colors hover:text-primary">
                 {t('nav.products')}
-                <ChevronDown className={`h-4 w-4 transition-transform ${isProductsOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  className={`h-4 w-4 transition-transform ${
+                    isProductsOpen ? 'rotate-180' : ''
+                  }`}
+                />
               </DropdownMenuTrigger>
+
               <DropdownMenuContent className="w-64 bg-card" align="start">
-                {categories.map((category) => (
-                  <DropdownMenuItem key={category.id} asChild>
-                    <Link
-                      to={`/products/${category.id}`}
-                      className="flex items-center gap-2 cursor-pointer"
-                    >
-                      <span>{category.icon}</span>
-                      <span>{category.name[language]}</span>
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
+                {loading ? (
+                  <p className="p-2 text-sm text-muted-foreground">Chargement...</p>
+                ) : categories.length > 0 ? (
+                  categories.map((category) => (
+                    <DropdownMenuItem key={category.id} asChild>
+                      <Link
+                        to={`/products/${category.id}`}
+                        className="flex items-center gap-2 cursor-pointer"
+                      >
+                        <span>{category.icon}</span>
+                        <span>{category.name[language]}</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  ))
+                ) : (
+                  <p className="p-2 text-sm text-muted-foreground">Aucune catégorie</p>
+                )}
               </DropdownMenuContent>
+            </DropdownMenu>
 
             {navLinks.slice(2).map((link) => (
               <Link
@@ -149,21 +167,27 @@ const Header = () => {
                   {t(link.label)}
                 </Link>
               ))}
-              
+
               <div className="py-2">
                 <p className="font-medium mb-2">{t('nav.products')}</p>
                 <div className="ml-4 flex flex-col gap-2">
-                  {categories.map((category) => (
-                    <Link
-                      key={category.id}
-                      to={`/products/${category.id}`}
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-2 text-muted-foreground hover:text-primary"
-                    >
-                      <span>{category.icon}</span>
-                      <span>{category.name[language]}</span>
-                    </Link>
-                  ))}
+                  {loading ? (
+                    <p className="text-sm text-muted-foreground">Chargement...</p>
+                  ) : categories.length > 0 ? (
+                    categories.map((category) => (
+                      <Link
+                        key={category.id}
+                        to={`/products/${category.id}`}
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-2 text-muted-foreground hover:text-primary"
+                      >
+                        <span>{category.icon}</span>
+                        <span>{category.name[language]}</span>
+                      </Link>
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground">Aucune catégorie</p>
+                  )}
                 </div>
               </div>
 
@@ -173,8 +197,8 @@ const Header = () => {
                 </Button>
               </Link>
 
-              <Link 
-                to="/admin" 
+              <Link
+                to="/admin"
                 onClick={() => setIsOpen(false)}
                 className="flex items-center gap-2 text-muted-foreground hover:text-primary py-2"
               >
