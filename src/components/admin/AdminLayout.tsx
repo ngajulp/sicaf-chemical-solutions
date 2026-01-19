@@ -11,7 +11,8 @@ import {
   Menu, 
   X,
   ChevronRight,
-  History
+  History,
+  Building2
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -65,6 +66,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     { path: '/admin/dashboard', label: 'Tableau de bord', icon: LayoutDashboard },
     { path: '/admin/products', label: 'Produits', icon: Package },
     { path: '/admin/proforma', label: 'Proforma / Devis', icon: FileText },
+    { path: '/admin/company', label: 'Entreprise', icon: Building2 },
     { path: '/admin/users', label: 'Utilisateurs', icon: Users, adminOnly: true },
     { path: '/admin/history', label: 'Historique', icon: History, adminOnly: true },
   ];

@@ -1,5 +1,5 @@
-import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Loader2, Package } from 'lucide-react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, ArrowRight, Loader2, Package, Eye } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import Layout from '@/components/layout/Layout';
@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/table';
 
 const ProductCategory = () => {
+  const navigate = useNavigate();
   const { categoryId } = useParams<{ categoryId: string }>();
   const { t, language } = useLanguage();
   const { categories, loading, getProductsByCategory, getCategoryById } = useGitHubProducts();
@@ -122,6 +123,9 @@ const ProductCategory = () => {
                     <TableHead className="text-primary-foreground font-semibold">
                       {t('table.specifications')}
                     </TableHead>
+                    <TableHead className="text-primary-foreground font-semibold w-20">
+                      {language === 'fr' ? 'Détails' : 'Details'}
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -158,6 +162,16 @@ const ProductCategory = () => {
                         <span className="inline-block bg-secondary/20 text-secondary-foreground px-2 py-1 rounded text-sm">
                           {product.specifications}
                         </span>
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => navigate(`/products/${categoryId}/${encodeURIComponent(product.reference)}`)}
+                          className="gap-1 text-primary hover:text-primary/80"
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}
