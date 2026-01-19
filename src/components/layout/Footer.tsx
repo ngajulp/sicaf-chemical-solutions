@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Globe, MessageCircle } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { categories } from '@/data/products';
 import logo from '@/assets/logo.png';
+//import { categories } from '@/data/products';
+import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import WhatsAppButton from '@/components/WhatsAppButton';
-
+const { categories } = useGitHubProducts();
 const Footer = () => {
   const { language, t } = useLanguage();
   const currentYear = new Date().getFullYear();
