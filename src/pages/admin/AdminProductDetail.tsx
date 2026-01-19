@@ -33,7 +33,6 @@ const AdminProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
-  // Fetch product data
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -78,10 +77,8 @@ const AdminProductDetail = () => {
     );
   }
 
-  // Handler for updating product after modal edit
-  const handleSave = (updatedProduct: ProductData) => {
+  const handleUpdate = (updatedProduct: ProductData) => {
     setProduct(updatedProduct);
-    // ici tu peux aussi appeler ton API pour mettre à jour GitHub
     console.log('Produit mis à jour:', updatedProduct);
   };
 
@@ -109,6 +106,7 @@ const AdminProductDetail = () => {
                 </Button>
               </a>
             )}
+            {/* Bouton Modifier admin */}
             <Button onClick={() => setIsEditing(true)}>
               <Edit className="h-4 w-4 mr-2" />
               Modifier
@@ -116,8 +114,9 @@ const AdminProductDetail = () => {
           </div>
         </div>
 
+        {/* Product details */}
         <div className="grid lg:grid-cols-2 gap-6">
-          {/* Product Image */}
+          {/* Image */}
           <Card className="overflow-hidden">
             <CardContent className="p-0">
               {product.img ? (
@@ -134,7 +133,7 @@ const AdminProductDetail = () => {
             </CardContent>
           </Card>
 
-          {/* Product Info */}
+          {/* Infos produit */}
           <div className="space-y-4">
             <Card>
               <CardHeader>
@@ -193,12 +192,12 @@ const AdminProductDetail = () => {
           </div>
         </div>
 
-        {/* Modal for editing product */}
+        {/* Modal Admin */}
         {isEditing && product && (
           <EditProductModal
             product={product}
             onClose={() => setIsEditing(false)}
-            onSave={handleSave}
+            onUpdate={handleUpdate}
           />
         )}
       </div>
