@@ -21,37 +21,49 @@ interface ProductData {
 interface EditProductModalProps {
   product: ProductData;
   onClose: () => void;
-  onSave: (updatedProduct: ProductData) => void;
+  onUpdate: (updatedProduct: ProductData) => void; // callback après sauvegarde
 }
 
-export default function EditProductModal({ product, onClose, onSave }: EditProductModalProps) {
+export default function EditProductModal({ product, onClose, onUpdate }: EditProductModalProps) {
   const [formData, setFormData] = useState<ProductData>({ ...product });
   const [applicationsText, setApplicationsText] = useState(product.applications.join('\n'));
   const [uploading, setUploading] = useState(false);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const pdfInputRef = useRef<HTMLInputElement>(null);
 
-  const handleSave = async () => {
+  const handleFileUpload = async (file: File, type: 'img' | 'pdf') => {
     setUploading(true);
     try {
       const updatedProduct = await updateProductWithFile(
-        product.reference,
-        {
-          ...formData,
-          applications: applicationsText.split('\n').filter(a => a.trim())
-        },
-        imageInputRef.current?.files?.[0],
-        pdfInputRef.current?.files?.[0]
+        formData.reference,
+        {}, // pas de champs modifiés pour l'instant
+        type === 'img' ? file : undefined,
+        type === 'pdf' ? file : undefined
       );
-
-      toast.success('Produit mis à jour avec succès !');
-      onSave(updatedProduct);
-      onClose();
-    } catch (err) {
-      console.error(err);
-      toast.error('Erreur lors de la mise à jour du produit');
+      setFormData(updatedProduct);
+      toast.success(`${type === 'img' ? 'Image' : 'PDF'} uploadé avec succès`);
+    } catch (error) {
+      console.error(error);
+      toast.error(`Erreur lors de l'upload du ${type === 'img' ? 'fichier image' : 'PDF'}`);
     } finally {
       setUploading(false);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      const updatedProduct = {
+        ...formData,
+        applications: applicationsText.split('\n').filter(a => a.trim())
+      };
+      // Ici on met à jour GitHub si d'autres champs changent (sans fichier)
+      await updateProductWithFile(formData.reference, updatedProduct);
+      onUpdate(updatedProduct);
+      toast.success('Produit mis à jour');
+      onClose();
+    } catch (error) {
+      console.error(error);
+      toast.error('Erreur lors de la mise à jour du produit');
     }
   };
 
@@ -123,7 +135,8 @@ export default function EditProductModal({ product, onClose, onSave }: EditProdu
           {/* Image */}
           <div className="space-y-2 p-4 border rounded-lg bg-muted/30">
             <label className="flex items-center gap-2 font-medium">
-              <Upload className="h-4 w-4" /> Image du produit
+              <Upload className="h-4 w-4" />
+              Image du produit
             </label>
             <div className="flex items-center gap-3">
               <input
@@ -131,13 +144,16 @@ export default function EditProductModal({ product, onClose, onSave }: EditProdu
                 type="file"
                 accept="image/*"
                 className="hidden"
+                onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0], 'img')}
               />
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={() => imageInputRef.current?.click()}
+                disabled={uploading}
               >
+                {uploading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Upload className="h-4 w-4 mr-2" />}
                 {formData.img ? 'Changer' : 'Sélectionner'}
               </Button>
               {formData.img && (
@@ -149,7 +165,8 @@ export default function EditProductModal({ product, onClose, onSave }: EditProdu
           {/* PDF */}
           <div className="space-y-2 p-4 border rounded-lg bg-muted/30">
             <label className="flex items-center gap-2 font-medium">
-              <FileText className="h-4 w-4" /> Fiche technique (PDF)
+              <FileText className="h-4 w-4" />
+              Fiche technique (PDF)
             </label>
             <div className="flex items-center gap-3">
               <input
@@ -157,15 +174,19 @@ export default function EditProductModal({ product, onClose, onSave }: EditProdu
                 type="file"
                 accept=".pdf"
                 className="hidden"
+                onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0], 'pdf')}
               />
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={() => pdfInputRef.current?.click()}
+                disabled={uploading}
               >
+                {uploading ? <Loader2 className="h-4 w-4 animate-spin mr-2" : <Upload className="h-4 w-4 mr-2" />}
                 {formData.pdf ? 'Changer' : 'Sélectionner'}
               </Button>
+
               {formData.pdf && (
                 <a
                   href={formData.pdf}
@@ -183,7 +204,7 @@ export default function EditProductModal({ product, onClose, onSave }: EditProdu
         <DialogFooter className="flex justify-end gap-2">
           <Button variant="outline" onClick={onClose}>Annuler</Button>
           <Button onClick={handleSave} disabled={uploading}>
-            {uploading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+            {uploading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
             Enregistrer
           </Button>
         </DialogFooter>
