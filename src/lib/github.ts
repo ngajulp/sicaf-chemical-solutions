@@ -450,3 +450,38 @@ export const getDefaultProductImage = (reference: string): string => {
 export const getDefaultCategoryImage = (categoryName: string): string => {
   return `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/public-data/img/default-category.png`;
 };
+
+
+
+// ==================== UPDATE PRODUCT WITH FILES ====================
+
+export const updateProductWithFile = async (
+  reference: string,
+  updatedData: Partial<any>,
+  newImage?: File,
+  newPdf?: File
+) => {
+  // 1️⃣ Récupérer produits existants et SHA
+  const { content: products, sha } = await fetchFileContent('products.json');
+
+  // 2️⃣ Trouver le produit par référence
+  const productIndex = products.findIndex((p: any) => p.reference === reference);
+  if (productIndex === -1) throw new Error('Produit non trouvé');
+
+  // 3️⃣ Upload nouveau fichier si fourni
+  if (newImage) {
+    const { url } = await uploadFileToGitHub(newImage, 'img');
+    updatedData.img = url;
+  }
+  if (newPdf) {
+    const { url } = await uploadFileToGitHub(newPdf, 'pdf');
+    updatedData.pdf = url;
+  }
+
+  // 4️⃣ Mettre à jour le produit
+  products[productIndex] = { ...products[productIndex], ...updatedData };
+
+  // 5️⃣ Envoyer sur GitHub
+  await updateFileContent('products.json', products, sha, `Update product ${reference}`);
+  return products[productIndex];
+};
