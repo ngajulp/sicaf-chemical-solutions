@@ -183,7 +183,9 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
                 onClick={() => pdfInputRef.current?.click()}
                 disabled={uploading}
               >
-                {uploading ? <Loader2 className="h-4 w-4 animate-spin mr-2" : <Upload className="h-4 w-4 mr-2" />}
+                {uploading 
+                  ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> 
+                  : <Upload className="h-4 w-4 mr-2" />}
                 {formData.pdf ? 'Changer' : 'Sélectionner'}
               </Button>
 
