@@ -28,7 +28,7 @@ export interface Category {
 export const categories: Category[] = [
   {
     id: 'treated_water',
-    name: { fr: 'Eaux Traitées', en: 'Treated Water' },
+    name: { fr: 'Eau et environenemt', en: 'Water and the environment' },
     icon: '🧪',
     description: {
       fr: 'Eaux purifiées pour applications industrielles et laboratoires',
@@ -110,7 +110,7 @@ export const categories: Category[] = [
 ];
 
 export const products: Product[] = [
-  // Eaux Traitées
+  // Eau et environenemt
   {
     reference: 'WF-EAU-001',
     name: { fr: 'Eau déminéralisée', en: 'Demineralized water' },
