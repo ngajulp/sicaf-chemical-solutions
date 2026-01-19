@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, DragEvent } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,19 +29,18 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
   const [applicationsText, setApplicationsText] = useState(product.applications.join('\n'));
   const [uploadingImage, setUploadingImage] = useState(false);
   const [uploadingPdf, setUploadingPdf] = useState(false);
+  const [dragActive, setDragActive] = useState(false);
+  const [dragPdfActive, setDragPdfActive] = useState(false);
 
   const imageInputRef = useRef<HTMLInputElement>(null);
   const pdfInputRef = useRef<HTMLInputElement>(null);
 
-  // --- Upload handlers avec vérification de taille ---
+  // --- Upload handlers avec limite de taille ---
   const handleImageUpload = async (file: File) => {
-    if (file.size > 1 * 1024 * 1024) {
-      toast.error("L'image doit être inférieure à 1MB");
-      return;
-    }
+    if (file.size > 1 * 1024 * 1024) return toast.error("L'image doit être inférieure à 1MB");
     setUploadingImage(true);
     try {
-      const result = await uploadImageToGitHub(file, product.reference); // Nom basé sur référence
+      const result = await uploadImageToGitHub(file, product.reference);
       setFormData(prev => ({ ...prev, img: result.url }));
       toast.success("Image uploadée avec succès");
     } catch (error) {
@@ -53,13 +52,10 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
   };
 
   const handlePdfUpload = async (file: File) => {
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error("Le PDF doit être inférieur à 5MB");
-      return;
-    }
+    if (file.size > 5 * 1024 * 1024) return toast.error("Le PDF doit être inférieur à 5MB");
     setUploadingPdf(true);
     try {
-      const result = await uploadPdfToGitHub(file, product.reference); // Nom basé sur référence
+      const result = await uploadPdfToGitHub(file, product.reference);
       setFormData(prev => ({ ...prev, pdf: result.url }));
       toast.success("PDF uploadé avec succès");
     } catch (error) {
@@ -70,6 +66,27 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
     }
   };
 
+  // --- Drag & drop handlers ---
+  const handleDrag = (e: DragEvent<HTMLDivElement>, type: 'image' | 'pdf') => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (type === 'image') setDragActive(e.type === 'dragover');
+    else setDragPdfActive(e.type === 'dragover');
+  };
+
+  const handleDrop = (e: DragEvent<HTMLDivElement>, type: 'image' | 'pdf') => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (type === 'image') setDragActive(false);
+    else setDragPdfActive(false);
+    const files = e.dataTransfer.files;
+    if (files.length) {
+      const file = files[0];
+      if (type === 'image') handleImageUpload(file);
+      else handlePdfUpload(file);
+    }
+  };
+
   // --- Save / Update product ---
   const handleSave = async () => {
     try {
@@ -77,13 +94,13 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
         ...formData,
         applications: applicationsText.split('\n').filter(a => a.trim())
       };
-      
+
       // Mettre à jour sur GitHub
       const finalProduct = await updateProductWithFile(
         product.reference,
         updatedProduct,
-        imageInputRef.current?.files?.[0],
-        pdfInputRef.current?.files?.[0]
+        undefined,
+        undefined
       );
 
       onUpdate(finalProduct);
@@ -160,8 +177,13 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
             </div>
           </div>
 
-          {/* Image */}
-          <div className="space-y-2 p-4 border rounded-lg bg-muted/30">
+          {/* Image Drag & Drop */}
+          <div
+            className={`space-y-2 p-4 border rounded-lg bg-muted/20 ${dragActive ? 'border-dashed border-primary' : ''}`}
+            onDragOver={e => handleDrag(e, 'image')}
+            onDragLeave={e => handleDrag(e, 'image')}
+            onDrop={e => handleDrop(e, 'image')}
+          >
             <label className="flex items-center gap-2 font-medium">
               <Upload className="h-4 w-4" /> Image du produit
             </label>
@@ -183,14 +205,18 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
                 {uploadingImage ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Upload className="h-4 w-4 mr-2" />}
                 {formData.img ? 'Changer' : 'Sélectionner'}
               </Button>
-              {formData.img && (
-                <img src={formData.img} alt="Preview" className="h-10 w-10 object-cover rounded" />
-              )}
+              {formData.img && <img src={formData.img} alt="Preview" className="h-16 w-16 object-cover rounded border" />}
             </div>
+            <p className="text-sm text-muted-foreground">Ou glisser-déposer ici</p>
           </div>
 
-          {/* PDF */}
-          <div className="space-y-2 p-4 border rounded-lg bg-muted/30">
+          {/* PDF Drag & Drop */}
+          <div
+            className={`space-y-2 p-4 border rounded-lg bg-muted/20 ${dragPdfActive ? 'border-dashed border-primary' : ''}`}
+            onDragOver={e => handleDrag(e, 'pdf')}
+            onDragLeave={e => handleDrag(e, 'pdf')}
+            onDrop={e => handleDrop(e, 'pdf')}
+          >
             <label className="flex items-center gap-2 font-medium">
               <FileText className="h-4 w-4" /> Fiche technique (PDF)
             </label>
@@ -224,13 +250,14 @@ export default function EditProductModal({ product, onClose, onUpdate }: EditPro
                 </a>
               )}
             </div>
+            <p className="text-sm text-muted-foreground">Ou glisser-déposer ici</p>
           </div>
         </div>
 
         <DialogFooter className="flex justify-end gap-2">
           <Button variant="outline" onClick={onClose}>Annuler</Button>
           <Button onClick={handleSave} disabled={uploadingImage || uploadingPdf}>
-            {uploadingImage || uploadingPdf ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+            {(uploadingImage || uploadingPdf) && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
             Enregistrer
           </Button>
         </DialogFooter>
