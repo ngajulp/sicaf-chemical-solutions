@@ -16,31 +16,37 @@ import { Card, CardContent } from '@/components/ui/card';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
 /* =======================
-   Corporate Watermark
+   Corporate Watermarks
 ======================= */
 const Watermark: React.FC<{
+  image?: string;
   opacity?: number;
   size?: number;
   rotation?: number;
-}> = ({ opacity = 0.28, size = 600, rotation = -12 }) => (
+}> = ({
+  image = 'https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png',
+  opacity = 0.18,
+  size = 600,
+  rotation = -12,
+}) => (
   <div
     className="absolute inset-0 pointer-events-none"
     style={{
-      backgroundImage:
-        'url(https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png)',
+      backgroundImage: `url(${image})`,
       backgroundRepeat: 'repeat',
       backgroundSize: `${size}px`,
       backgroundPosition: 'center',
       transform: `rotate(${rotation}deg)`,
       opacity,
       filter: 'grayscale(100%) brightness(1.15)',
+      zIndex: 0,
     }}
   />
 );
 
 /* Overlay pour lisibilité */
-const OverlayLight = () => <div className="absolute inset-0 bg-white/88" />;
-const OverlayDark = () => <div className="absolute inset-0 bg-[#0F2A44]/85" />;
+const OverlayLight = () => <div className="absolute inset-0 bg-white/88 z-10" />;
+const OverlayDark = () => <div className="absolute inset-0 bg-[#0F2A44]/85 z-10" />;
 
 const Index = () => {
   const { language, t } = useLanguage();
@@ -58,18 +64,23 @@ const Index = () => {
       <WhatsAppButton variant="floating" />
 
       {/* ================= HERO ================= */}
-      <section className="relative py-28 md:py-36 overflow-hidden">
-        <Watermark rotation={-12} size={620} opacity={0.28} />
+      <section className="relative py-32 md:py-40 overflow-hidden">
+        <Watermark size={650} opacity={0.2} rotation={-12} />
+        <Watermark
+          image="https://images.unsplash.com/photo-1581092333473-6f41e227c1f8"
+          size={700}
+          opacity={0.12}
+          rotation={10}
+        />
         <OverlayDark />
 
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+        <div className="relative z-20 container mx-auto px-4 text-center">
+          <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white">
             {t('hero.title')}
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto">
             {t('hero.subtitle')}
           </p>
-
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/catalog">
               <Button
@@ -83,7 +94,7 @@ const Index = () => {
             <Link to="/quote">
               <Button
                 size="lg"
-                className="bg-[#1F6FA8] hover:bg-[#1a5f8f] font-semibold"
+                className="bg-[#1F6FA8] hover:bg-[#175d8a] font-semibold"
               >
                 {t('nav.quote')}
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -94,11 +105,17 @@ const Index = () => {
       </section>
 
       {/* ================= PRODUCTS ================= */}
-      <section className="relative py-24 bg-gray-50 overflow-hidden">
-        <Watermark rotation={-15} size={600} opacity={0.28} />
+      <section className="relative py-28 bg-gray-50 overflow-hidden">
+        <Watermark size={600} opacity={0.18} rotation={-15} />
+        <Watermark
+          image="https://images.unsplash.com/photo-1602080759555-0dc54a7e6a18"
+          size={650}
+          opacity={0.1}
+          rotation={8}
+        />
         <OverlayLight />
 
-        <div className="relative z-10 container mx-auto px-4">
+        <div className="relative z-20 container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-[#0F2A44] mb-4">
               {t('home.products_title')}
@@ -116,7 +133,7 @@ const Index = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {categories.map((category) => (
                 <Link key={category.id} to={`/products/${category.id}`}>
-                  <Card className="h-full border border-gray-200 hover:shadow-lg transition">
+                  <Card className="h-full border border-[#1F6FA8]/20 hover:shadow-lg transition rounded-lg">
                     <CardContent className="p-6">
                       <div className="flex gap-4">
                         <div className="text-4xl bg-[#1F6FA8]/10 p-3 rounded-lg">
@@ -154,11 +171,17 @@ const Index = () => {
       </section>
 
       {/* ================= WHY US ================= */}
-      <section className="relative py-24 bg-white overflow-hidden">
-        <Watermark rotation={-10} size={600} opacity={0.28} />
+      <section className="relative py-28 bg-white overflow-hidden">
+        <Watermark size={600} opacity={0.18} rotation={-10} />
+        <Watermark
+          image="https://images.unsplash.com/photo-1581091012184-25a1ee2b6f4b"
+          size={650}
+          opacity={0.1}
+          rotation={5}
+        />
         <OverlayLight />
 
-        <div className="relative z-10 container mx-auto px-4">
+        <div className="relative z-20 container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-[#0F2A44] mb-4">
               {t('home.why_title')}
@@ -170,7 +193,7 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, i) => (
-              <Card key={i} className="border border-gray-200">
+              <Card key={i} className="border border-gray-200 rounded-lg shadow-sm">
                 <CardContent className="p-8 text-center">
                   <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#1F6FA8]/10 flex items-center justify-center">
                     <feature.icon className="h-8 w-8 text-[#1F6FA8]" />
@@ -189,11 +212,11 @@ const Index = () => {
       </section>
 
       {/* ================= CTA ================= */}
-      <section className="relative py-24 bg-[#0F2A44] text-white overflow-hidden">
-        <Watermark rotation={-12} size={600} opacity={0.28} />
+      <section className="relative py-28 bg-[#0F2A44] text-white overflow-hidden">
+        <Watermark size={600} opacity={0.18} rotation={-12} />
         <OverlayDark />
 
-        <div className="relative z-10 container mx-auto px-4 text-center">
+        <div className="relative z-20 container mx-auto px-4 text-center">
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
             {language === 'fr'
               ? 'Besoin d’un devis personnalisé ?'
@@ -207,7 +230,7 @@ const Index = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/quote">
-              <Button size="lg" className="bg-[#1F6FA8] hover:bg-[#1a5f8f]">
+              <Button size="lg" className="bg-[#1F6FA8] hover:bg-[#175d8a]">
                 {t('nav.quote')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
