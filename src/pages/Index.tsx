@@ -1,5 +1,11 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Award, Users, Truck, ChevronRight, Loader2, FlaskConical, Beaker, Microscope, TestTube2, Atom, FileBadge2, Factory } from 'lucide-react';
+import { 
+  ArrowRight, Shield, Award, Users, Truck, 
+  Loader2, FlaskConical, Beaker, Microscope, 
+  TestTube2, Atom, Factory, FileBadge2, Binary,
+  Activity, Globe2, Gauge, Zap
+} from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import Layout from '@/components/layout/Layout';
@@ -7,205 +13,168 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
-// Composant Watermark ultra-flexible pour le layering complexe
-const WatermarkOverlay: React.FC<{
-  image: string;
-  opacity?: number;
-  size?: string | number;
-  rotation?: number;
-  animate?: boolean;
-  variant?: 'light' | 'dark' | 'blueprint'; // Ajout du mode 'blueprint' pour l'effet brevet
-  blur?: number;
-  zIndex?: number;
-  repeat?: 'repeat' | 'no-repeat';
-  position?: string;
-  mixBlendMode?: 'multiply' | 'screen' | 'overlay' | 'soft-light'; // Contrôle précis du blend mode
-}> = ({ image, opacity = 0.08, size = 'cover', rotation = 0, animate = true, variant = 'dark', blur = 0, zIndex = 0, repeat = 'no-repeat', position = 'center', mixBlendMode }) => {
-  
-  // Détermination automatique du blend mode si non spécifié
-  let finalBlendMode = mixBlendMode;
-  if (!finalBlendMode) {
-      if (variant === 'blueprint') finalBlendMode = 'overlay';
-      else finalBlendMode = variant === 'dark' ? 'multiply' : 'screen';
-  }
+// --- COMPOSANT DAMIER CORPORATE AVEC SCANLINE ---
+const CorporateGrid: React.FC<{ variant: 'light' | 'dark', opacity?: number }> = ({ variant, opacity = 0.08 }) => (
+  <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+    {/* Effet Scanline (Laser de balayage technique) */}
+    <div className="absolute inset-0 z-10 animate-scanline opacity-[0.15]" 
+      style={{
+        background: `linear-gradient(to bottom, transparent, ${variant === 'light' ? '#60A5FA' : '#0F172A'} 50%, transparent)`,
+        height: '100px',
+        width: '100%',
+      }} 
+    />
 
-  // Filtres spécifiques pour le style corporate
-  let filters = `blur(${blur}px)`;
-  if (variant === 'light') filters += ' brightness(0) invert(1)';
-  else if (variant === 'dark') filters += ' grayscale(100%) contrast(120%)';
-  else if (variant === 'blueprint') filters += ' grayscale(100%) brightness(1.2) contrast(150%) sepia(20%)'; // Effet papier technique
-
-  return (
-  <div
-    className={`absolute inset-0 pointer-events-none ${animate ? 'animate-watermark-slow' : ''}`}
-    style={{
-      backgroundImage: `url(${image})`,
-      backgroundRepeat: repeat,
-      backgroundSize: size,
-      backgroundPosition: position,
-      opacity,
-      zIndex,
-      filter: filters,
-      mixBlendMode: finalBlendMode,
-      '--rotation': `${rotation}deg`,
-    } as React.CSSProperties}
-  />
-)};
+    {/* Le Quadrillage (Grille de précision) */}
+    <div className="absolute inset-0" 
+      style={{
+        backgroundImage: `linear-gradient(${variant === 'light' ? 'rgba(255,255,255,0.1)' : 'rgba(15,23,42,0.1)'} 1px, transparent 1px), 
+                          linear-gradient(90deg, ${variant === 'light' ? 'rgba(255,255,255,0.1)' : 'rgba(15,23,42,0.1)'} 1px, transparent 1px)`,
+        backgroundSize: '40px 40px',
+      }}
+    />
+    
+    {/* Micro-Filigranes Logo Sicaf (Répétition Damier) */}
+    <div className="absolute inset-0" 
+      style={{
+        backgroundImage: `url("https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png")`,
+        backgroundSize: '70px', 
+        backgroundRepeat: 'repeat',
+        opacity: opacity,
+        filter: variant === 'light' ? 'brightness(0) invert(1)' : 'grayscale(100%)',
+      }}
+    />
+    
+    {/* Fragmentation d'images de laboratoire (Texture de fond) */}
+    <div className="absolute inset-0 opacity-[0.04]" 
+      style={{
+        backgroundImage: `url("https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=400&q=80")`,
+        backgroundSize: '300px 300px',
+        backgroundRepeat: 'repeat',
+        filter: 'grayscale(100%) contrast(150%)',
+      }}
+    />
+  </div>
+);
 
 export default function Index() {
   const { language, t } = useLanguage();
   const { categories, loading } = useGitHubProducts();
 
-  const LOGO_URL = "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png";
-  
-  // NOUVELLE SÉLECTION D'IMAGES CORPORATE / SCIENCE / INDUSTRIE
-  // Hero: Abstrait, R&D de pointe, lumière bleue
-  const IMG_HERO_SCIENCE = "https://images.unsplash.com/photo-1532187875460-12d0c2cf36e5?auto=format&fit=crop&w=2000&q=80"; 
-  // Produits: Structure moléculaire, pureté, "brevet"
-  const IMG_MOLECULE_STRUCT = "https://images.unsplash.com/photo-1628595351029-c2bf17511435?auto=format&fit=crop&w=2000&q=80";
-  // Why Us: Verrerie de précision, contrôle qualité
-  const IMG_PRECISION_LAB = "https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=2000&q=80";
-  // CTA: Industrie lourde, échelle globale, usine moderne
-  const IMG_INDUSTRY_GLOBAL = "https://images.unsplash.com/photo-1565896311032-1334a90286b5?auto=format&fit=crop&w=2000&q=80";
-
-  const features = [
-    { icon: Shield, titleKey: 'home.quality', descKey: 'home.quality_desc' },
-    { icon: Award, titleKey: 'home.expertise', descKey: 'home.expertise_desc' },
-    { icon: Users, titleKey: 'home.service', descKey: 'home.service_desc' },
-    { icon: Truck, titleKey: 'home.delivery', descKey: 'home.delivery_desc' },
+  const stats = [
+    { label: 'R&D Investment', value: '24%', icon: Activity },
+    { label: 'Global Reach', value: '45+', icon: Globe2 },
+    { label: 'Quality Control', value: '100%', icon: Gauge },
+    { label: 'Innovation Patents', value: '120+', icon: FileBadge2 },
   ];
-
-  // Palette de couleurs "Corporate Science" (à définir dans votre tailwind.config.js idéalement)
-  // On utilise ici des classes utilitaires pour simuler : Bleu profond, Gris technique.
-  const bgDarkCorporate = "bg-[#0A1A2F]"; // Bleu nuit très profond
-  const bgLightTechnical = "bg-[#F4F7FA]"; // Blanc cassé technique/froid
 
   return (
     <Layout>
       <WhatsAppButton variant="floating" />
 
-      {/* ======================= HERO : R&D GLOBALE ======================= */}
-      <section className={`relative py-32 md:py-48 text-white overflow-hidden ${bgDarkCorporate}`}>
-        {/* COUCHE 1 : Ambiance Laboratoire High-Tech (Grande échelle) */}
-        <WatermarkOverlay 
-            image={IMG_HERO_SCIENCE} 
-            variant="light" // Devient blanc sur fond sombre
-            opacity={0.15}
-            size="cover"
-            position="center"
-            blur={2} // Flou pour la profondeur de champ
-            zIndex={0}
-            animate={false}
-        />
-        
-        {/* COUCHE 2 : Overlay dégradé pour assombrir et donner un ton bleu technique */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0A1A2F]/90 via-[#0A1A2F]/80 to-[#0A1A2F]/95" style={{zIndex: 1}} />
-        
-        {/* COUCHE 3 : Motif Logo Corporate Fragmenté (Filigrane de sécurité) */}
-        <WatermarkOverlay 
-            image={LOGO_URL} 
-            variant="light" 
-            opacity={0.05} // Très subtil
-            rotation={-15} 
-            size={130} // Petite taille pour répétition dense
-            repeat='repeat' 
-            zIndex={2} 
-            mixBlendMode="overlay" // Incrustation subtile
-        />
+      {/* ======================= HERO SECTION : LABO & SCANLINE ======================= */}
+      <section className="relative min-h-[90vh] flex items-center text-white overflow-hidden bg-[#020617]">
+        <CorporateGrid variant="light" opacity={0.15} />
+        <div className="absolute inset-0 z-1 bg-gradient-to-r from-[#020617] via-[#020617]/40 to-transparent" />
 
-        <div className="relative z-10 container mx-auto px-4 text-center max-w-5xl">
-          {/* Badge technique */}
-          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-[#1E2D4A] border border-blue-400/20 mb-10 backdrop-blur-md shadow-lg">
-            <Atom className="h-5 w-5 text-blue-400" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-blue-100">
-              {language === 'fr' ? 'Innovation & Chimie Industrielle' : 'Innovation & Industrial Chemistry'}
-            </span>
-          </div>
-          
-          <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight uppercase tracking-tighter drop-shadow-2xl bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-slate-300">
-            {t('hero.title')}
-          </h1>
-          <p className="text-2xl text-blue-50/80 mb-14 font-light max-w-3xl mx-auto leading-relaxed">
-            {t('hero.subtitle')}
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <Link to="/catalog" className="w-full sm:w-auto">
-              <Button size="lg" variant="outline" className="border border-blue-400/30 text-white hover:bg-blue-400/10 hover:border-blue-400/50 w-full px-12 h-16 text-lg font-bold tracking-widest uppercase rounded-sm backdrop-blur-sm transition-all">
-                {t('hero.cta')}
-              </Button>
-            </Link>
-            <Link to="/quote" className="w-full sm:w-auto">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-white border border-accent/50 font-black w-full px-12 h-16 text-lg tracking-widest uppercase shadow-[0_0_30px_rgba(var(--primary-rgb),0.3)] rounded-sm transition-all">
-                {t('nav.quote')}
-                <ArrowRight className="ml-3 h-6 w-6" />
-              </Button>
-            </Link>
+        <div className="relative z-10 container mx-auto px-4">
+          <div className="max-w-4xl">
+            <div className="inline-flex items-center gap-3 px-4 py-1.5 border-l-4 border-primary bg-primary/10 mb-8">
+              <Binary className="h-5 w-5 text-primary animate-pulse" />
+              <span className="text-xs font-bold uppercase tracking-[0.5em] text-blue-100">
+                SICAF Digital Laboratory System v2.0
+              </span>
+            </div>
+            
+            <h1 className="text-6xl md:text-9xl font-black mb-8 uppercase tracking-tighter leading-[0.9] drop-shadow-2xl">
+              {t('hero.title')}
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-slate-400 mb-12 max-w-2xl font-light leading-relaxed border-l border-slate-700 pl-8">
+              {t('hero.subtitle')}
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-6">
+              <Link to="/catalog">
+                <Button size="lg" className="bg-white text-black hover:bg-primary hover:text-white px-12 h-20 text-xl rounded-none font-black uppercase tracking-widest transition-all">
+                  {t('hero.cta')}
+                </Button>
+              </Link>
+              <Link to="/quote">
+                <Button size="lg" variant="outline" className="border-2 border-white/30 text-white hover:border-white px-12 h-20 text-xl rounded-none font-black uppercase tracking-widest">
+                  {t('nav.quote')}
+                  <ArrowRight className="ml-3 h-6 w-6" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ======================= PRODUCT CATEGORIES : STRUCTURE & BREVETS ======================= */}
-      <section className={`relative py-32 overflow-hidden ${bgLightTechnical}`}>
-        {/* COUCHE 1 : Structure Moléculaire (Effet Brevet/Blueprint) */}
-        <WatermarkOverlay 
-          image={IMG_MOLECULE_STRUCT} 
-          variant="blueprint" // Nouveau mode "papier technique"
-          opacity={0.07} 
-          size="110%" // Légèrement zoomé
-          position="center"
-          repeat="no-repeat"
-          blur={0} // Net pour voir les détails techniques
-          zIndex={0}
-          mixBlendMode="multiply"
-          animate={false}
-        />
-        
-        {/* COUCHE 2 : Motif Logo discret */}
-        <WatermarkOverlay image={LOGO_URL} variant="dark" opacity={0.03} size={180} rotation={10} repeat='repeat' zIndex={1} mixBlendMode="multiply" />
+      {/* ======================= STATS : PERFORMANCE CORPORATE ======================= */}
+      <section className="relative py-12 bg-[#020617] border-y border-white/10">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, i) => (
+              <div key={i} className="flex items-center gap-4 group">
+                <div className="p-3 bg-primary/10 rounded-none border border-primary/20 group-hover:bg-primary group-hover:text-white transition-all">
+                  <stat.icon className="h-6 w-6" />
+                </div>
+                <div>
+                  <div className="text-3xl font-black text-white">{stat.value}</div>
+                  <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">{stat.label}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ======================= PRODUCT CATEGORIES : MATÉRIAUX CHIMIQUES ======================= */}
+      <section className="relative py-32 bg-[#F8FAFC] overflow-hidden">
+        <CorporateGrid variant="dark" opacity={0.04} />
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-20">
-            <div className="flex justify-center mb-4">
-                <FileBadge2 className="h-10 w-10 text-primary/60" />
-            </div>
-            <h2 className="text-4xl md:text-5xl font-black mb-6 text-[#0A1A2F] uppercase tracking-tight">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+            <div className="max-w-2xl">
+              <h2 className="text-5xl md:text-7xl font-black text-slate-900 uppercase tracking-tighter leading-none mb-6">
                 {t('home.products_title')}
-            </h2>
-            <div className="h-1 bg-primary w-24 mx-auto mb-8"></div>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto font-medium leading-relaxed">
-              {t('home.products_subtitle')}
-            </p>
+              </h2>
+              <p className="text-lg text-slate-600 font-medium border-l-4 border-primary pl-6">
+                {t('home.products_subtitle')}
+              </p>
+            </div>
+            <Link to="/catalog">
+              <Button variant="link" className="text-primary font-black uppercase tracking-widest group">
+                View Full Inventory <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform" />
+              </Button>
+            </Link>
           </div>
 
           {loading ? (
-            <div className="flex justify-center items-center py-24">
-              <Loader2 className="h-12 w-12 animate-spin text-primary" />
-            </div>
+            <div className="flex justify-center py-20"><Loader2 className="animate-spin h-12 w-12 text-primary" /></div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
               {categories.map((category) => (
-                <Link key={category.id} to={`/products/${category.id}`}>
-                  {/* Carte style "Verre trempé" et bordure technique */}
-                  <Card className="group h-full hover:shadow-xl transition-all duration-500 hover:-translate-y-2 bg-white/80 backdrop-blur-md border border-slate-200/60 hover:border-primary/50 rounded-none">
-                    <CardContent className="p-10 relative overflow-hidden">
-                      {/* Petit accent technique dans le coin */}
-                      <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                      
-                      <div className="flex flex-col gap-6">
-                        <div className="w-20 h-20 flex items-center justify-center bg-[#0A1A2F] text-white rounded-sm group-hover:bg-primary transition-all duration-500 shadow-md ring-1 ring-white/10">
-                          {category.icon || <FlaskConical className="h-9 w-9" />}
-                        </div>
-                        <div>
-                          <h3 className="font-heading font-black text-xl text-[#0A1A2F] mb-4 tracking-wide uppercase">
-                            {category.name[language]}
-                          </h3>
-                          <p className="text-slate-600 leading-relaxed text-base">
-                            {category.description[language]}
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                <Link key={category.id} to={`/products/${category.id}`} className="group relative bg-white border border-slate-200 p-12 overflow-hidden transition-all hover:z-20 hover:shadow-2xl hover:scale-[1.02]">
+                  <div className="relative z-10">
+                    <div className="text-slate-300 group-hover:text-primary transition-colors mb-8">
+                      {category.icon || <FlaskConical size={48} strokeWidth={1} />}
+                    </div>
+                    <h3 className="text-2xl font-black uppercase mb-4 text-slate-900 tracking-tight leading-none">
+                      {category.name[language]}
+                    </h3>
+                    <p className="text-slate-500 text-sm leading-relaxed mb-8">
+                      {category.description[language]}
+                    </p>
+                    <div className="flex items-center text-xs font-bold uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                      Documentation Technique <ChevronRight size={14} />
+                    </div>
+                  </div>
+                  {/* Filigrane d'icône en fond de carte */}
+                  <div className="absolute -bottom-4 -right-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity">
+                     <Beaker size={150} />
+                  </div>
                 </Link>
               ))}
             </div>
@@ -213,95 +182,60 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ======================= WHY CHOOSE US : PRÉCISION & QUALITÉ ======================= */}
-      <section className="relative py-32 overflow-hidden bg-white">
-        {/* COUCHE 1 : Verrerie de précision (Nette et clinique) */}
-        <WatermarkOverlay 
-          image={IMG_PRECISION_LAB} 
-          variant="dark" 
-          opacity={0.05} 
-          size="cover" 
-          position="center right" // Cadrage dynamique
-          repeat="no-repeat"
-          blur={0} 
-          zIndex={0}
-          mixBlendMode="multiply"
-          animate={false}
-        />
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-black mb-6 text-[#0A1A2F] uppercase tracking-tight">{t('home.why_title')}</h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto font-medium">{t('home.why_subtitle')}</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              // Cartes style "Bloc de données"
-              <div key={index} className="group p-10 bg-[#F4F7FA] border border-slate-200 hover:border-[#0A1A2F] hover:bg-[#0A1A2F] hover:text-white transition-all duration-500 text-center rounded-none relative">
-                {/* Ligne technique décorative */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-1 bg-primary/20 group-hover:bg-primary transition-colors"></div>
-                
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-white border border-slate-200 text-primary group-hover:bg-white/10 group-hover:border-white/20 group-hover:text-white mb-8 shadow-sm rounded-sm transition-all">
-                  <feature.icon className="h-7 w-7" />
-                </div>
-                <h3 className="font-heading font-bold text-lg mb-4 uppercase tracking-wider">{t(feature.titleKey)}</h3>
-                <p className="text-sm opacity-90 leading-relaxed font-medium">{t(feature.descKey)}</p>
-              </div>
-            ))}
+      {/* ======================= TRUST LOGOS : RÉASSURANCE ======================= */}
+      <section className="py-20 bg-white border-b border-slate-100">
+        <div className="container mx-auto px-4">
+          <p className="text-center text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 mb-12">Certified Industrial Compliance</p>
+          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 grayscale">
+             {/* Remplacez par vos logos partenaires/certifications réels */}
+             <div className="font-black text-2xl italic tracking-tighter">ISO-9001</div>
+             <div className="font-black text-2xl italic tracking-tighter">REACH</div>
+             <div className="font-black text-2xl italic tracking-tighter">GMP-CERT</div>
+             <div className="font-black text-2xl italic tracking-tighter">SGS-AUDITED</div>
           </div>
         </div>
       </section>
 
-      {/* ======================= CTA : PUISSANCE INDUSTRIELLE ======================= */}
-      <section className={`relative py-32 overflow-hidden ${bgDarkCorporate}`}>
-        {/* COUCHE 1 : Industrie Lourde / Usine (Grande échelle) */}
-        <WatermarkOverlay 
-            image={IMG_INDUSTRY_GLOBAL} 
-            variant="light"
-            opacity={0.2}
-            size="cover"
-            position="center"
-            blur={3} // Flou pour donner une atmosphère dense
-            zIndex={0}
-            mixBlendMode="screen"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A2F] via-[#0A1A2F]/90 to-primary/30" style={{zIndex: 1}} />
-        
-        {/* COUCHE 2 : Motif Logo Corporate (Dense et net) */}
-        <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.07} size={90} rotation={25} repeat='repeat' zIndex={2} mixBlendMode="overlay" />
+      {/* ======================= CTA SECTION : GLOBAL POWER ======================= */}
+      <section className="relative py-48 bg-[#020617] text-white overflow-hidden">
+        <CorporateGrid variant="light" opacity={0.2} />
+        <div className="absolute inset-0 z-1 bg-gradient-to-t from-[#020617] via-[#020617]/80 to-primary/30" />
 
-        <div className="container mx-auto px-4 text-center relative z-10 text-white">
-          <div className="mb-10 flex justify-center gap-6 opacity-50">
-             <Factory className="h-16 w-16" />
-             <FileBadge2 className="h-16 w-16" />
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <div className="inline-flex justify-center items-center w-24 h-24 bg-white/5 border border-white/10 mb-12 animate-pulse">
+            <Zap className="h-12 w-12 text-primary" />
           </div>
-          <h2 className="text-5xl md:text-7xl font-black mb-10 tracking-tighter uppercase italic drop-shadow-2xl">
-            {language === 'fr' ? "Partenaire de votre innovation" : 'Partnering for innovation'}
+          
+          <h2 className="text-5xl md:text-8xl font-black mb-12 uppercase tracking-tighter leading-none italic">
+            {language === 'fr' ? "L'Excellence Sans Compromis" : 'Excellence Without Compromise'}
           </h2>
           
-          <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
+          <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
             <Link to="/quote">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-white border border-accent/50 font-black px-16 h-20 text-2xl shadow-[0_0_40px_rgba(var(--accent-rgb),0.3)] uppercase tracking-widest rounded-sm transform hover:scale-105 transition-transform">
+              <Button size="lg" className="bg-primary hover:bg-white hover:text-black text-white px-20 h-24 text-3xl font-black rounded-none uppercase tracking-[0.2em] shadow-[0_0_60px_rgba(var(--primary-rgb),0.5)] transition-all">
                 {t('nav.quote')}
               </Button>
             </Link>
             <WhatsAppButton variant="hero" />
+          </div>
+          
+          <div className="mt-20 text-[10px] font-bold text-slate-500 uppercase tracking-[0.5em]">
+            Sicaf Chemical Industries • R&D Department • 2026 Internal Document
           </div>
         </div>
       </section>
 
       <style>
         {`
-          /* Animation beaucoup plus lente et subtile pour un effet "sérieux" */
-          @keyframes watermarkMoveSlow {
-            0% { transform: translate(0, 0) rotate(var(--rotation)); }
-            50% { transform: translate(-10px, -5px) rotate(calc(var(--rotation) + 0.2deg)); }
-            100% { transform: translate(0, 0) rotate(var(--rotation)); }
+          @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(1000%); }
           }
-          .animate-watermark-slow {
-            animation: watermarkMoveSlow 60s ease-in-out infinite;
-            will-change: transform;
+          .animate-scanline {
+            animation: scanline 8s linear infinite;
+          }
+          :root {
+            --primary-rgb: 37, 99, 235; /* Bleu Primary */
           }
         `}
       </style>
