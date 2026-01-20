@@ -14,7 +14,7 @@ const WatermarkOverlay: React.FC<{
   size?: number;
   rotation?: number;
   animate?: boolean;
-}> = ({ image, opacity = 0.08, size = 420, rotation = 0, animate = false }) => (
+}> = ({ image, opacity = 0.15, size = 500, rotation = 0, animate = false }) => (
   <div
     className={`absolute inset-0 pointer-events-none z-0 ${animate ? 'animate-watermark' : ''}`}
     style={{
@@ -93,36 +93,38 @@ export default function Index() {
       </section>
 
       {/* ======================= PRODUCT CATEGORIES ======================= */}
-      <section className="relative overflow-hidden py-40">
+      <section className="relative overflow-hidden py-48">
         {/* FILIGRANES */}
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581091215369-1a7c8763d219?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.05}
+          opacity={0.15}
           rotation={5}
-          animate
-        />
-        <WatermarkOverlay
-          image="https://images.unsplash.com/photo-1581094277362-cd798e2f2a65?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.1}
-          rotation={-15}
           size={600}
           animate
         />
         <WatermarkOverlay
+          image="https://images.unsplash.com/photo-1581094277362-cd798e2f2a65?auto=format&fit=crop&w=1600&q=80"
+          opacity={0.18}
+          rotation={-15}
+          size={650}
+          animate
+        />
+        <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.12}
+          opacity={0.15}
           rotation={10}
           size={500}
           animate
         />
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581092227602-0b06d3f3c8be?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.08}
+          opacity={0.12}
           rotation={5}
           size={550}
           animate
         />
 
+        {/* CONTENU */}
         <div className="container mx-auto px-4 relative z-10 text-center">
           <h2 className="text-4xl font-bold mb-8">{t('home.products_title')}</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-16">
@@ -134,11 +136,11 @@ export default function Index() {
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">
               {categories.map((category) => (
                 <Link key={category.id} to={`/products/${category.id}`}>
                   <Card className="group h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 border-transparent hover:border-primary/20">
-                    <CardContent className="p-6">
+                    <CardContent className="p-6 bg-white/10 backdrop-blur-sm rounded-lg">
                       <div className="flex items-start gap-4">
                         <div className="text-4xl p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
                           {category.icon || <FlaskConical />}
@@ -166,44 +168,46 @@ export default function Index() {
       </section>
 
       {/* ======================= WHY CHOOSE US ======================= */}
-      <section className="relative overflow-hidden py-40">
+      <section className="relative overflow-hidden py-48">
         {/* FILIGRANES */}
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1614308457659-2e2e5b7e7c68?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.05}
+          opacity={0.15}
           rotation={-10}
+          size={600}
           animate
         />
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.15}
+          opacity={0.18}
           rotation={10}
-          size={500}
+          size={650}
           animate
         />
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581094277362-cd798e2f2a65?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.12}
+          opacity={0.15}
           rotation={-20}
           size={600}
           animate
         />
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581092227602-0b06d3f3c8be?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.1}
+          opacity={0.12}
           rotation={5}
           size={550}
           animate
         />
 
+        {/* CONTENU */}
         <div className="container mx-auto px-4 relative z-10 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-8">{t('home.why_title')}</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-16">{t('home.why_subtitle')}</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
             {features.map((feature, index) => (
               <Card key={index} className="text-center border-none shadow-md">
-                <CardContent className="pt-8 pb-6 px-6">
+                <CardContent className="pt-8 pb-6 px-6 bg-white/10 backdrop-blur-sm rounded-lg">
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-4">
                     <feature.icon className="h-8 w-8" />
                   </div>
