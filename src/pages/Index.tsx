@@ -18,13 +18,19 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
-// Filigrane générique
-const WatermarkOverlay: React.FC<{
-  images: string[];
-  opacity?: number;
-  size?: number;
-  rotation?: number;
-}> = ({ images, opacity = 0.08, size = 420, rotation = 0 }) => (
+// Filigranes chimiques / laboratoire
+const chemicalImages = [
+  'https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png', // logo SICAF
+  'https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=1600&q=80', // labo
+  'https://images.unsplash.com/photo-1581091215369-1a7c8763d219?auto=format&fit=crop&w=1600&q=80', // matériel chimique
+];
+
+const WatermarkOverlay: React.FC<{ images: string[]; opacity?: number; size?: number; rotation?: number }> = ({
+  images,
+  opacity = 0.08,
+  size = 350,
+  rotation = 0,
+}) => (
   <div className="absolute inset-0 pointer-events-none z-0">
     {images.map((img, idx) => (
       <div
@@ -32,12 +38,12 @@ const WatermarkOverlay: React.FC<{
         className="absolute inset-0"
         style={{
           backgroundImage: `url(${img})`,
-          backgroundRepeat: 'repeat',
+          backgroundRepeat: 'no-repeat',
           backgroundSize: `${size}px`,
-          backgroundPosition: 'center',
+          backgroundPosition: ['20% 20%', '70% 25%', '50% 60%'][idx] || 'center',
           opacity,
           transform: `rotate(${rotation + idx * 15}deg)`,
-          filter: 'grayscale(100%) contrast(120%) blur(0.5px)',
+          filter: 'grayscale(100%) contrast(110%) blur(0.5px)',
         }}
       />
     ))}
@@ -55,38 +61,22 @@ export default function Index() {
     { icon: Truck, titleKey: 'home.delivery', descKey: 'home.delivery_desc' },
   ];
 
-  // Images filigranes chimiques/laboratoire
-  const chemicalImages = [
-    'https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=1600&q=80', // laboratoire
-    'https://images.unsplash.com/photo-1581091215369-1a7c8763d219?auto=format&fit=crop&w=1600&q=80', // matériel chimique
-    'https://images.unsplash.com/photo-1614308457659-2e2e5b7e7c68?auto=format&fit=crop&w=1600&q=80', // flacons chimiques
-    'https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png', // logo SICAF
-  ];
-
   return (
     <Layout>
       <WhatsAppButton variant="floating" />
 
-      {/* ======================= HERO ======================= */}
+      {/* ================= HERO ================= */}
       <section className="relative py-28 md:py-36 text-white overflow-hidden">
-        {/* Background Hero */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              'url(https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=1600&q=80)',
-          }}
-        />
-        <div className="absolute inset-0 bg-slate-900/65" />
-        <WatermarkOverlay images={chemicalImages} opacity={0.12} size={300} rotation={-10} />
+        {/* Background Bleu clair + overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0F4C81] to-[#0F2A44]" />
+        <div className="absolute inset-0 bg-blue-900/25" />
+        <WatermarkOverlay images={chemicalImages} opacity={0.15} rotation={-10} size={350} />
 
         <div className="relative z-10 container mx-auto px-4 text-center max-w-3xl">
           <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
             {t('hero.title')}
           </h1>
-          <p className="text-xl md:text-2xl text-slate-200/90 mb-8">
-            {t('hero.subtitle')}
-          </p>
+          <p className="text-xl md:text-2xl text-white/90 mb-8">{t('hero.subtitle')}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
             <Link to="/catalog">
               <Button
@@ -110,14 +100,9 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ======================= NOS PRODUITS ======================= */}
+      {/* ================= NOS PRODUITS ================= */}
       <section className="relative py-20 bg-slate-50 overflow-hidden">
-        <WatermarkOverlay
-          images={chemicalImages}
-          opacity={0.05}
-          rotation={5}
-          size={350}
-        />
+        <WatermarkOverlay images={chemicalImages.slice(1)} opacity={0.08} rotation={5} size={300} />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-14">
             <h2 className="text-4xl font-bold mb-4">{t('home.products_title')}</h2>
@@ -171,14 +156,9 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ======================= POURQUOI CHOISIR SICAF ======================= */}
+      {/* ================= POURQUOI CHOISIR SICAF ================= */}
       <section className="relative py-20 bg-white overflow-hidden">
-        <WatermarkOverlay
-          images={chemicalImages}
-          opacity={0.04}
-          rotation={-10}
-          size={300}
-        />
+        <WatermarkOverlay images={chemicalImages.slice(1)} opacity={0.06} rotation={-10} size={300} />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('home.why_title')}</h2>
@@ -203,9 +183,9 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ======================= CTA DEVIS ======================= */}
+      {/* ================= CTA DEVIS ================= */}
       <section className="relative py-24 bg-gradient-to-r from-primary to-slate-800 text-white overflow-hidden">
-        <WatermarkOverlay images={chemicalImages} opacity={0.1} rotation={5} size={300} />
+        <WatermarkOverlay images={chemicalImages} opacity={0.12} rotation={5} size={350} />
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             {language === 'fr' ? "Besoin d'un devis personnalisé ?" : 'Need a custom quote?'}
