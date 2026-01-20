@@ -146,20 +146,42 @@ export default function Index() {
       </section>
 
       {/* ======================= WHY CHOOSE US ======================= */}
+      {/* ======================= WHY CHOOSE US : STRUCTURE ENGINEERING / TEXTE FEATURES ======================= */}
       <section className="relative py-32 overflow-hidden bg-white">
-        {/* Filigrane Moléculaire (Opacité 0.25) */}
+        {/* Filigrane Moléculaire Explicite (Opacité 0.25) */}
         <WatermarkOverlay image={IMG_MOLECULE} variant="dark" opacity={0.25} zIndex={1} />
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-20">
-            <h2 className="text-5xl font-black mb-6 text-slate-900 uppercase tracking-tight italic">Engineering Excellence</h2>
+            {/* Titre avec la taille sobre (text-3xl md:text-4xl) */}
+            <h2 className="font-heading text-3xl md:text-4xl font-black text-slate-900 uppercase tracking-tight italic mb-4">
+              {t('home.why_title')}
+            </h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto font-medium bg-white/50 backdrop-blur-sm inline-block px-2">
+              {t('home.why_subtitle')}
+            </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {categories.slice(0, 4).map((_, index) => (
-              <div key={index} className="p-12 bg-white/80 backdrop-blur-md border-b-8 border-accent shadow-xl">
-                <Activity className="h-10 w-10 text-accent mb-8" />
-                <h3 className="font-black text-xl mb-4 uppercase">Protocol {index + 1}</h3>
-                <p className="text-slate-600 font-bold uppercase text-xs tracking-widest">High Performance Standard</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <div 
+                key={index} 
+                className="p-10 bg-white/80 backdrop-blur-md border-b-8 border-accent shadow-2xl flex flex-col items-center text-center transition-transform hover:-translate-y-2"
+              >
+                {/* Icône style Engineering Excellence */}
+                <div className="text-accent mb-8">
+                  <feature.icon className="h-12 w-12" strokeWidth={1.5} />
+                </div>
+                
+                {/* Titre style sobre (text-lg) */}
+                <h3 className="font-black text-xl text-slate-900 uppercase mb-4 tracking-tight">
+                  {t(feature.titleKey)}
+                </h3>
+                
+                {/* Description style sobre (text-sm) */}
+                <p className="text-slate-600 font-bold leading-relaxed text-sm">
+                  {t(feature.descKey)}
+                </p>
               </div>
             ))}
           </div>
