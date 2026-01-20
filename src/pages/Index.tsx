@@ -74,13 +74,23 @@ export default function Index() {
               {t('hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-6">
+              {/* BOUTON CATALOGUE : Fond blanc, Texte sombre par défaut */}
               <Link to="/catalog">
-                <Button size="lg" className="rounded-none bg-white text-slate-900 hover:bg-accent hover:text-white px-12 h-20 text-xl font-black uppercase tracking-widest shadow-2xl transition-all">
+                <Button 
+                  size="lg" 
+                  className="rounded-none bg-white text-slate-900 hover:bg-accent hover:text-white px-12 h-20 text-xl font-black uppercase tracking-widest shadow-2xl transition-all border-none"
+                >
                   {t('hero.cta')}
                 </Button>
               </Link>
+            
+              {/* BOUTON DEVIS : Bordure blanche, Texte blanc, Fond transparent */}
               <Link to="/quote">
-                <Button size="lg" variant="outline" className="rounded-none border-4 border-white text-white hover:bg-white/20 px-12 h-20 text-xl font-black uppercase tracking-widest">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="rounded-none border-4 border-white text-white hover:bg-white hover:text-slate-900 px-12 h-20 text-xl font-black uppercase tracking-widest bg-transparent transition-all"
+                >
                   {t('nav.quote')}
                 </Button>
               </Link>
