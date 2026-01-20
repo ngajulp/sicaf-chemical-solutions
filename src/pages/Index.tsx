@@ -58,15 +58,14 @@ export default function Index() {
     <Layout>
       <WhatsAppButton variant="floating" />
 
-      {/* 1. HERO SECTION - Bordure haute réduite de 8px à 3px */}
+      {/* 1. HERO SECTION - Bordure accentuée à 3px */}
       <section className="relative py-44 md:py-64 text-white overflow-hidden bg-slate-900 border-t-[3px] border-accent">
         <WatermarkOverlay image={IMG_PLANT} variant="dark" opacity={0.45} zIndex={0} />
         <div className="absolute inset-0 z-[1] bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent" />
         <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.35} size={60} repeat='repeat' zIndex={2} />
 
         <div className="relative z-10 container mx-auto px-4">
-          {/* Bordure latérale réduite de 4px à 2.5px */}
-          <div className="max-w-5xl border-l-[2.5px] border-accent pl-8 md:pl-16">
+          <div className="max-w-5xl border-l-[3px] border-accent pl-8 md:pl-16">
             <h1 className="text-5xl md:text-[7.6rem] font-black mb-8 leading-[0.85] uppercase tracking-tighter drop-shadow-2xl italic">
               {t('hero.title')}
             </h1>
@@ -86,7 +85,6 @@ export default function Index() {
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  {/* Bordure bouton réduite de 4px à 2px */}
                   className="rounded-none border-[2px] border-white text-white hover:bg-white hover:text-slate-900 px-12 h-20 text-xl font-black uppercase tracking-widest bg-transparent transition-all"
                 >
                   {t('nav.quote')}
@@ -97,7 +95,7 @@ export default function Index() {
         </div>
       </section>
 
-      {/* 2. STATS BANNER - Bordure réduite à 3px */}
+      {/* 2. STATS BANNER */}
       <section className="bg-white border-t-[3px] border-accent py-16 relative z-10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
@@ -107,8 +105,7 @@ export default function Index() {
               { label: 'Safety Index', val: '100%', icon: Gauge },
               { label: 'Units', val: 'Global', icon: Globe },
             ].map((s, i) => (
-              {/* Bordure indicateur réduite de 4px à 2px */}
-              <div key={i} className="flex flex-col border-l-[2px] border-accent pl-8">
+              <div key={i} className="flex flex-col border-l-[2.5px] border-accent pl-8">
                 <s.icon className="h-8 w-8 text-accent mb-4" />
                 <span className="text-4xl font-black text-slate-900 tracking-tighter">{s.val}</span>
                 <span className="text-xs uppercase tracking-widest text-slate-500 font-black">{s.label}</span>
@@ -118,7 +115,7 @@ export default function Index() {
         </div>
       </section>
 
-      {/* 3. NOS PRODUITS - Bordure réduite à 3px */}
+      {/* 3. NOS PRODUITS - Grille structurelle 1.5px */}
       <section className="relative py-32 overflow-hidden bg-slate-50 border-t-[3px] border-accent">
         <WatermarkOverlay image={IMG_LAB} variant="dark" opacity={0.30} zIndex={1} />
         <WatermarkOverlay image={LOGO_URL} variant="dark" opacity={0.15} size={250} repeat='repeat' zIndex={2} />
@@ -128,23 +125,27 @@ export default function Index() {
             <h2 className="text-5xl md:text-8xl font-black mb-6 text-slate-900 uppercase tracking-tighter">
               {t('home.products_title')}
             </h2>
-            {/* Ligne décorative réduite de h-3 (12px) à h-1 (4px) */}
             <div className="h-1 bg-accent w-48 mx-auto mb-8 shadow-sm"></div>
-            <p className="text-2xl text-slate-800 max-w-2xl mx-auto font-bold bg-white/60 backdrop-blur-sm p-4">{t('home.products_subtitle')}</p>
+            <p className="text-2xl text-slate-800 max-w-2xl mx-auto font-bold bg-white/60 backdrop-blur-sm p-4 uppercase italic">
+              {t('home.products_subtitle')}
+            </p>
           </div>
 
           {loading ? (
             <div className="flex justify-center py-20"><Loader2 className="animate-spin text-accent h-16 w-16" /></div>
           ) : (
-            {/* Grille : Bordure extérieure réduite de 4px à 1.5px */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-slate-200 border-[1.5px] border-slate-200">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-slate-200 border-[1.5px] border-slate-200 shadow-xl">
               {categories.map((category) => (
                 <Link key={category.id} to={`/products/${category.id}`} className="group bg-white/90 p-16 hover:bg-slate-900 transition-all duration-500">
                   <div className="text-accent group-hover:text-white mb-10 transform group-hover:scale-110 transition-transform">
-                    {category.icon || <Beaker size={64} strokeWidth={2} />}
+                    {category.icon || <Beaker size={64} strokeWidth={1.5} />}
                   </div>
-                  <h3 className="font-black text-3xl text-slate-900 group-hover:text-white mb-6 uppercase tracking-tight">{category.name[language]}</h3>
-                  <p className="text-slate-600 group-hover:text-slate-300 text-lg leading-relaxed font-bold">{category.description[language]}</p>
+                  <h3 className="font-black text-3xl text-slate-900 group-hover:text-white mb-6 uppercase tracking-tight italic">
+                    {category.name[language]}
+                  </h3>
+                  <p className="text-slate-600 group-hover:text-slate-300 text-lg leading-relaxed font-bold">
+                    {category.description[language]}
+                  </p>
                 </Link>
               ))}
             </div>
@@ -152,23 +153,22 @@ export default function Index() {
         </div>
       </section>
 
-      {/* 4. WHY CHOOSE US - Bordure réduite à 3px */}
+      {/* 4. WHY CHOOSE US - Bordure basse 2.5px */}
       <section className="relative py-32 overflow-hidden bg-white border-t-[3px] border-accent">
         <WatermarkOverlay image={IMG_MOLECULE} variant="dark" opacity={0.25} zIndex={1} />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-20">
-            <h2 className="font-heading text-3xl md:text-4xl font-black text-slate-900 uppercase tracking-tight italic mb-4">
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 uppercase tracking-tight italic mb-4">
               {t('home.why_title')}
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto font-medium bg-white/50 backdrop-blur-sm inline-block px-2">
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto font-bold bg-white/50 backdrop-blur-sm inline-block px-2 uppercase">
               {t('home.why_subtitle')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              {/* Bordure de bas de carte réduite de 8px à 2.5px */}
-              <div key={index} className="p-10 bg-white/80 backdrop-blur-md border-b-[2.5px] border-accent shadow-xl flex flex-col items-center text-center transition-transform hover:-translate-y-2">
+              <div key={index} className="p-10 bg-white border-b-[2.5px] border-accent shadow-xl flex flex-col items-center text-center transition-transform hover:-translate-y-2">
                 <div className="text-accent mb-8">
                   <feature.icon className="h-12 w-12" strokeWidth={1.5} />
                 </div>
@@ -184,25 +184,25 @@ export default function Index() {
         </div>
       </section>
 
-      {/* 5. FINAL CTA SECTION - Double bordure réduite de 8px à 3px */}
+      {/* 5. FINAL CTA SECTION */}
       <section className="relative py-56 bg-slate-900 text-white overflow-hidden border-t-[3px] border-accent border-b-[3px] border-accent">
         <WatermarkOverlay image={IMG_LOGISTICS} variant="dark" opacity={0.40} zIndex={0} />
         <div className="absolute inset-0 z-[1] bg-slate-900/60 backdrop-brightness-50" />
         <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.40} size={60} repeat='repeat' zIndex={2} />
 
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="font-heading text-3xl md:text-5xl font-black mb-6 uppercase tracking-tight italic drop-shadow-xl">
-            {language === 'fr' ? 'Besoin d\'un devis personnalisé ?' : 'Need a custom quote?'}
+          <h2 className="text-3xl md:text-6xl font-black mb-6 uppercase tracking-tight italic drop-shadow-xl">
+            {language === 'fr' ? "Besoin d'un devis ?" : "Need a quote?"}
           </h2>
-          <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto font-medium uppercase tracking-wider">
+          <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto font-bold uppercase tracking-wider">
             {language === 'fr'
-              ? 'Notre équipe d\'experts est prête à vous accompagner dans vos projets'
-              : 'Our team of experts is ready to assist you with your projects'}
+              ? "Notre expertise à votre service"
+              : "Our expertise at your service"}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Link to="/quote">
-              <Button size="lg" className="bg-accent text-white hover:bg-white hover:text-slate-900 font-black uppercase tracking-widest px-10 h-16 rounded-none shadow-xl transition-all">
+              <Button size="lg" className="bg-accent text-white hover:bg-white hover:text-slate-900 font-black uppercase tracking-widest px-10 h-16 rounded-none shadow-xl transition-all border-none">
                 {t('nav.quote')}
                 <ArrowRight className="ml-2 h-6 w-6" />
               </Button>
