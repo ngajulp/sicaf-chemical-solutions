@@ -167,25 +167,41 @@ export default function Index() {
       </section>
 
       {/* ======================= CTA (CTD) SECTION ======================= */}
-      <section className="relative py-56 bg-slate-900 text-white overflow-hidden border-t-8 border-accent">
-        {/* Filigrane Logistique Industrielle - Très visible (Opacité 0.40) */}
-        <WatermarkOverlay image={IMG_LOGISTICS} variant="dark" opacity={0.40} zIndex={0} />
-        
-        <div className="absolute inset-0 z-[1] bg-slate-900/60 backdrop-brightness-50" />
-        
-        {/* Filigrane Logo SICAF 60px répétition (Opacité 0.40) */}
-        <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.40} size={60} repeat='repeat' zIndex={2} />
-
+      {/* CTA Section */}
+      <section className="relative py-16 md:py-20 gradient-primary text-primary-foreground">
+        <WatermarkOverlay opacity={0.12} size={300} rotation={5} />
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-6xl md:text-[10rem] font-black mb-16 tracking-tighter uppercase italic leading-[0.8] drop-shadow-2xl">
-            {language === 'fr' ? "Prêt pour l'Impact" : 'Ready for Impact'}
+          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
+            {language === 'fr' ? 'Besoin d\'un devis personnalisé ?' : 'Need a custom quote?'}
           </h2>
-          <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
+          <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+            {language === 'fr'
+              ? 'Notre équipe d\'experts est prête à vous accompagner dans vos projets'
+              : 'Our team of experts is ready to assist you with your projects'}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
             <Link to="/quote">
-              <Button size="lg" className="rounded-none bg-accent text-white hover:bg-white hover:text-slate-900 px-24 h-24 text-3xl font-black uppercase tracking-widest shadow-[0_0_50px_rgba(255,165,0,0.4)] transition-all">
-                Lancer le Projet
+              <Button
+                size="lg"
+                className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold w-full sm:w-auto"
+              >
+                {t('nav.quote')}
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
+            <Link to="/contact">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full sm:w-auto"
+              >
+                {t('nav.contact')}
+              </Button>
+            </Link>
+          </div>
+
+          {/* WhatsApp CTA */}
+          <div className="pt-4">
             <WhatsAppButton variant="hero" />
           </div>
         </div>
