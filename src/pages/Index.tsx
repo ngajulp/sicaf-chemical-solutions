@@ -167,6 +167,7 @@ export default function Index() {
       </section>
 
       {/* ======================= CTA (CTD) SECTION ======================= */}
+      {/* ======================= SECTION CTA : STYLE IMPACT / TEXTE DEVIS ======================= */}
       <section className="relative py-56 bg-slate-900 text-white overflow-hidden border-t-8 border-accent">
         {/* Filigrane Logistique Industrielle - Très visible (Opacité 0.40) */}
         <WatermarkOverlay image={IMG_LOGISTICS} variant="dark" opacity={0.40} zIndex={0} />
@@ -177,15 +178,41 @@ export default function Index() {
         <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.40} size={60} repeat='repeat' zIndex={2} />
 
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-6xl md:text-[10rem] font-black mb-16 tracking-tighter uppercase italic leading-[0.8] drop-shadow-2xl">
-            {language === 'fr' ? "Prêt pour l'Impact" : 'Ready for Impact'}
+          {/* Taille de texte réduite (3xl à 4xl) comme demandé */}
+          <h2 className="font-heading text-3xl md:text-5xl font-black mb-6 uppercase tracking-tight">
+            {language === 'fr' ? 'Besoin d\'un devis personnalisé ?' : 'Need a custom quote?'}
           </h2>
-          <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
+          
+          <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto font-medium">
+            {language === 'fr'
+              ? 'Notre équipe d\'experts est prête à vous accompagner dans vos projets'
+              : 'Our team of experts is ready to assist you with your projects'}
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Link to="/quote">
-              <Button size="lg" className="rounded-none bg-accent text-white hover:bg-white hover:text-slate-900 px-24 h-24 text-3xl font-black uppercase tracking-widest shadow-[0_0_50px_rgba(255,165,0,0.4)] transition-all">
-                Lancer le Projet
+              <Button
+                size="lg"
+                className="bg-accent text-white hover:bg-white hover:text-slate-900 font-black uppercase tracking-widest px-10 h-16 rounded-none shadow-xl transition-all"
+              >
+                {t('nav.quote')}
+                <ArrowRight className="ml-2 h-6 w-6" />
               </Button>
             </Link>
+            
+            <Link to="/contact">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-2 border-white text-white hover:bg-white hover:text-slate-900 font-black uppercase tracking-widest px-10 h-16 rounded-none transition-all"
+              >
+                {t('nav.contact')}
+              </Button>
+            </Link>
+          </div>
+
+          {/* WhatsApp CTA */}
+          <div className="pt-10">
             <WhatsAppButton variant="hero" />
           </div>
         </div>
