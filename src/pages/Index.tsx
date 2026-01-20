@@ -42,8 +42,8 @@ export default function Index() {
   const { categories, loading } = useGitHubProducts();
 
   const LOGO_URL = "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png";
-  const IMG_PLANT = "https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=2000&q=80";
-  const IMG_LAB = "https://images.unsplash.com/photo-1532187863486-abf9d3a3522a?auto=format&fit=crop&w=2000&q=80";
+  const IMG_PLANT = "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png";
+  const IMG_LAB = "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industriechimie.png";
   const IMG_MOLECULE = "https://images.unsplash.com/photo-1530210124550-912dc1381cb8?auto=format&fit=crop&w=2000&q=80";
   const IMG_LOGISTICS = "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2000&q=80";
 
