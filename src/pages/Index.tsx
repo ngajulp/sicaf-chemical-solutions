@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, Microscope, Atom, Factory, Beaker, 
-  ChevronRight, Binary, Activity, Globe2, Gauge, FileBadge2, Zap, FlaskConical 
+  ChevronRight, Binary, Activity, Globe2, Gauge, 
+  FileBadge2, Zap, FlaskConical, Loader2 // Importé ici
 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useGitHubProducts } from '@/hooks/useGitHubProducts';
@@ -11,14 +12,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
-// Composant pour le motif technique répétitif (Logo Sicaf en filigrane)
+// Composant pour le motif technique (Filigrane Sicaf répété)
 const TechPattern: React.FC<{ variant: 'light' | 'dark' }> = ({ variant }) => (
   <div className="absolute inset-0 z-[2] pointer-events-none overflow-hidden">
     <div 
       className="absolute inset-0 opacity-[0.08]" 
       style={{
         backgroundImage: `url("https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png")`,
-        backgroundSize: '100px', // Filigrane sicaf ajusté
+        backgroundSize: '100px', 
         backgroundRepeat: 'repeat',
         filter: variant === 'light' ? 'brightness(0) invert(1)' : 'grayscale(100%)',
       }}
@@ -41,25 +42,23 @@ export default function Index() {
     <Layout>
       <WhatsAppButton variant="floating" />
 
-      {/* ======================= HERO SECTION (FRAGMENTÉE & SCANLINE) ======================= */}
+      {/* ======================= HERO SECTION ======================= */}
       <section className="relative min-h-[90vh] flex items-center justify-center text-white overflow-hidden bg-[#020617]">
         
-        {/* Effet Scanline Laser */}
+        {/* Scanline Laser Effect */}
         <div className="absolute inset-0 z-[5] animate-scanline pointer-events-none opacity-20" 
-             style={{ background: 'linear-gradient(to bottom, transparent, #3B82F6 50%, transparent)', height: '100px', width: '100%' }} />
+             style={{ background: 'linear-gradient(to bottom, transparent, #3B82F6 50%, transparent)', height: '120px', width: '100%' }} />
 
-        {/* IMAGE DE FOND : Fragmentation en maximum 10 carreaux (Damier) */}
+        {/* Fragmentation : Moins de 10 grands carreaux (3 colonnes x 2 lignes = 6 carreaux) */}
         <div 
           className="absolute inset-0 z-0 opacity-40"
           style={{
             backgroundImage: `url('https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=800&q=80')`,
-            backgroundSize: '33.33% 50%', // Crée exactement 6 grands carreaux (3x2)
+            backgroundSize: '33.33% 50%', 
             backgroundRepeat: 'repeat',
-            border: '1px solid rgba(255,255,255,0.05)'
           }}
         />
         
-        {/* Overlay dégradé Corporate */}
         <div className="absolute inset-0 z-[1] bg-gradient-to-r from-[#020617] via-[#020617]/70 to-[#020617]" />
         
         <TechPattern variant="light" />
@@ -67,7 +66,7 @@ export default function Index() {
         <div className="relative z-10 container mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-none border border-blue-500/30 bg-blue-500/10 mb-8">
             <Binary className="h-4 w-4 text-blue-400 animate-pulse" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.4em]">Sicaf R&D Laboratory Unit</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.4em]">Sicaf Global R&D Unit</span>
           </div>
           
           <h1 className="text-6xl md:text-9xl font-black mb-6 uppercase tracking-tighter leading-none">
@@ -94,13 +93,13 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ======================= STATS SECTION ======================= */}
+      {/* ======================= STATS ======================= */}
       <section className="relative py-16 bg-[#020617] border-y border-white/5 z-10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, i) => (
-              <div key={i} className="flex items-center gap-4 group">
-                <div className="p-3 bg-primary/10 border border-primary/20 text-primary group-hover:bg-primary group-hover:text-white transition-all">
+              <div key={i} className="flex items-center gap-4">
+                <div className="p-3 bg-primary/10 border border-primary/20 text-primary">
                   <stat.icon className="h-6 w-6" />
                 </div>
                 <div>
@@ -113,7 +112,7 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ======================= PRODUCT GRID ======================= */}
+      {/* ======================= PRODUCTS ======================= */}
       <section className="relative py-32 bg-slate-50 overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mb-20">
@@ -126,11 +125,13 @@ export default function Index() {
           </div>
 
           {loading ? (
-            <div className="flex justify-center py-20"><Loader2 className="animate-spin h-12 w-12 text-primary" /></div>
+            <div className="flex justify-center py-20">
+              <Loader2 className="animate-spin h-12 w-12 text-primary" />
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-1 shadow-2xl">
               {categories.map((category) => (
-                <Link key={category.id} to={`/products/${category.id}`} className="group relative bg-white border border-slate-200 p-12 overflow-hidden transition-all hover:bg-[#020617] hover:z-20">
+                <Link key={category.id} to={`/products/${category.id}`} className="group relative bg-white border border-slate-200 p-12 overflow-hidden transition-all hover:bg-[#020617]">
                   <div className="relative z-10">
                     <div className="text-primary group-hover:text-white transition-colors mb-8">
                       {category.icon || <FlaskConical size={48} strokeWidth={1} />}
@@ -155,19 +156,19 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ======================= CTA SECTION (FRAGMENTÉE & SCANLINE) ======================= */}
+      {/* ======================= CTA SECTION ======================= */}
       <section className="relative py-48 bg-[#020617] text-white overflow-hidden">
         
-        {/* Scanline pour le CTA */}
+        {/* Scanline Effect */}
         <div className="absolute inset-0 z-[5] animate-scanline pointer-events-none opacity-20" 
              style={{ background: 'linear-gradient(to bottom, transparent, #3B82F6 50%, transparent)', height: '100px', width: '100%' }} />
 
-        {/* IMAGE DE FOND : Fragmentation 10 carreaux max (Grands carreaux industriels) */}
+        {/* Fragmentation : 8 grands carreaux (4 colonnes x 2 lignes) */}
         <div 
           className="absolute inset-0 z-0 opacity-30"
           style={{
             backgroundImage: `url('https://images.unsplash.com/photo-1565896311032-1334a90286b5?auto=format&fit=crop&w=600&q=80')`,
-            backgroundSize: '25% 50%', // Crée exactement 8 grands carreaux (4x2)
+            backgroundSize: '25% 50%', 
             backgroundRepeat: 'repeat',
           }}
         />
@@ -188,7 +189,7 @@ export default function Index() {
           
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
             <Link to="/quote">
-              <Button size="lg" className="bg-primary hover:bg-white hover:text-black text-white px-16 h-20 text-2xl font-black rounded-none uppercase tracking-[0.2em] shadow-2xl transition-all transform hover:scale-105">
+              <Button size="lg" className="bg-primary hover:bg-white hover:text-black text-white px-16 h-20 text-2xl font-black rounded-none uppercase tracking-[0.2em] shadow-2xl transition-all">
                 {t('nav.quote')}
               </Button>
             </Link>
@@ -204,10 +205,7 @@ export default function Index() {
             100% { transform: translateY(1000%); }
           }
           .animate-scanline {
-            animation: scanline 12s linear infinite;
-          }
-          :root {
-            --primary-rgb: 37, 99, 235;
+            animation: scanline 15s linear infinite;
           }
         `}
       </style>
