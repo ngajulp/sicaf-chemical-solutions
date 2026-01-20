@@ -1,15 +1,35 @@
 import { useState } from 'react';
-import { MapPin, Phone, Mail, Globe, Send, CheckCircle, MessageCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Globe, Send, CheckCircle, MessageCircle, Building2 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { sendContactEmail } from '@/lib/emailjs';
-import WhatsAppButton, { getWhatsAppUrl } from '@/components/WhatsAppButton';
+import WhatsAppButton from '@/components/WhatsAppButton';
+
+const WatermarkOverlay: React.FC<{
+  image: string;
+  opacity?: number;
+  size?: string | number;
+  variant?: 'light' | 'dark'; 
+  zIndex?: number;
+  repeat?: 'repeat' | 'no-repeat';
+}> = ({ image, opacity = 0.2, size = 'cover', variant = 'dark', zIndex = 0, repeat = 'no-repeat' }) => (
+  <div
+    className="absolute inset-0 pointer-events-none"
+    style={{
+      backgroundImage: `url(${image})`,
+      backgroundRepeat: repeat,
+      backgroundSize: typeof size === 'number' ? `${size}px` : size,
+      opacity,
+      zIndex,
+      filter: variant === 'light' ? 'brightness(0) invert(1) contrast(1.5)' : 'grayscale(100%) contrast(1.3)',
+    } as React.CSSProperties}
+  />
+);
 
 const Contact = () => {
   const { t, language } = useLanguage();
@@ -24,256 +44,141 @@ const Contact = () => {
     message: ''
   });
 
+  const LOGO_URL = "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png";
+  const IMG_LAB = "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png";
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
     try {
       await sendContactEmail(formData);
       setIsSubmitted(true);
-      toast({
-        title: t('contact.success'),
-        description: language === 'fr' 
-          ? 'Nous vous répondrons dans les plus brefs délais.'
-          : 'We will respond to you as soon as possible.',
-      });
+      toast({ title: t('contact.success') });
     } catch (error) {
-      toast({
-        title: language === 'fr' ? 'Erreur' : 'Error',
-        description: language === 'fr' 
-          ? 'Une erreur est survenue. Veuillez réessayer.'
-          : 'An error occurred. Please try again.',
-        variant: 'destructive'
-      });
+      toast({ title: "Erreur", variant: 'destructive' });
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const contactInfo = [
-    {
-      icon: MapPin,
-      label: t('contact.address'),
-      values: ['BP : 13135, Akwa', 'Siège Social : Douala, Cameroun']
-    },
-    {
-      icon: Phone,
-      label: language === 'fr' ? 'Téléphone' : 'Phone',
-      values: ['+237 691 83 70 39'],
-      href: 'tel:+237651254307'
-    },
-    {
-      icon: Mail,
-      label: 'Email',
-      values: ['sicaf@chimistry.com'],
-      href: 'mailto:sicaf@chimistry.com'
-    },
-    {
-      icon: Globe,
-      label: language === 'fr' ? 'Site Web' : 'Website',
-      values: ['www.sicaf-chemical.com'],
-      href: 'https://www.sicaf-chemical.com'
-    }
+    { icon: MapPin, label: t('contact.address'), values: ['BP : 13135, Akwa', 'Douala, Cameroun'] },
+    { icon: Phone, label: 'Téléphone', values: ['+237 691 83 70 39'], href: 'tel:+237691837039' },
+    { icon: Mail, label: 'Email', values: ['sicaf@chimistry.com'], href: 'mailto:sicaf@chimistry.com' },
+    { icon: Globe, label: 'Website', values: ['www.sicaf-chemical.com'], href: '#' }
   ];
 
   return (
     <Layout>
-      {/* Floating WhatsApp Button */}
       <WhatsAppButton variant="floating" />
 
-      {/* Hero */}
-      <section className="gradient-hero text-primary-foreground py-16 md:py-24">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
-            {t('contact.title')}
-          </h1>
-          <p className="text-xl text-primary-foreground/90 max-w-2xl mx-auto">
-            {t('contact.subtitle')}
-          </p>
+      {/* 1. HERO SECTION */}
+      <section className="relative py-24 md:py-32 text-white overflow-hidden bg-slate-900 border-t-8 border-accent">
+        <WatermarkOverlay image={IMG_LAB} variant="dark" opacity={0.4} zIndex={0} />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent" />
+        <div className="relative z-10 container mx-auto px-4">
+          <div className="max-w-4xl border-l-4 border-accent pl-8 md:pl-12">
+            <h1 className="text-5xl md:text-7xl font-black mb-4 uppercase tracking-tighter italic">
+              {t('contact.title')}
+            </h1>
+            <p className="text-lg md:text-xl text-slate-300 font-bold uppercase italic bg-slate-800/50 inline-block p-2">
+              {t('contact.subtitle')}
+            </p>
+          </div>
         </div>
       </section>
 
-      <section className="py-16 md:py-24 bg-background">
+      {/* 2. FORM & INFO SECTION */}
+      <section className="py-20 bg-white border-t-8 border-accent border-b-8 border-accent">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Contact Form */}
-            <div>
-              <Card className="shadow-lg">
-                <CardContent className="p-8">
-                  {isSubmitted ? (
-                    <div className="text-center py-12">
-                      <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-                      <h3 className="font-heading text-2xl font-bold text-foreground mb-2">
-                        {t('contact.success')}
-                      </h3>
-                      <p className="text-muted-foreground mb-6">
-                        {language === 'fr' 
-                          ? 'Nous vous répondrons dans les plus brefs délais.'
-                          : 'We will respond to you as soon as possible.'}
-                      </p>
-                      
-                      {/* WhatsApp CTA after submission */}
-                      <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                        <p className="text-sm text-green-800 mb-3">
-                          {language === 'fr' 
-                            ? '💬 Pour une réponse plus rapide, contactez-nous sur WhatsApp !'
-                            : '💬 For a faster response, contact us on WhatsApp!'}
-                        </p>
-                        <WhatsAppButton variant="inline" />
-                      </div>
-
-                      <Button 
-                        onClick={() => {
-                          setIsSubmitted(false);
-                          setFormData({ name: '', email: '', phone: '', company: '', message: '' });
-                        }} 
-                        variant="outline"
-                      >
-                        {language === 'fr' ? 'Envoyer un autre message' : 'Send another message'}
-                      </Button>
+          <div className="grid lg:grid-cols-2 gap-16 max-w-7xl mx-auto">
+            
+            {/* Formulaire Brutaliste */}
+            <div className="relative">
+              <div className="absolute -top-4 -left-4 w-12 h-12 border-t-4 border-l-4 border-accent z-0" />
+              <div className="relative z-10 bg-slate-50 border-4 border-slate-900 p-8 md:p-12 shadow-[12px_12px_0px_0px_rgba(251,146,60,1)]">
+                {isSubmitted ? (
+                  <div className="text-center py-12">
+                    <CheckCircle className="h-20 w-20 text-accent mx-auto mb-6" />
+                    <h3 className="text-3xl font-black text-slate-900 uppercase mb-4 italic">{t('contact.success')}</h3>
+                    <div className="bg-white border-2 border-slate-900 p-6 mb-8">
+                       <WhatsAppButton variant="inline" />
                     </div>
-                  ) : (
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="name">{t('contact.name')} *</Label>
-                          <Input 
-                            id="name" 
-                            name="name" 
-                            value={formData.name}
-                            onChange={handleChange}
-                            required 
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="email">{t('contact.email')} *</Label>
-                          <Input 
-                            id="email" 
-                            name="email" 
-                            type="email" 
-                            value={formData.email}
-                            onChange={handleChange}
-                            required 
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="phone">{t('contact.phone')}</Label>
-                          <Input 
-                            id="phone" 
-                            name="phone" 
-                            type="tel"
-                            value={formData.phone}
-                            onChange={handleChange}
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="company">{t('contact.company')}</Label>
-                          <Input 
-                            id="company" 
-                            name="company"
-                            value={formData.company}
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
-
+                    <Button onClick={() => setIsSubmitted(false)} className="rounded-none bg-slate-900 text-white px-8 h-14 font-black uppercase">
+                      Nouveau Message
+                    </Button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label htmlFor="message">{t('contact.message')} *</Label>
-                        <Textarea 
-                          id="message" 
-                          name="message" 
-                          rows={5}
-                          value={formData.message}
-                          onChange={handleChange}
-                          required 
-                        />
+                        <Label className="font-black uppercase text-xs tracking-widest text-slate-500">{t('contact.name')} *</Label>
+                        <Input name="name" value={formData.name} onChange={handleChange} required className="rounded-none border-2 border-slate-200 focus:border-accent h-14 font-bold text-lg" />
                       </div>
-
-                      <Button 
-                        type="submit" 
-                        className="w-full font-semibold" 
-                        size="lg"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting ? (
-                          <span className="flex items-center gap-2">
-                            <span className="animate-spin">⏳</span>
-                            {language === 'fr' ? 'Envoi en cours...' : 'Sending...'}
-                          </span>
-                        ) : (
-                          <span className="flex items-center gap-2">
-                            <Send className="h-5 w-5" />
-                            {t('contact.send')}
-                          </span>
-                        )}
-                      </Button>
-                    </form>
-                  )}
-                </CardContent>
-              </Card>
+                      <div className="space-y-2">
+                        <Label className="font-black uppercase text-xs tracking-widest text-slate-500">{t('contact.email')} *</Label>
+                        <Input name="email" type="email" value={formData.email} onChange={handleChange} required className="rounded-none border-2 border-slate-200 focus:border-accent h-14 font-bold text-lg" />
+                      </div>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <Label className="font-black uppercase text-xs tracking-widest text-slate-500">{t('contact.phone')}</Label>
+                        <Input name="phone" value={formData.phone} onChange={handleChange} className="rounded-none border-2 border-slate-200 focus:border-accent h-14 font-bold text-lg" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="font-black uppercase text-xs tracking-widest text-slate-500">{t('contact.company')}</Label>
+                        <Input name="company" value={formData.company} onChange={handleChange} className="rounded-none border-2 border-slate-200 focus:border-accent h-14 font-bold text-lg" />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="font-black uppercase text-xs tracking-widest text-slate-500">{t('contact.message')} *</Label>
+                      <Textarea name="message" rows={6} value={formData.message} onChange={handleChange} required className="rounded-none border-2 border-slate-200 focus:border-accent font-bold text-lg" />
+                    </div>
+                    <Button type="submit" disabled={isSubmitting} className="w-full h-16 rounded-none bg-slate-900 hover:bg-accent text-white font-black uppercase tracking-[0.2em] text-xl transition-all">
+                      {isSubmitting ? "ENVOI..." : t('contact.send')}
+                    </Button>
+                  </form>
+                )}
+              </div>
             </div>
 
-            {/* Contact Info */}
-            <div>
-              <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-8">
+            {/* Informations & Map */}
+            <div className="flex flex-col justify-center">
+              <h2 className="text-4xl font-black text-slate-900 uppercase tracking-tighter italic mb-12 border-l-8 border-accent pl-6">
                 {t('contact.info_title')}
               </h2>
 
-              <div className="space-y-6">
+              <div className="grid sm:grid-cols-2 gap-10 mb-12">
                 {contactInfo.map((info, index) => (
-                  <div key={index} className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                      <info.icon className="h-6 w-6 text-primary" />
+                  <div key={index} className="group">
+                    <div className="flex items-center gap-4 mb-3">
+                      <div className="w-10 h-10 bg-slate-900 text-accent flex items-center justify-center">
+                        <info.icon size={20} />
+                      </div>
+                      <span className="font-black uppercase text-xs tracking-widest text-slate-400">{info.label}</span>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-1">{info.label}</h3>
-                      {info.values.map((value, vIndex) => (
-                        info.href ? (
-                          <a 
-                            key={vIndex}
-                            href={info.href}
-                            className="block text-muted-foreground hover:text-primary transition-colors"
-                            target={info.href.startsWith('http') ? '_blank' : undefined}
-                            rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                          >
-                            {value}
-                          </a>
-                        ) : (
-                          <p key={vIndex} className="text-muted-foreground">{value}</p>
-                        )
-                      ))}
-                    </div>
+                    {info.values.map((v, i) => (
+                      <p key={i} className="text-xl font-bold text-slate-800 leading-tight">{v}</p>
+                    ))}
                   </div>
                 ))}
-
-              
-                {/* WhatsApp Contact */}
-                <div className="flex items-start gap-4">
-                </div>
               </div>
-  
 
-              {/* Map placeholder */}
-              <div className="mt-10 rounded-lg overflow-hidden shadow-lg">
-                <div className="bg-muted h-64 flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPin className="h-12 w-12 text-primary mx-auto mb-2" />
-                    <p className="text-muted-foreground font-medium">Douala, Cameroun</p>
-                    <p className="text-sm text-muted-foreground">Akwa - BP 13135</p>
-                  </div>
+              {/* Map/Location Visual */}
+              <div className="relative border-4 border-slate-900 h-64 overflow-hidden grayscale hover:grayscale-0 transition-all duration-700">
+                <WatermarkOverlay image={LOGO_URL} opacity={0.1} size={100} repeat="repeat" />
+                <div className="absolute inset-0 bg-slate-100 flex flex-col items-center justify-center p-8 text-center">
+                  <MapPin className="text-accent h-12 w-12 mb-4 animate-bounce" />
+                  <p className="text-2xl font-black text-slate-900 uppercase tracking-tighter">SICAF CHIMIE S.A.</p>
+                  <p className="font-bold text-slate-500">Akwa, Douala - Cameroun</p>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>
