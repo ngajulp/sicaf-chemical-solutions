@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
-// Composant Watermark
+// Composant Watermark optimisé pour la visibilité
 const WatermarkOverlay: React.FC<{
   image: string;
   opacity?: number;
@@ -59,27 +59,35 @@ export default function Index() {
     <Layout>
       <WhatsAppButton variant="floating" />
 
-      {/* ======================= HERO (ÉCLAIRCI & CORPORATE) ======================= */}
+      {/* ======================= HERO (FILIGRANE RENFORCÉ) ======================= */}
       <section className="relative py-44 md:py-64 text-white overflow-hidden bg-slate-800">
-        {/* Fond plus clair avec mix-blend-mode pour la luminosité */}
-        <div className="absolute inset-0 z-0 opacity-50 mix-blend-overlay" 
+        {/* Fond Image */}
+        <div className="absolute inset-0 z-0 opacity-40 mix-blend-overlay" 
              style={{ 
                backgroundImage: `url(${IMG_HERO_LAB})`, 
                backgroundSize: 'cover',
                backgroundPosition: 'center',
-               filter: 'contrast(110%) brightness(1.2)' 
+               filter: 'contrast(110%) brightness(1.1)' 
              }} />
         
-        {/* Dégradé radial pour simuler un éclairage de studio */}
-        <div className="absolute inset-0 z-1 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-700/60 via-slate-800 to-slate-900" />
+        {/* Overlay Dégradé */}
+        <div className="absolute inset-0 z-1 bg-gradient-to-b from-slate-800/50 via-slate-800 to-slate-900" />
         
-        {/* Cadre technique de précision */}
-        <div className="absolute inset-8 md:inset-16 z-[2] border border-white/10 pointer-events-none" />
-        <div className="absolute top-8 md:top-16 left-8 md:left-16 w-8 h-8 border-t-2 border-l-2 border-accent z-[2]" />
-        <div className="absolute bottom-8 md:bottom-16 right-8 md:right-16 w-8 h-8 border-b-2 border-r-2 border-accent z-[2]" />
+        {/* FILIGRANE LOGO 60PX : Opacité augmentée à 0.25 pour visibilité maximale */}
+        <WatermarkOverlay 
+          image={LOGO_URL} 
+          variant="light" 
+          opacity={0.25} 
+          size={60} 
+          repeat='repeat' 
+          zIndex={2} 
+          animate={false} // Désactivé pour un look plus stable et corporate
+        />
 
-        {/* LOGO REPETITION 60PX */}
-        <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.15} size={60} repeat='repeat' zIndex={2} />
+        {/* Cadre technique */}
+        <div className="absolute inset-8 md:inset-16 z-[3] border border-white/10 pointer-events-none" />
+        <div className="absolute top-8 md:top-16 left-8 md:left-16 w-8 h-8 border-t-2 border-l-2 border-accent z-[3]" />
+        <div className="absolute bottom-8 md:bottom-16 right-8 md:right-16 w-8 h-8 border-b-2 border-r-2 border-accent z-[3]" />
 
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-5xl">
@@ -88,7 +96,7 @@ export default function Index() {
               <span className="text-xs font-black uppercase tracking-[0.6em] text-accent">Division Sicaf Innovation</span>
             </div>
             
-            <h1 className="text-6xl md:text-[9rem] font-black mb-10 leading-[0.8] uppercase tracking-tighter text-white drop-shadow-sm">
+            <h1 className="text-6xl md:text-[9rem] font-black mb-10 leading-[0.8] uppercase tracking-tighter text-white drop-shadow-md">
               {t('hero.title')}
             </h1>
             
@@ -184,16 +192,23 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ======================= CTA (ÉCLAIRCI & INDUSTRIEL) ======================= */}
+      {/* ======================= CTA (FILIGRANE RENFORCÉ) ======================= */}
       <section className="relative py-48 bg-slate-700 text-white overflow-hidden border-t border-accent/20">
-        {/* Fond industriel plus visible et clair */}
         <div className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-screen" 
              style={{ backgroundImage: `url(${IMG_PRODUCTS_CHEM})`, filter: 'brightness(1.5) contrast(1.1)' }} />
         
         <div className="absolute inset-0 z-1 bg-gradient-to-t from-slate-900 via-slate-800/80 to-transparent" />
         
-        {/* LOGO REPETITION 60PX */}
-        <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.15} size={60} repeat='repeat' zIndex={2} />
+        {/* LOGO REPETITION 60PX : Opacité 0.20 pour le CTA */}
+        <WatermarkOverlay 
+          image={LOGO_URL} 
+          variant="light" 
+          opacity={0.20} 
+          size={60} 
+          repeat='repeat' 
+          zIndex={2} 
+          animate={false}
+        />
 
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="inline-flex items-center justify-center p-6 border border-accent/30 bg-slate-800/50 mb-14 backdrop-blur-md">
