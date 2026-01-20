@@ -93,15 +93,14 @@ export default function Index() {
       </section>
 
       {/* ======================= PRODUCT CATEGORIES ======================= */}
-      <section className="relative py-32 bg-slate-50 overflow-hidden min-h-[700px]">
-        {/* Filigrane existant */}
+      <section className="relative overflow-hidden min-h-[800px]">
+        {/* FILIGRANES */}
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581091215369-1a7c8763d219?auto=format&fit=crop&w=1600&q=80"
           opacity={0.05}
           rotation={5}
           animate
         />
-        {/* Trois filigranes supplémentaires */}
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581094277362-cd798e2f2a65?auto=format&fit=crop&w=1600&q=80"
           opacity={0.15}
@@ -124,7 +123,8 @@ export default function Index() {
           animate
         />
 
-        <div className="container mx-auto px-4 relative z-10">
+        {/* CONTENU */}
+        <div className="container mx-auto px-4 relative z-10 bg-white/80 backdrop-blur-sm rounded-xl py-16">
           <div className="text-center mb-14">
             <h2 className="text-4xl font-bold mb-4">{t('home.products_title')}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -178,15 +178,14 @@ export default function Index() {
       </section>
 
       {/* ======================= WHY CHOOSE US ======================= */}
-      <section className="relative py-32 bg-white overflow-hidden min-h-[600px]">
-        {/* Filigrane existant */}
+      <section className="relative overflow-hidden min-h-[700px]">
+        {/* FILIGRANES */}
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1614308457659-2e2e5b7e7c68?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.04}
+          opacity={0.05}
           rotation={-10}
           animate
         />
-        {/* Trois filigranes supplémentaires */}
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=1600&q=80"
           opacity={0.15}
@@ -209,7 +208,8 @@ export default function Index() {
           animate
         />
 
-        <div className="container mx-auto px-4 relative z-10">
+        {/* CONTENU */}
+        <div className="container mx-auto px-4 relative z-10 bg-white/80 backdrop-blur-sm rounded-xl py-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('home.why_title')}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t('home.why_subtitle')}</p>
