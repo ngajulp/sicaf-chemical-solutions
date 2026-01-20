@@ -1,5 +1,9 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Award, Users, Truck, ChevronRight, Loader2, FlaskConical, Beaker, Microscope, TestTube2, Binary } from 'lucide-react';
+import { 
+  ArrowRight, Shield, Award, Users, Truck, ChevronRight, 
+  Loader2, FlaskConical, Beaker, Microscope, TestTube2, 
+  Binary, Factory // Imports vérifiés
+} from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import Layout from '@/components/layout/Layout';
@@ -57,37 +61,36 @@ export default function Index() {
     <Layout>
       <WhatsAppButton variant="floating" />
 
-      {/* ======================= HERO (CORPORATE & REPETITION) ======================= */}
-      <section className="relative py-40 md:py-64 text-white overflow-hidden bg-[#0A1A2F]">
-        {/* Fragmentation de fond (Damier de labo discret) */}
-        <div className="absolute inset-0 z-0 opacity-30" 
-             style={{ backgroundImage: `url(${IMG_HERO_LAB})`, backgroundSize: '33.33% 50%', backgroundRepeat: 'repeat', filter: 'grayscale(100%) contrast(110%)' }} />
+      {/* ======================= HERO (CORPORATE & REPETITION LOGO 60PX) ======================= */}
+      <section className="relative py-40 md:py-64 text-white overflow-hidden bg-[#020617]">
+        {/* Background avec fragmentation large */}
+        <div className="absolute inset-0 z-0 opacity-25" 
+             style={{ backgroundImage: `url(${IMG_HERO_LAB})`, backgroundSize: '33.33% 50%', backgroundRepeat: 'repeat', filter: 'grayscale(100%)' }} />
         
-        {/* Overlay Progressif Multinational */}
-        <div className="absolute inset-0 z-1 bg-gradient-to-r from-[#0A1A2F] via-[#0A1A2F]/80 to-transparent" />
+        <div className="absolute inset-0 z-1 bg-gradient-to-r from-[#020617] via-[#020617]/80 to-transparent" />
         
-        {/* FILIGRANE LOGO : Petit (60px) et répété comme un motif de sécurité */}
-        <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.12} rotation={0} size={60} repeat='repeat' zIndex={2} />
+        {/* FILIGRANE LOGO : Répété, 60px, sans rotation pour un aspect "grille technique" */}
+        <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.15} rotation={0} size={60} repeat='repeat' zIndex={2} />
 
         <div className="relative z-10 container mx-auto px-4 max-w-5xl">
-          <div className="inline-flex items-center gap-3 px-4 py-1 border-l-4 border-accent bg-accent/10 mb-10 backdrop-blur-sm">
-            <Binary className="h-4 w-4 text-accent" />
-            <span className="text-[10px] font-black uppercase tracking-[0.5em]">{language === 'fr' ? 'Standard Chimique International' : 'International Chemical Standard'}</span>
+          <div className="inline-flex items-center gap-3 px-4 py-1 border-l-4 border-accent bg-accent/10 mb-10">
+            <Binary className="h-4 w-4 text-accent animate-pulse" />
+            <span className="text-[10px] font-black uppercase tracking-[0.5em]">{language === 'fr' ? 'Division R&D Industrielle' : 'Industrial R&D Division'}</span>
           </div>
-          <h1 className="font-heading text-6xl md:text-9xl font-black mb-8 leading-none uppercase tracking-tighter">
+          <h1 className="text-6xl md:text-[8rem] font-black mb-8 leading-[0.9] uppercase tracking-tighter drop-shadow-2xl">
             {t('hero.title')}
           </h1>
-          <p className="text-xl md:text-2xl text-slate-300 mb-12 max-w-2xl font-light leading-relaxed border-l border-white/10 pl-8">
+          <p className="text-xl md:text-2xl text-slate-400 mb-12 max-w-2xl font-light leading-relaxed border-l border-white/10 pl-8">
             {t('hero.subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-6">
             <Link to="/catalog">
-              <Button size="lg" variant="outline" className="rounded-none border-2 border-white text-white hover:bg-white hover:text-slate-900 px-12 h-16 text-lg font-bold uppercase tracking-widest">
+              <Button size="lg" variant="outline" className="rounded-none border-2 border-white text-white hover:bg-white hover:text-black px-12 h-16 text-lg font-bold uppercase tracking-widest transition-all">
                 {t('hero.cta')}
               </Button>
             </Link>
             <Link to="/quote">
-              <Button size="lg" className="rounded-none bg-accent text-accent-foreground hover:bg-accent/90 font-black px-12 h-16 text-lg uppercase tracking-widest shadow-2xl">
+              <Button size="lg" className="rounded-none bg-accent text-white hover:bg-accent/90 font-black px-12 h-16 text-lg uppercase tracking-widest">
                 {t('nav.quote')}
                 <ArrowRight className="ml-3 h-6 w-6" />
               </Button>
@@ -150,33 +153,34 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ======================= CTA (CORPORATE & REPETITION) ======================= */}
-      <section className="relative py-48 bg-[#0A1A2F] text-white overflow-hidden border-t border-white/5">
-        <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: `url(${IMG_PRODUCTS_CHEM})`, filter: 'grayscale(100%)' }} />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A1A2F] via-[#0A1A2F]/90 to-primary/30" />
+      {/* ======================= CTA (CORPORATE & REPETITION LOGO 60PX) ======================= */}
+      <section className="relative py-48 bg-[#020617] text-white overflow-hidden border-t border-white/5">
+        <div className="absolute inset-0 bg-cover bg-center opacity-20" 
+             style={{ backgroundImage: `url(${IMG_PRODUCTS_CHEM})`, filter: 'grayscale(100%) brightness(0.5)' }} />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/80 to-primary/20" />
         
         {/* FILIGRANE LOGO : Petit (60px) et répété */}
-        <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.1} rotation={0} size={60} repeat='repeat' zIndex={2} />
+        <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.12} rotation={0} size={60} repeat='repeat' zIndex={2} />
 
         <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="mb-12 flex justify-center gap-12 opacity-30">
+          <div className="mb-14 flex justify-center gap-12 opacity-30">
              <TestTube2 className="h-16 w-16" />
              <Beaker className="h-16 w-16" />
              <Factory className="h-16 w-16" />
           </div>
-          <h2 className="text-5xl md:text-8xl font-black mb-16 tracking-tighter uppercase italic">
-            {language === 'fr' ? "Propulser l'Industrie" : 'Powering Industry'}
+          <h2 className="text-5xl md:text-8xl font-black mb-16 tracking-tighter uppercase leading-none">
+            {language === 'fr' ? "L'Excellence à Grande Échelle" : 'Excellence at Scale'}
           </h2>
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
             <Link to="/quote">
-              <Button size="lg" className="rounded-none bg-white text-[#0A1A2F] hover:bg-accent hover:text-white font-black px-20 h-24 text-3xl shadow-2xl uppercase tracking-[0.2em] transition-all">
+              <Button size="lg" className="rounded-none bg-white text-black hover:bg-accent hover:text-white font-black px-20 h-24 text-3xl uppercase tracking-widest transition-all shadow-[0_0_50px_rgba(255,255,255,0.1)]">
                 {t('nav.quote')}
               </Button>
             </Link>
             <WhatsAppButton variant="hero" />
           </div>
-          <div className="mt-20 text-[10px] font-bold text-slate-500 uppercase tracking-[1em] opacity-50">
-            Sicaf Chemical Solutions • Global Operations • 2026
+          <div className="mt-20 text-[10px] font-bold text-slate-500 uppercase tracking-[1em]">
+            SICAF INDUSTRIES • 2026 INTERNAL DOCUMENT
           </div>
         </div>
       </section>
@@ -184,9 +188,9 @@ export default function Index() {
       <style>
         {`
           @keyframes watermarkMove {
-            0% { transform: translate(0, 0) rotate(var(--rotation)); }
+            0% { transform: translate(0, 0); }
             50% { transform: translate(-10px, -5px); }
-            100% { transform: translate(0, 0) rotate(var(--rotation)); }
+            100% { transform: translate(0, 0); }
           }
           .animate-watermark {
             animation: watermarkMove 30s linear infinite;
