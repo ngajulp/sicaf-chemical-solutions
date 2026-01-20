@@ -3,16 +3,14 @@ import { Link } from 'react-router-dom';
 import { 
   ArrowRight, Shield, Award, Users, Truck, ChevronRight, 
   Loader2, FlaskConical, Beaker, Microscope, TestTube2, 
-  Binary, Factory, Activity, Gauge, Globe, Database, Droplets
+  Binary, Factory, Activity, Gauge, Globe, Database, Droplets 
 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
-// Composant Watermark avec visibilité renforcée
 const WatermarkOverlay: React.FC<{
   image: string;
   opacity?: number;
@@ -44,34 +42,35 @@ export default function Index() {
   const { categories, loading } = useGitHubProducts();
 
   const LOGO_URL = "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png";
-  
-  // Images à fort contraste pour les filigranes
   const IMG_PLANT = "https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=2000&q=80";
   const IMG_LAB = "https://images.unsplash.com/photo-1532187863486-abf9d3a3522a?auto=format&fit=crop&w=2000&q=80";
   const IMG_MOLECULE = "https://images.unsplash.com/photo-1530210124550-912dc1381cb8?auto=format&fit=crop&w=2000&q=80";
   const IMG_LOGISTICS = "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2000&q=80";
 
+  // Définition des features pour la section "Why Choose Us"
+  const features = [
+    { icon: Shield, titleKey: 'features.quality.title', descKey: 'features.quality.desc' },
+    { icon: Microscope, titleKey: 'features.innovation.title', descKey: 'features.innovation.desc' },
+    { icon: Truck, titleKey: 'features.logistics.title', descKey: 'features.logistics.desc' },
+    { icon: Users, titleKey: 'features.support.title', descKey: 'features.support.desc' },
+  ];
+
   return (
     <Layout>
       <WhatsAppButton variant="floating" />
 
-      {/* ======================= HERO SECTION ======================= */}
+      {/* HERO SECTION */}
       <section className="relative py-44 md:py-64 text-white overflow-hidden bg-slate-900">
-        {/* Filigrane Image Industrielle - Très visible (Opacité 0.45) */}
         <WatermarkOverlay image={IMG_PLANT} variant="dark" opacity={0.45} zIndex={0} />
-        
-        {/* Voile de couleur pour détacher le texte */}
         <div className="absolute inset-0 z-[1] bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent" />
-        
-        {/* Filigrane Logo SICAF 60px - Net et répété (Opacité 0.35) */}
         <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.35} size={60} repeat='repeat' zIndex={2} />
 
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-5xl border-l-4 border-accent pl-8 md:pl-16">
-            <h1 className="text-6xl md:text-[9rem] font-black mb-8 leading-[0.85] uppercase tracking-tighter drop-shadow-2xl">
+            <h1 className="text-6xl md:text-[9rem] font-black mb-8 leading-[0.85] uppercase tracking-tighter drop-shadow-2xl italic">
               {t('hero.title')}
             </h1>
-            <p className="text-xl md:text-3xl text-slate-200 mb-12 max-w-2xl font-bold bg-slate-900/40 backdrop-blur-sm inline-block p-2">
+            <p className="text-xl md:text-3xl text-slate-200 mb-12 max-w-2xl font-bold bg-slate-900/40 backdrop-blur-sm inline-block p-2 uppercase italic">
               {t('hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-6">
@@ -90,7 +89,7 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ======================= STATS BANNER ======================= */}
+      {/* STATS BANNER */}
       <section className="bg-white border-y-8 border-slate-100 py-16 relative z-10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
@@ -110,20 +109,17 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ======================= NOS PRODUITS ======================= */}
+      {/* NOS PRODUITS */}
       <section className="relative py-32 overflow-hidden bg-slate-50">
-        {/* Filigrane Labo R&D - Visibilité Forte (Opacité 0.30) */}
         <WatermarkOverlay image={IMG_LAB} variant="dark" opacity={0.30} zIndex={1} />
-        
-        {/* Filigrane Logo Large 250px */}
         <WatermarkOverlay image={LOGO_URL} variant="dark" opacity={0.15} size={250} rotation={-15} repeat='repeat' zIndex={2} />
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-24">
-            <h2 className="text-5xl md:text-8xl font-black mb-6 text-slate-900 uppercase tracking-tighter shadow-sm">
+            <h2 className="text-5xl md:text-8xl font-black mb-6 text-slate-900 uppercase tracking-tighter">
               {t('home.products_title')}
             </h2>
-            <div className="h-3 bg-accent w-48 mx-auto mb-8"></div>
+            <div className="h-3 bg-accent w-48 mx-auto mb-8 shadow-sm"></div>
             <p className="text-2xl text-slate-800 max-w-2xl mx-auto font-bold bg-white/60 backdrop-blur-sm p-4">{t('home.products_subtitle')}</p>
           </div>
 
@@ -145,15 +141,11 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ======================= WHY CHOOSE US ======================= */}
-      {/* ======================= WHY CHOOSE US : STRUCTURE ENGINEERING / TEXTE FEATURES ======================= */}
+      {/* WHY CHOOSE US (STRUCTURE ENGINEERING / TEXTE FEATURES) */}
       <section className="relative py-32 overflow-hidden bg-white">
-        {/* Filigrane Moléculaire Explicite (Opacité 0.25) */}
         <WatermarkOverlay image={IMG_MOLECULE} variant="dark" opacity={0.25} zIndex={1} />
-        
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-20">
-            {/* Titre avec la taille sobre (text-3xl md:text-4xl) */}
             <h2 className="font-heading text-3xl md:text-4xl font-black text-slate-900 uppercase tracking-tight italic mb-4">
               {t('home.why_title')}
             </h2>
@@ -164,21 +156,13 @@ export default function Index() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <div 
-                key={index} 
-                className="p-10 bg-white/80 backdrop-blur-md border-b-8 border-accent shadow-2xl flex flex-col items-center text-center transition-transform hover:-translate-y-2"
-              >
-                {/* Icône style Engineering Excellence */}
+              <div key={index} className="p-10 bg-white/80 backdrop-blur-md border-b-8 border-accent shadow-2xl flex flex-col items-center text-center transition-transform hover:-translate-y-2">
                 <div className="text-accent mb-8">
                   <feature.icon className="h-12 w-12" strokeWidth={1.5} />
                 </div>
-                
-                {/* Titre style sobre (text-lg) */}
                 <h3 className="font-black text-xl text-slate-900 uppercase mb-4 tracking-tight">
                   {t(feature.titleKey)}
                 </h3>
-                
-                {/* Description style sobre (text-sm) */}
                 <p className="text-slate-600 font-bold leading-relaxed text-sm">
                   {t(feature.descKey)}
                 </p>
@@ -188,24 +172,17 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ======================= CTA (CTD) SECTION ======================= */}
-      {/* ======================= SECTION CTA : STYLE IMPACT / TEXTE DEVIS ======================= */}
+      {/* FINAL CTA SECTION */}
       <section className="relative py-56 bg-slate-900 text-white overflow-hidden border-t-8 border-accent">
-        {/* Filigrane Logistique Industrielle - Très visible (Opacité 0.40) */}
         <WatermarkOverlay image={IMG_LOGISTICS} variant="dark" opacity={0.40} zIndex={0} />
-        
         <div className="absolute inset-0 z-[1] bg-slate-900/60 backdrop-brightness-50" />
-        
-        {/* Filigrane Logo SICAF 60px répétition (Opacité 0.40) */}
         <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.40} size={60} repeat='repeat' zIndex={2} />
 
         <div className="container mx-auto px-4 text-center relative z-10">
-          {/* Taille de texte réduite (3xl à 4xl) comme demandé */}
-          <h2 className="font-heading text-3xl md:text-5xl font-black mb-6 uppercase tracking-tight">
+          <h2 className="font-heading text-3xl md:text-5xl font-black mb-6 uppercase tracking-tight italic drop-shadow-xl">
             {language === 'fr' ? 'Besoin d\'un devis personnalisé ?' : 'Need a custom quote?'}
           </h2>
-          
-          <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto font-medium">
+          <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto font-medium uppercase tracking-wider">
             {language === 'fr'
               ? 'Notre équipe d\'experts est prête à vous accompagner dans vos projets'
               : 'Our team of experts is ready to assist you with your projects'}
@@ -213,27 +190,17 @@ export default function Index() {
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Link to="/quote">
-              <Button
-                size="lg"
-                className="bg-accent text-white hover:bg-white hover:text-slate-900 font-black uppercase tracking-widest px-10 h-16 rounded-none shadow-xl transition-all"
-              >
+              <Button size="lg" className="bg-accent text-white hover:bg-white hover:text-slate-900 font-black uppercase tracking-widest px-10 h-16 rounded-none shadow-xl transition-all">
                 {t('nav.quote')}
                 <ArrowRight className="ml-2 h-6 w-6" />
               </Button>
             </Link>
-            
             <Link to="/contact">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-2 border-white text-white hover:bg-white hover:text-slate-900 font-black uppercase tracking-widest px-10 h-16 rounded-none transition-all"
-              >
+              <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-slate-900 font-black uppercase tracking-widest px-10 h-16 rounded-none transition-all">
                 {t('nav.contact')}
               </Button>
             </Link>
           </div>
-
-          {/* WhatsApp CTA */}
           <div className="pt-10">
             <WhatsAppButton variant="hero" />
           </div>
