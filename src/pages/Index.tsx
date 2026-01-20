@@ -185,39 +185,47 @@ export default function Index() {
       </section>
 
       {/* 5. FINAL CTA SECTION */}
-      <section className="relative py-56 bg-slate-900 text-white overflow-hidden border-t-[3px] border-accent border-b-[3px] border-accent">
-        <WatermarkOverlay image={IMG_LOGISTICS} variant="dark" opacity={0.40} zIndex={0} />
-        <div className="absolute inset-0 z-[1] bg-slate-900/60 backdrop-brightness-50" />
-        <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.40} size={60} repeat='repeat' zIndex={2} />
-
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl md:text-6xl font-black mb-6 uppercase tracking-tight italic drop-shadow-xl">
-            {language === 'fr' ? "Besoin d'un devis ?" : "Need a quote?"}
-          </h2>
-          <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto font-bold uppercase tracking-wider">
-            {language === 'fr'
-              ? "Notre expertise à votre service"
-              : "Our expertise at your service"}
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Link to="/quote">
-              <Button size="lg" className="bg-accent text-white hover:bg-white hover:text-slate-900 font-black uppercase tracking-widest px-10 h-16 rounded-none shadow-xl transition-all border-none">
-                {t('nav.quote')}
-                <ArrowRight className="ml-2 h-6 w-6" />
-              </Button>
-            </Link>
-            <Link to="/contact">
-              <Button size="lg" variant="outline" className="border-[2px] border-white text-white hover:bg-white hover:text-slate-900 font-black uppercase tracking-widest px-10 h-16 rounded-none transition-all">
-                {t('nav.contact')}
-              </Button>
-            </Link>
+         <section className="relative py-56 bg-slate-900 text-white overflow-hidden border-t-[3px] border-accent border-b-[3px] border-accent">
+          <WatermarkOverlay image={IMG_LOGISTICS} variant="dark" opacity={0.40} zIndex={0} />
+          <div className="absolute inset-0 z-[1] bg-slate-900/60 backdrop-brightness-50" />
+          <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.40} size={60} repeat='repeat' zIndex={2} />
+        
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <h2 className="text-3xl md:text-6xl font-black mb-6 uppercase tracking-tight italic drop-shadow-xl">
+              {language === 'fr' ? "Besoin d'un devis ?" : "Need a quote?"}
+            </h2>
+            <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto font-bold uppercase tracking-wider">
+              {language === 'fr'
+                ? "Notre expertise à votre service"
+                : "Our expertise at your service"}
+            </p>
+        
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <Link to="/quote">
+                {/* Bouton DEVIS : On s'assure que le texte passe en noir sur fond blanc au hover */}
+                <Button size="lg" className="bg-accent text-white hover:bg-white hover:text-slate-900 font-black uppercase tracking-widest px-10 h-16 rounded-none shadow-xl transition-all border-none">
+                  {t('nav.quote')}
+                  <ArrowRight className="ml-2 h-6 w-6" />
+                </Button>
+              </Link>
+              
+              <Link to="/contact">
+                {/* Bouton CONTACT : Correction ici -> text-white explicite et text-slate-900 au hover */}
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-[2px] border-white text-white hover:bg-white hover:text-slate-900 font-black uppercase tracking-widest px-10 h-16 rounded-none transition-all bg-transparent"
+                >
+                  {t('nav.contact')}
+                </Button>
+              </Link>
+            </div>
+            
+            <div className="pt-10">
+              <WhatsAppButton variant="hero" />
+            </div>
           </div>
-          <div className="pt-10">
-            <WhatsAppButton variant="hero" />
-          </div>
-        </div>
-      </section>
+        </section>
     </Layout>
   );
 }
