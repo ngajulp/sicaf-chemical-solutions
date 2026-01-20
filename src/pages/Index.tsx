@@ -49,12 +49,12 @@ export default function Index() {
 
   // Définition des features pour la section "Why Choose Us"
   const features = [
-    { icon: Shield, titleKey: 'features.quality.title', descKey: 'features.quality.desc' },
-    { icon: Microscope, titleKey: 'features.innovation.title', descKey: 'features.innovation.desc' },
-    { icon: Truck, titleKey: 'features.logistics.title', descKey: 'features.logistics.desc' },
-    { icon: Users, titleKey: 'features.support.title', descKey: 'features.support.desc' },
+    { icon: Shield, titleKey: 'home.quality', descKey: 'home.quality_desc' },
+    { icon: Microscope, titleKey: 'home.expertise', descKey: 'home.expertise_desc' },
+    { icon: Truck, titleKey: 'home.delivery', descKey: 'home.delivery_desc' },
+    { icon: Users, titleKey: 'home.service', descKey: 'home.service_desc' },
   ];
-
+  
   return (
     <Layout>
       <WhatsAppButton variant="floating" />
