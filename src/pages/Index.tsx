@@ -1,80 +1,143 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Award, Users, Truck, Loader2, Microscope, TestTube2, Factory, Activity, Gauge, Globe, Beaker, Database } from 'lucide-react';
+import { 
+  ArrowRight, Shield, Award, Users, Truck, ChevronRight, 
+  Loader2, FlaskConical, Beaker, Microscope, TestTube2, 
+  Binary, Factory, Activity, Gauge, Globe, Database, Droplets
+} from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
-/** * COMPOSANT DE DÉCOR INDUSTRIEL UNIFIÉ 
- * Gère à la fois l'image de fond explicite et le motif de logo répétitif
- */
-const SectionBackground = ({ image, opacity = 0.6, patternOpacity = 0.35, dark = true }) => (
-  <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-    {/* 1. L'Image Explicite (Ingénieur, Verrerie, etc.) */}
-    <div className={`absolute inset-0 bg-cover bg-center grayscale contrast-125 ${dark ? 'brightness-50' : 'brightness-110'}`}
-         style={{ backgroundImage: `url(${image})`, opacity }} />
-    
-    {/* 2. Le Filigrane Logo SICAF répétitif (80px) */}
-    <div className="absolute inset-0" 
-         style={{ 
-           backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png')`,
-           backgroundSize: '80px', backgroundRepeat: 'repeat', opacity: patternOpacity 
-         }} />
-    
-    {/* 3. Overlay de contraste pour la lisibilité */}
-    <div className={`absolute inset-0 ${dark ? 'bg-gradient-to-b from-black/60 to-black/20' : 'bg-white/60'}`} />
-  </div>
+// Composant Watermark avec visibilité renforcée
+const WatermarkOverlay: React.FC<{
+  image: string;
+  opacity?: number;
+  size?: string | number;
+  variant?: 'light' | 'dark'; 
+  zIndex?: number;
+  repeat?: 'repeat' | 'no-repeat';
+  position?: string;
+  className?: string;
+}> = ({ image, opacity = 0.2, size = 'cover', variant = 'dark', zIndex = 0, repeat = 'no-repeat', position = 'center', className = "" }) => (
+  <div
+    className={`absolute inset-0 pointer-events-none ${className}`}
+    style={{
+      backgroundImage: `url(${image})`,
+      backgroundRepeat: repeat,
+      backgroundSize: typeof size === 'number' ? `${size}px` : size,
+      backgroundPosition: position,
+      opacity,
+      zIndex,
+      filter: variant === 'light' 
+        ? 'brightness(0) invert(1) contrast(1.5)' 
+        : 'grayscale(100%) contrast(1.3) brightness(0.8)',
+    } as React.CSSProperties}
+  />
 );
 
 export default function Index() {
   const { language, t } = useLanguage();
   const { categories, loading } = useGitHubProducts();
 
-  const IMGS = {
-    HERO: "https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=2000&q=80", // Ingénieur
-    PRODS: "https://images.unsplash.com/photo-1603126738563-6a3ef5615f47?auto=format&fit=crop&w=2000&q=80", // Verrerie/Béchers
-    SCIENCE: "https://images.unsplash.com/photo-1532187863486-abf9d3a3522a?auto=format&fit=crop&w=2000&q=80", // Formules/Labo
-    CTA: "https://images.unsplash.com/photo-1624391976761-d51e1bd1fb46?auto=format&fit=crop&w=2000&q=80" // Fûts/Toxique
-  };
+  const LOGO_URL = "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png";
+  
+  // Images à fort contraste pour les filigranes
+  const IMG_PLANT = "https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=2000&q=80";
+  const IMG_LAB = "https://images.unsplash.com/photo-1532187863486-abf9d3a3522a?auto=format&fit=crop&w=2000&q=80";
+  const IMG_MOLECULE = "https://images.unsplash.com/photo-1530210124550-912dc1381cb8?auto=format&fit=crop&w=2000&q=80";
+  const IMG_LOGISTICS = "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2000&q=80";
 
   return (
     <Layout>
       <WhatsAppButton variant="floating" />
 
-      {/* HERO : INGÉNIEUR & CENTRE DE RECHERCHE */}
-      <section className="relative py-44 md:py-64 text-white overflow-hidden bg-[#0A0F1A]">
-        <SectionBackground image={IMGS.HERO} opacity={0.6} patternOpacity={0.4} />
+      {/* ======================= HERO SECTION ======================= */}
+      <section className="relative py-44 md:py-64 text-white overflow-hidden bg-slate-900">
+        {/* Filigrane Image Industrielle - Très visible (Opacité 0.45) */}
+        <WatermarkOverlay image={IMG_PLANT} variant="dark" opacity={0.45} zIndex={0} />
+        
+        {/* Voile de couleur pour détacher le texte */}
+        <div className="absolute inset-0 z-[1] bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent" />
+        
+        {/* Filigrane Logo SICAF 60px - Net et répété (Opacité 0.35) */}
+        <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.35} size={60} repeat='repeat' zIndex={2} />
+
         <div className="relative z-10 container mx-auto px-4">
-          <div className="max-w-4xl border-l-8 border-accent pl-10">
-            <h1 className="text-6xl md:text-[9rem] font-black leading-[0.8] uppercase tracking-tighter mb-10 drop-shadow-2xl italic">
+          <div className="max-w-5xl border-l-4 border-accent pl-8 md:pl-16">
+            <h1 className="text-6xl md:text-[9rem] font-black mb-8 leading-[0.85] uppercase tracking-tighter drop-shadow-2xl">
               {t('hero.title')}
             </h1>
-            <p className="text-xl md:text-3xl font-black mb-12 bg-black/40 backdrop-blur-md p-4 border border-white/10 italic">
+            <p className="text-xl md:text-3xl text-slate-200 mb-12 max-w-2xl font-bold bg-slate-900/40 backdrop-blur-sm inline-block p-2">
               {t('hero.subtitle')}
             </p>
-            <Link to="/catalog">
-              <Button className="h-20 px-12 bg-white text-black hover:bg-accent hover:text-white rounded-none font-black uppercase tracking-widest text-xl transition-all">Explorer</Button>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-6">
+              <Link to="/catalog">
+                <Button size="lg" className="rounded-none bg-white text-slate-900 hover:bg-accent hover:text-white px-12 h-20 text-xl font-black uppercase tracking-widest shadow-2xl transition-all">
+                  {t('hero.cta')}
+                </Button>
+              </Link>
+              <Link to="/quote">
+                <Button size="lg" variant="outline" className="rounded-none border-4 border-white text-white hover:bg-white/20 px-12 h-20 text-xl font-black uppercase tracking-widest">
+                  {t('nav.quote')}
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* NOS PRODUITS : VERRERIE & SOLUTIONS CHIMIQUES */}
-      <section className="relative py-32 bg-slate-50 overflow-hidden">
-        <SectionBackground image={IMGS.PRODS} opacity={0.5} patternOpacity={0.15} dark={false} />
+      {/* ======================= STATS BANNER ======================= */}
+      <section className="bg-white border-y-8 border-slate-100 py-16 relative z-10">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
+            {[
+              { label: 'Quality Assurance', val: 'ISO 9001', icon: Shield },
+              { label: 'Chemical R&D', val: 'Precision', icon: Microscope },
+              { label: 'Safety Index', val: '100%', icon: Gauge },
+              { label: 'Units', val: 'Global', icon: Globe },
+            ].map((s, i) => (
+              <div key={i} className="flex flex-col border-l-4 border-accent pl-8">
+                <s.icon className="h-8 w-8 text-accent mb-4" />
+                <span className="text-4xl font-black text-slate-900 tracking-tighter">{s.val}</span>
+                <span className="text-xs uppercase tracking-widest text-slate-500 font-black">{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ======================= NOS PRODUITS ======================= */}
+      <section className="relative py-32 overflow-hidden bg-slate-50">
+        {/* Filigrane Labo R&D - Visibilité Forte (Opacité 0.30) */}
+        <WatermarkOverlay image={IMG_LAB} variant="dark" opacity={0.30} zIndex={1} />
+        
+        {/* Filigrane Logo Large 250px */}
+        <WatermarkOverlay image={LOGO_URL} variant="dark" opacity={0.15} size={250} rotation={-15} repeat='repeat' zIndex={2} />
+
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-6xl md:text-8xl font-black text-center text-slate-900 uppercase tracking-tighter mb-20 drop-shadow-md">
-            {t('home.products_title')}
-          </h2>
-          {loading ? <div className="flex justify-center"><Loader2 className="animate-spin text-accent h-16 w-16" /></div> : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 border-8 border-white shadow-2xl">
-              {categories.map((cat) => (
-                <Link key={cat.id} to={`/products/${cat.id}`} className="group bg-white/90 p-16 hover:bg-slate-900 transition-all duration-500">
-                  <Beaker size={64} className="text-accent group-hover:text-white mb-8" />
-                  <h3 className="font-black text-3xl text-slate-900 group-hover:text-white uppercase mb-4">{cat.name[language]}</h3>
-                  <p className="text-slate-600 group-hover:text-slate-400 font-bold italic">{cat.description[language]}</p>
+          <div className="text-center mb-24">
+            <h2 className="text-5xl md:text-8xl font-black mb-6 text-slate-900 uppercase tracking-tighter shadow-sm">
+              {t('home.products_title')}
+            </h2>
+            <div className="h-3 bg-accent w-48 mx-auto mb-8"></div>
+            <p className="text-2xl text-slate-800 max-w-2xl mx-auto font-bold bg-white/60 backdrop-blur-sm p-4">{t('home.products_subtitle')}</p>
+          </div>
+
+          {loading ? (
+            <div className="flex justify-center py-20"><Loader2 className="animate-spin text-accent h-16 w-16" /></div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-slate-200 border-4 border-slate-200">
+              {categories.map((category) => (
+                <Link key={category.id} to={`/products/${category.id}`} className="group bg-white/90 p-16 hover:bg-slate-900 transition-all duration-500">
+                  <div className="text-accent group-hover:text-white mb-10 transform group-hover:scale-110 transition-transform">
+                    {category.icon || <Beaker size={64} strokeWidth={2} />}
+                  </div>
+                  <h3 className="font-black text-3xl text-slate-900 group-hover:text-white mb-6 uppercase tracking-tight">{category.name[language]}</h3>
+                  <p className="text-slate-600 group-hover:text-slate-300 text-lg leading-relaxed font-bold">{category.description[language]}</p>
                 </Link>
               ))}
             </div>
@@ -82,32 +145,46 @@ export default function Index() {
         </div>
       </section>
 
-      {/* WHY US : FORMULES & RECHERCHE APPLIQUÉE */}
-      <section className="relative py-32 bg-white overflow-hidden">
-        <SectionBackground image={IMGS.SCIENCE} opacity={0.4} patternOpacity={0.2} dark={false} />
+      {/* ======================= WHY CHOOSE US ======================= */}
+      <section className="relative py-32 overflow-hidden bg-white">
+        {/* Filigrane Moléculaire (Opacité 0.25) */}
+        <WatermarkOverlay image={IMG_MOLECULE} variant="dark" opacity={0.25} zIndex={1} />
+        
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-5xl font-black mb-16 text-slate-900 uppercase tracking-tight italic bg-white p-4 inline-block shadow-lg">Expertise Scientifique</h2>
+          <div className="text-center mb-20">
+            <h2 className="text-5xl font-black mb-6 text-slate-900 uppercase tracking-tight italic">Engineering Excellence</h2>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="p-12 bg-white/90 backdrop-blur-md border-t-8 border-slate-900 shadow-2xl">
-                <Database className="h-10 w-10 text-accent mb-6" />
-                <h3 className="font-black text-xl mb-4 uppercase">Batch Protocol {i}</h3>
+            {categories.slice(0, 4).map((_, index) => (
+              <div key={index} className="p-12 bg-white/80 backdrop-blur-md border-b-8 border-accent shadow-xl">
+                <Activity className="h-10 w-10 text-accent mb-8" />
+                <h3 className="font-black text-xl mb-4 uppercase">Protocol {index + 1}</h3>
+                <p className="text-slate-600 font-bold uppercase text-xs tracking-widest">High Performance Standard</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA : FÛTS INDUSTRIELS & PRODUITS FINIS TOXIQUES */}
-      <section className="relative py-60 bg-[#0A0F1A] text-white overflow-hidden border-t-8 border-accent">
-        <SectionBackground image={IMGS.CTA} opacity={0.65} patternOpacity={0.45} />
+      {/* ======================= CTA (CTD) SECTION ======================= */}
+      <section className="relative py-56 bg-slate-900 text-white overflow-hidden border-t-8 border-accent">
+        {/* Filigrane Logistique Industrielle - Très visible (Opacité 0.40) */}
+        <WatermarkOverlay image={IMG_LOGISTICS} variant="dark" opacity={0.40} zIndex={0} />
+        
+        <div className="absolute inset-0 z-[1] bg-slate-900/60 backdrop-brightness-50" />
+        
+        {/* Filigrane Logo SICAF 60px répétition (Opacité 0.40) */}
+        <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.40} size={60} repeat='repeat' zIndex={2} />
+
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-6xl md:text-[10rem] font-black uppercase tracking-tighter italic leading-[0.8] mb-16 drop-shadow-[0_20px_20px_rgba(0,0,0,1)]">
-             Impact <br/> Industriel
+          <h2 className="text-6xl md:text-[10rem] font-black mb-16 tracking-tighter uppercase italic leading-[0.8] drop-shadow-2xl">
+            {language === 'fr' ? "Prêt pour l'Impact" : 'Ready for Impact'}
           </h2>
-          <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
             <Link to="/quote">
-              <Button className="h-24 px-20 bg-accent text-white hover:bg-white hover:text-black rounded-none text-3xl font-black uppercase tracking-widest shadow-2xl transition-all">Lancer la Production</Button>
+              <Button size="lg" className="rounded-none bg-accent text-white hover:bg-white hover:text-slate-900 px-24 h-24 text-3xl font-black uppercase tracking-widest shadow-[0_0_50px_rgba(255,165,0,0.4)] transition-all">
+                Lancer le Projet
+              </Button>
             </Link>
             <WhatsAppButton variant="hero" />
           </div>
