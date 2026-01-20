@@ -10,30 +10,29 @@ import {
   Loader2,
 } from 'lucide-react';
 
-import Layout from '@/components/layout/Layout';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import WhatsAppButton from '@/components/WhatsAppButton';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useGitHubProducts } from '@/hooks/useGitHubProducts';
+import Layout from '../components/layout/Layout';
+import { Button } from '../components/ui/button';
+import { Card, CardContent } from '../components/ui/card';
+import WhatsAppButton from '../components/WhatsAppButton';
+import { useLanguage } from '../contexts/LanguageContext';
+import { useGitHubProducts } from '../hooks/useGitHubProducts';
 
 /* =========================================================
    WATERMARK SYSTEM – CORPORATE CHEMICAL
 ========================================================= */
 
 const watermarkImages = [
-  // SICAF LOGO – repeated many times
+  // SICAF logo – repeated
   'https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png',
 
-  // Professional chemical / laboratory images (max 2 repetitions)
-  'https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1581091215369-1a7c8763d219?auto=format&fit=crop&w=800&q=80',
-  'https://images.unsplash.com/photo-1614308457659-2e2e5b7e7c68?auto=format&fit=crop&w=800&q=80',
+  // Professional chemical / laboratory images (max 2 visual impact)
+  'https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1581091215369-1a7c8763d219?auto=format&fit=crop&w=1200&q=80',
 ];
 
 const WatermarkOverlay = ({
-  opacity = 0.11,
-  size = 650,
+  opacity = 0.1,
+  size = 620,
   rotation = -12,
 }: {
   opacity?: number;
@@ -49,16 +48,16 @@ const WatermarkOverlay = ({
           backgroundImage: `url(${img})`,
           backgroundRepeat: index === 0 ? 'repeat' : 'no-repeat',
           backgroundSize: index === 0 ? `${size}px` : '900px',
-          backgroundPosition: index === 0 ? 'center' : '20% 30%',
+          backgroundPosition: index === 0 ? 'center' : '75% 30%',
           opacity,
           transform: `rotate(${rotation}deg)`,
-          filter: 'grayscale(100%) brightness(115%)',
+          filter: 'grayscale(100%) brightness(120%)',
         }}
       />
     ))}
 
     {/* Overlay for text readability */}
-    <div className="absolute inset-0 bg-white/70" />
+    <div className="absolute inset-0 bg-white/75" />
   </div>
 );
 
@@ -67,29 +66,29 @@ const WatermarkOverlay = ({
 ========================================================= */
 
 export default function Index() {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const { categories, loading } = useGitHubProducts();
 
   const features = [
     {
       icon: FlaskConical,
       title: 'High-Purity Chemical Products',
-      desc: 'Certified chemicals for industrial, laboratory and research use.',
+      desc: 'Certified chemicals for laboratory, industrial and research applications.',
     },
     {
       icon: Microscope,
       title: 'Laboratory Instruments',
-      desc: 'Professional analytical and laboratory equipment.',
+      desc: 'Professional analytical instruments and laboratory equipment.',
     },
     {
       icon: Factory,
-      title: 'Industrial & Research Solutions',
-      desc: 'Tailored chemical solutions for industry and R&D.',
+      title: 'Industrial & R&D Solutions',
+      desc: 'Customized solutions for chemical industries and research centers.',
     },
     {
       icon: ShieldCheck,
       title: 'Quality & Compliance',
-      desc: 'International standards, safety and regulatory compliance.',
+      desc: 'International standards, safety, and regulatory compliance.',
     },
   ];
 
@@ -100,7 +99,7 @@ export default function Index() {
       {/* =====================================================
           HERO
       ====================================================== */}
-      <section className="relative py-28 bg-[#0F2A44] text-white">
+      <section className="relative py-32 bg-[#0F2A44] text-white">
         <WatermarkOverlay />
 
         <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
@@ -138,10 +137,10 @@ export default function Index() {
       </section>
 
       {/* =====================================================
-          PRODUCTS CATEGORIES
+          PRODUCT CATEGORIES
       ====================================================== */}
-      <section className="relative py-24 bg-gray-50">
-        <WatermarkOverlay opacity={0.1} />
+      <section className="relative py-28 bg-gray-50">
+        <WatermarkOverlay opacity={0.08} />
 
         <div className="relative z-10 container mx-auto px-4">
           <div className="text-center mb-16">
@@ -149,7 +148,7 @@ export default function Index() {
               Product Categories
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              A complete range of chemical products and laboratory solutions.
+              A comprehensive portfolio of chemical products and laboratory solutions.
             </p>
           </div>
 
@@ -185,8 +184,8 @@ export default function Index() {
       {/* =====================================================
           WHY SICAF
       ====================================================== */}
-      <section className="relative py-24 bg-white">
-        <WatermarkOverlay opacity={0.1} />
+      <section className="relative py-28 bg-white">
+        <WatermarkOverlay opacity={0.08} />
 
         <div className="relative z-10 container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -208,8 +207,8 @@ export default function Index() {
       {/* =====================================================
           CTA
       ====================================================== */}
-      <section className="relative py-24 bg-gray-50">
-        <WatermarkOverlay opacity={0.1} />
+      <section className="relative py-28 bg-gray-50">
+        <WatermarkOverlay opacity={0.08} />
 
         <div className="relative z-10 container mx-auto px-4 text-center max-w-3xl">
           <h2 className="text-3xl font-semibold text-[#0F2A44] mb-4">
@@ -218,7 +217,7 @@ export default function Index() {
 
           <p className="text-gray-600 mb-8">
             Our experts support industrial and research projects with precision,
-            quality and compliance.
+            compliance and long-term reliability.
           </p>
 
           <Link to="/contact">
@@ -235,6 +234,3 @@ export default function Index() {
     </Layout>
   );
 }
-
-
-export default Index;
