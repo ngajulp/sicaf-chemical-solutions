@@ -25,6 +25,7 @@ const WatermarkOverlay: React.FC<{
       opacity,
       transform: `rotate(${rotation}deg)`,
       filter: 'grayscale(100%) contrast(120%)',
+      '--rotation': `${rotation}deg`,
     }}
   />
 );
@@ -46,7 +47,6 @@ export default function Index() {
 
       {/* ======================= HERO ======================= */}
       <section className="relative py-24 md:py-32 text-white overflow-hidden">
-        {/* Image laboratoire chimique en arrière-plan */}
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -93,7 +93,7 @@ export default function Index() {
       </section>
 
       {/* ======================= PRODUCT CATEGORIES ======================= */}
-      <section className="relative py-20 bg-slate-50 overflow-hidden">
+      <section className="relative py-32 bg-slate-50 overflow-hidden min-h-[700px]">
         {/* Filigrane existant */}
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581091215369-1a7c8763d219?auto=format&fit=crop&w=1600&q=80"
@@ -101,26 +101,26 @@ export default function Index() {
           rotation={5}
           animate
         />
-        {/* Trois filigranes animés supplémentaires */}
+        {/* Trois filigranes supplémentaires */}
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581094277362-cd798e2f2a65?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.06}
+          opacity={0.15}
           rotation={-15}
-          size={500}
+          size={600}
           animate
         />
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.05}
+          opacity={0.12}
           rotation={10}
-          size={400}
+          size={500}
           animate
         />
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581092227602-0b06d3f3c8be?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.04}
+          opacity={0.1}
           rotation={5}
-          size={450}
+          size={550}
           animate
         />
 
@@ -178,7 +178,7 @@ export default function Index() {
       </section>
 
       {/* ======================= WHY CHOOSE US ======================= */}
-      <section className="relative py-20 bg-white overflow-hidden">
+      <section className="relative py-32 bg-white overflow-hidden min-h-[600px]">
         {/* Filigrane existant */}
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1614308457659-2e2e5b7e7c68?auto=format&fit=crop&w=1600&q=80"
@@ -186,26 +186,26 @@ export default function Index() {
           rotation={-10}
           animate
         />
-        {/* Trois filigranes animés supplémentaires */}
+        {/* Trois filigranes supplémentaires */}
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.05}
+          opacity={0.15}
           rotation={10}
-          size={400}
+          size={500}
           animate
         />
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581094277362-cd798e2f2a65?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.06}
+          opacity={0.12}
           rotation={-20}
-          size={450}
+          size={600}
           animate
         />
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581092227602-0b06d3f3c8be?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.04}
+          opacity={0.1}
           rotation={5}
-          size={500}
+          size={550}
           animate
         />
 
@@ -269,16 +269,15 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ======================= ANIMATIONS CSS ======================= */}
+      {/* ======================= ANIMATION CSS ======================= */}
       <style>
         {`
           @keyframes watermarkMove {
             0%, 100% { transform: translateY(0) rotate(var(--rotation)); }
-            50% { transform: translateY(-15px) rotate(calc(var(--rotation) + 2deg)); }
+            50% { transform: translateY(-20px) rotate(calc(var(--rotation) + 3deg)); }
           }
           .animate-watermark {
-            animation: watermarkMove 20s ease-in-out infinite alternate;
-            --rotation: 0deg;
+            animation: watermarkMove 25s ease-in-out infinite alternate;
           }
         `}
       </style>
