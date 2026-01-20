@@ -167,42 +167,72 @@ export default function Index() {
       </section>
 
       {/* ======================= CTA (CTD) SECTION ======================= */}
-      {/* CTA Section */}
-      <section className="relative py-16 md:py-20 gradient-primary text-primary-foreground">
-        <WatermarkOverlay opacity={0.12} size={300} rotation={5} />
+      {/* ======================= SECTION CTA : IMPACT INDUSTRIEL & DEVIS ======================= */}
+      <section className="relative py-48 md:py-60 bg-slate-900 text-white overflow-hidden border-t-8 border-accent">
+        {/* Filigrane : Fûts industriels (Logistique lourde) - Haute visibilité */}
+        <WatermarkOverlay 
+          image={IMG_INDUSTRIAL_DRUMS} 
+          variant="dark" 
+          opacity={0.55} 
+          zIndex={0} 
+        />
+        
+        {/* Voile sombre pour détacher le texte blanc */}
+        <div className="absolute inset-0 z-[1] bg-slate-900/40 backdrop-brightness-50" />
+        
+        {/* Logo SICAF répétitif 60px (Sceau de certification) */}
+        <WatermarkOverlay 
+          image={LOGO_URL} 
+          variant="light" 
+          opacity={0.4} 
+          size={60} 
+          repeat='repeat' 
+          zIndex={2} 
+        />
+
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
-            {language === 'fr' ? 'Besoin d\'un devis personnalisé ?' : 'Need a custom quote?'}
+          {/* Texte de la section 2 injecté dans le style monumental de la section 1 */}
+          <h2 className="text-5xl md:text-[8rem] font-black mb-6 tracking-tighter uppercase italic leading-[0.85] drop-shadow-[0_20px_20px_rgba(0,0,0,1)]">
+            {language === 'fr' ? "Besoin d'un devis personnalisé ?" : 'Need a custom quote?'}
           </h2>
-          <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+          
+          <p className="text-xl md:text-3xl font-bold mb-16 max-w-3xl mx-auto uppercase tracking-wide bg-accent/10 backdrop-blur-sm p-4 border border-white/5">
             {language === 'fr'
-              ? 'Notre équipe d\'experts est prête à vous accompagner dans vos projets'
+              ? "Notre équipe d'experts est prête à vous accompagner dans vos projets"
               : 'Our team of experts is ready to assist you with your projects'}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+
+          {/* Boutons fusionnés */}
+          <div className="flex flex-col lg:flex-row gap-8 justify-center items-center">
             <Link to="/quote">
-              <Button
-                size="lg"
-                className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold w-full sm:w-auto"
+              <Button 
+                size="lg" 
+                className="rounded-none bg-accent text-white hover:bg-white hover:text-slate-900 px-16 h-24 text-3xl font-black uppercase tracking-widest shadow-[0_30px_60px_rgba(0,0,0,0.5)] transition-all flex items-center gap-4"
               >
                 {t('nav.quote')}
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="h-8 w-8" />
               </Button>
             </Link>
+            
             <Link to="/contact">
-              <Button
-                size="lg"
+              <Button 
+                size="lg" 
                 variant="outline"
-                className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full sm:w-auto"
+                className="rounded-none border-4 border-white text-white hover:bg-white/20 px-16 h-24 text-3xl font-black uppercase tracking-widest backdrop-blur-sm transition-all"
               >
                 {t('nav.contact')}
               </Button>
             </Link>
           </div>
 
-          {/* WhatsApp CTA */}
-          <div className="pt-4">
+          {/* WhatsApp CTA final */}
+          <div className="mt-12">
             <WhatsAppButton variant="hero" />
+          </div>
+
+          {/* Signature Technique */}
+          <div className="mt-20 text-accent font-black tracking-[1.5em] text-xs uppercase opacity-80">
+            DANGER • HIGH QUALITY CHEMICALS • SICAF 2026
           </div>
         </div>
       </section>
