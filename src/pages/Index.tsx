@@ -18,15 +18,11 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 /* =======================
    Corporate Watermark
 ======================= */
-const Watermark = ({
-  opacity = 0.28,
-  size = 620,
-  rotation = -12,
-}: {
+const Watermark: React.FC<{
   opacity?: number;
   size?: number;
   rotation?: number;
-}) => (
+}> = ({ opacity = 0.28, size = 600, rotation = -12 }) => (
   <div
     className="absolute inset-0 pointer-events-none"
     style={{
@@ -42,13 +38,9 @@ const Watermark = ({
   />
 );
 
-const OverlayLight = () => (
-  <div className="absolute inset-0 bg-white/90" />
-);
-
-const OverlayDark = () => (
-  <div className="absolute inset-0 bg-[#0F2A44]/85" />
-);
+/* Overlay pour lisibilité */
+const OverlayLight = () => <div className="absolute inset-0 bg-white/88" />;
+const OverlayDark = () => <div className="absolute inset-0 bg-[#0F2A44]/85" />;
 
 const Index = () => {
   const { language, t } = useLanguage();
@@ -66,12 +58,12 @@ const Index = () => {
       <WhatsAppButton variant="floating" />
 
       {/* ================= HERO ================= */}
-      <section className="relative py-24 md:py-32 bg-[#0F2A44] text-white overflow-hidden">
-        <Watermark />
+      <section className="relative py-28 md:py-36 overflow-hidden">
+        <Watermark rotation={-12} size={620} opacity={0.28} />
         <OverlayDark />
 
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
             {t('hero.title')}
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto">
@@ -91,7 +83,7 @@ const Index = () => {
             <Link to="/quote">
               <Button
                 size="lg"
-                className="bg-[#1F6FA8] hover:bg-[#1a5f8f]"
+                className="bg-[#1F6FA8] hover:bg-[#1a5f8f] font-semibold"
               >
                 {t('nav.quote')}
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -103,7 +95,7 @@ const Index = () => {
 
       {/* ================= PRODUCTS ================= */}
       <section className="relative py-24 bg-gray-50 overflow-hidden">
-        <Watermark rotation={-15} />
+        <Watermark rotation={-15} size={600} opacity={0.28} />
         <OverlayLight />
 
         <div className="relative z-10 container mx-auto px-4">
@@ -163,7 +155,7 @@ const Index = () => {
 
       {/* ================= WHY US ================= */}
       <section className="relative py-24 bg-white overflow-hidden">
-        <Watermark rotation={-10} />
+        <Watermark rotation={-10} size={600} opacity={0.28} />
         <OverlayLight />
 
         <div className="relative z-10 container mx-auto px-4">
@@ -198,7 +190,7 @@ const Index = () => {
 
       {/* ================= CTA ================= */}
       <section className="relative py-24 bg-[#0F2A44] text-white overflow-hidden">
-        <Watermark />
+        <Watermark rotation={-12} size={600} opacity={0.28} />
         <OverlayDark />
 
         <div className="relative z-10 container mx-auto px-4 text-center">
