@@ -58,8 +58,8 @@ export default function Index() {
     <Layout>
       <WhatsAppButton variant="floating" />
 
-      {/* HERO SECTION */}
-      <section className="relative py-44 md:py-64 text-white overflow-hidden bg-slate-900">
+      {/* 1. HERO SECTION (Séparation avec le Header) */}
+      <section className="relative py-44 md:py-64 text-white overflow-hidden bg-slate-900 border-t-8 border-accent">
         <WatermarkOverlay image={IMG_PLANT} variant="dark" opacity={0.45} zIndex={0} />
         <div className="absolute inset-0 z-[1] bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent" />
         <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.35} size={60} repeat='repeat' zIndex={2} />
@@ -81,7 +81,6 @@ export default function Index() {
                   {t('hero.cta')}
                 </Button>
               </Link>
-            
               <Link to="/quote">
                 <Button 
                   size="lg" 
@@ -96,8 +95,8 @@ export default function Index() {
         </div>
       </section>
 
-      {/* STATS BANNER - LIGNE AJOUTÉE (border-t-8) */}
-      <section className="bg-white border-t-8 border-accent border-b-8 border-slate-100 py-16 relative z-10">
+      {/* 2. STATS BANNER (Séparation avec Hero) */}
+      <section className="bg-white border-t-8 border-accent py-16 relative z-10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
             {[
@@ -116,7 +115,7 @@ export default function Index() {
         </div>
       </section>
 
-      {/* NOS PRODUITS - LIGNE AJOUTÉE (border-t-8) */}
+      {/* 3. NOS PRODUITS (Séparation avec Stats) */}
       <section className="relative py-32 overflow-hidden bg-slate-50 border-t-8 border-accent">
         <WatermarkOverlay image={IMG_LAB} variant="dark" opacity={0.30} zIndex={1} />
         <WatermarkOverlay image={LOGO_URL} variant="dark" opacity={0.15} size={250} rotation={-15} repeat='repeat' zIndex={2} />
@@ -148,7 +147,7 @@ export default function Index() {
         </div>
       </section>
 
-      {/* WHY CHOOSE US - LIGNE AJOUTÉE (border-t-8) */}
+      {/* 4. WHY CHOOSE US (Séparation avec Produits) */}
       <section className="relative py-32 overflow-hidden bg-white border-t-8 border-accent">
         <WatermarkOverlay image={IMG_MOLECULE} variant="dark" opacity={0.25} zIndex={1} />
         <div className="container mx-auto px-4 relative z-10">
@@ -179,8 +178,8 @@ export default function Index() {
         </div>
       </section>
 
-      {/* FINAL CTA SECTION - DÉJÀ PRÉSENTE (border-t-8) */}
-      <section className="relative py-56 bg-slate-900 text-white overflow-hidden border-t-8 border-accent">
+      {/* 5. FINAL CTA SECTION (Séparation avec Why Us ET avec le Footer) */}
+      <section className="relative py-56 bg-slate-900 text-white overflow-hidden border-t-8 border-accent border-b-8 border-accent">
         <WatermarkOverlay image={IMG_LOGISTICS} variant="dark" opacity={0.40} zIndex={0} />
         <div className="absolute inset-0 z-[1] bg-slate-900/60 backdrop-brightness-50" />
         <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.40} size={60} repeat='repeat' zIndex={2} />
