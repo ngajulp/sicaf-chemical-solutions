@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Award, Users, Truck, ChevronRight, Loader2, FlaskConical, Microscope, Factory } from 'lucide-react';
+import { ArrowRight, Shield, Award, Users, Truck, ChevronRight, Loader2, FlaskConical } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import Layout from '@/components/layout/Layout';
@@ -7,15 +7,16 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
-// Composant Watermark réutilisable pour toutes les sections
-const WatermarkOverlay: React.FC<{ image: string; opacity?: number; size?: number; rotation?: number }> = ({
-  image,
-  opacity = 0.08,
-  size = 420,
-  rotation = 0,
-}) => (
+// Composant Watermark réutilisable avec animation
+const WatermarkOverlay: React.FC<{
+  image: string;
+  opacity?: number;
+  size?: number;
+  rotation?: number;
+  animate?: boolean;
+}> = ({ image, opacity = 0.08, size = 420, rotation = 0, animate = false }) => (
   <div
-    className="absolute inset-0 pointer-events-none z-0"
+    className={`absolute inset-0 pointer-events-none z-0 ${animate ? 'animate-watermark' : ''}`}
     style={{
       backgroundImage: `url(${image})`,
       backgroundRepeat: 'repeat',
@@ -53,14 +54,12 @@ export default function Index() {
               'url(https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=1600&q=80)',
           }}
         />
-        {/* Overlay sombre pour lisibilité */}
         <div className="absolute inset-0 bg-slate-900/75" />
-
-        {/* Filigrane logo SICAF */}
         <WatermarkOverlay
           image="https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png"
           opacity={0.12}
           rotation={-10}
+          animate
         />
 
         <div className="relative z-10 container mx-auto px-4 text-center max-w-3xl">
@@ -95,12 +94,36 @@ export default function Index() {
 
       {/* ======================= PRODUCT CATEGORIES ======================= */}
       <section className="relative py-20 bg-slate-50 overflow-hidden">
-        {/* Filigrane industrie chimique */}
+        {/* Filigrane existant */}
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581091215369-1a7c8763d219?auto=format&fit=crop&w=1600&q=80"
           opacity={0.05}
           rotation={5}
+          animate
         />
+        {/* Trois filigranes animés supplémentaires */}
+        <WatermarkOverlay
+          image="https://images.unsplash.com/photo-1581094277362-cd798e2f2a65?auto=format&fit=crop&w=1600&q=80"
+          opacity={0.06}
+          rotation={-15}
+          size={500}
+          animate
+        />
+        <WatermarkOverlay
+          image="https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=1600&q=80"
+          opacity={0.05}
+          rotation={10}
+          size={400}
+          animate
+        />
+        <WatermarkOverlay
+          image="https://images.unsplash.com/photo-1581092227602-0b06d3f3c8be?auto=format&fit=crop&w=1600&q=80"
+          opacity={0.04}
+          rotation={5}
+          size={450}
+          animate
+        />
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-14">
             <h2 className="text-4xl font-bold mb-4">{t('home.products_title')}</h2>
@@ -156,11 +179,36 @@ export default function Index() {
 
       {/* ======================= WHY CHOOSE US ======================= */}
       <section className="relative py-20 bg-white overflow-hidden">
+        {/* Filigrane existant */}
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1614308457659-2e2e5b7e7c68?auto=format&fit=crop&w=1600&q=80"
           opacity={0.04}
           rotation={-10}
+          animate
         />
+        {/* Trois filigranes animés supplémentaires */}
+        <WatermarkOverlay
+          image="https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=1600&q=80"
+          opacity={0.05}
+          rotation={10}
+          size={400}
+          animate
+        />
+        <WatermarkOverlay
+          image="https://images.unsplash.com/photo-1581094277362-cd798e2f2a65?auto=format&fit=crop&w=1600&q=80"
+          opacity={0.06}
+          rotation={-20}
+          size={450}
+          animate
+        />
+        <WatermarkOverlay
+          image="https://images.unsplash.com/photo-1581092227602-0b06d3f3c8be?auto=format&fit=crop&w=1600&q=80"
+          opacity={0.04}
+          rotation={5}
+          size={500}
+          animate
+        />
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('home.why_title')}</h2>
@@ -191,6 +239,7 @@ export default function Index() {
           image="https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png"
           opacity={0.1}
           rotation={5}
+          animate
         />
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -219,6 +268,20 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      {/* ======================= ANIMATIONS CSS ======================= */}
+      <style>
+        {`
+          @keyframes watermarkMove {
+            0%, 100% { transform: translateY(0) rotate(var(--rotation)); }
+            50% { transform: translateY(-15px) rotate(calc(var(--rotation) + 2deg)); }
+          }
+          .animate-watermark {
+            animation: watermarkMove 20s ease-in-out infinite alternate;
+            --rotation: 0deg;
+          }
+        `}
+      </style>
     </Layout>
   );
 }
