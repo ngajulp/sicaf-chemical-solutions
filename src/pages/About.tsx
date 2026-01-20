@@ -3,7 +3,6 @@ import { Target, Heart, Lightbulb, Leaf, Shield, Microscope, Globe, Users } from
 import { useLanguage } from '@/contexts/LanguageContext';
 import Layout from '@/components/layout/Layout';
 
-// Réutilisation du composant WatermarkOverlay pour l'uniformité
 const WatermarkOverlay: React.FC<{
   image: string;
   opacity?: number;
@@ -46,14 +45,15 @@ const About = () => {
 
   return (
     <Layout>
-      {/* 1. HERO SECTION (Identique à Index pour l'uniformité) */}
-      <section className="relative py-32 md:py-48 text-white overflow-hidden bg-slate-900 border-t-8 border-accent">
+      {/* 1. HERO SECTION - Bordure orange réduite à 3px */}
+      <section className="relative py-32 md:py-48 text-white overflow-hidden bg-slate-900 border-t-[3px] border-accent">
         <WatermarkOverlay image={IMG_LAB} variant="dark" opacity={0.4} zIndex={0} />
         <div className="absolute inset-0 z-[1] bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent" />
         <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.3} size={60} repeat='repeat' zIndex={2} />
 
         <div className="relative z-10 container mx-auto px-4">
-          <div className="max-w-4xl border-l-4 border-accent pl-8 md:pl-16">
+          {/* Bordure latérale réduite à 3px */}
+          <div className="max-w-4xl border-l-[3px] border-accent pl-8 md:pl-16">
             <h1 className="text-5xl md:text-8xl font-black mb-6 leading-[0.85] uppercase tracking-tighter drop-shadow-2xl italic">
               {t('about.title')}
             </h1>
@@ -64,13 +64,14 @@ const About = () => {
         </div>
       </section>
 
-      {/* 2. HISTORY & MISSION (Style Industriel épuré) */}
-      <section className="relative py-24 bg-white border-t-8 border-accent">
+      {/* 2. HISTORY & MISSION - Bordure orange réduite à 3px */}
+      <section className="relative py-24 bg-white border-t-[3px] border-accent">
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid md:grid-cols-2 gap-1 bg-slate-200 border-4 border-slate-200">
+          {/* Grille : bordure centrale et extérieure réduite de 4px à 1.5px */}
+          <div className="grid md:grid-cols-2 gap-[1.5px] bg-slate-200 border-[1.5px] border-slate-200 shadow-xl">
             {/* History */}
             <div className="bg-white p-12 md:p-16">
-              <h2 className="text-4xl font-black text-slate-900 mb-8 uppercase tracking-tighter italic border-l-4 border-accent pl-6">
+              <h2 className="text-4xl font-black text-slate-900 mb-8 uppercase tracking-tighter italic border-l-[3px] border-accent pl-6">
                 {t('about.history_title')}
               </h2>
               <p className="text-slate-600 leading-relaxed font-bold text-lg">
@@ -80,7 +81,7 @@ const About = () => {
 
             {/* Mission */}
             <div className="bg-slate-900 p-12 md:p-16 text-white">
-              <h2 className="text-4xl font-black text-accent mb-8 uppercase tracking-tighter italic border-l-4 border-accent pl-6">
+              <h2 className="text-4xl font-black text-accent mb-8 uppercase tracking-tighter italic border-l-[3px] border-accent pl-6">
                 {t('about.mission_title')}
               </h2>
               <p className="text-slate-300 leading-relaxed font-bold text-lg">
@@ -91,22 +92,24 @@ const About = () => {
         </div>
       </section>
 
-      {/* 3. VALUES (Utilisation du style "Produits" de l'Index) */}
-      <section className="relative py-32 overflow-hidden bg-slate-50 border-t-8 border-accent">
+      {/* 3. VALUES - Bordure orange réduite à 3px */}
+      <section className="relative py-32 overflow-hidden bg-slate-50 border-t-[3px] border-accent">
         <WatermarkOverlay image={IMG_MOLECULE} variant="dark" opacity={0.2} zIndex={1} />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-7xl font-black text-slate-900 uppercase tracking-tighter italic">
               {t('about.values_title')}
             </h2>
-            <div className="h-2 bg-accent w-32 mx-auto mt-4"></div>
+            {/* Ligne décorative réduite de h-2 (8px) à 2px */}
+            <div className="h-[2px] bg-accent w-32 mx-auto mt-4"></div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
-              <div key={index} className="p-10 bg-white border-b-8 border-accent shadow-2xl transition-all hover:-translate-y-2 group">
+              {/* Bordure de bas de carte réduite de 8px à 2.5px */}
+              <div key={index} className="p-10 bg-white border-b-[2.5px] border-accent shadow-xl transition-all hover:-translate-y-2 group">
                 <div className="text-accent mb-8 group-hover:scale-110 transition-transform">
-                  <value.icon className="h-14 w-14" strokeWidth={2} />
+                  <value.icon className="h-14 w-14" strokeWidth={1.5} />
                 </div>
                 <h3 className="font-black text-xl text-slate-900 uppercase mb-4 tracking-tight">
                   {t(value.titleKey)}
@@ -120,8 +123,8 @@ const About = () => {
         </div>
       </section>
 
-      {/* 4. COMPANY STATS (Style Stats Banner de l'Index) */}
-      <section className="bg-slate-900 text-white border-t-8 border-accent border-b-8 border-accent py-20 relative overflow-hidden">
+      {/* 4. COMPANY STATS - Double bordure orange réduite à 3px */}
+      <section className="bg-slate-900 text-white border-t-[3px] border-accent border-b-[3px] border-accent py-20 relative overflow-hidden">
         <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.1} size={150} repeat="repeat" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
@@ -131,7 +134,8 @@ const About = () => {
               { val: '9', label: t('about.history_title').includes('Histoire') ? 'Catégories' : 'Categories', icon: Target },
               { val: '500+', label: t('about.history_title').includes('Histoire') ? 'Clients satisfaits' : 'Satisfied Clients', icon: Users },
             ].map((s, i) => (
-              <div key={i} className="flex flex-col border-l-4 border-accent pl-8">
+              {/* Bordure d'indicateur réduite à 2.5px */}
+              <div key={i} className="flex flex-col border-l-[2.5px] border-accent pl-8">
                 <s.icon className="h-8 w-8 text-accent mb-4" />
                 <span className="text-5xl font-black text-white tracking-tighter italic">{s.val}</span>
                 <span className="text-xs uppercase tracking-widest text-slate-400 font-black mt-2">{s.label}</span>
