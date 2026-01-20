@@ -52,7 +52,6 @@ const About = () => {
         <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.3} size={60} repeat='repeat' zIndex={2} />
 
         <div className="relative z-10 container mx-auto px-4">
-          {/* Bordure latérale réduite à 3px */}
           <div className="max-w-4xl border-l-[3px] border-accent pl-8 md:pl-16">
             <h1 className="text-5xl md:text-8xl font-black mb-6 leading-[0.85] uppercase tracking-tighter drop-shadow-2xl italic">
               {t('about.title')}
@@ -64,10 +63,9 @@ const About = () => {
         </div>
       </section>
 
-      {/* 2. HISTORY & MISSION - Bordure orange réduite à 3px */}
+      {/* 2. HISTORY & MISSION - Bordures grille réduites à 1.5px */}
       <section className="relative py-24 bg-white border-t-[3px] border-accent">
         <div className="container mx-auto px-4 relative z-10">
-          {/* Grille : bordure centrale et extérieure réduite de 4px à 1.5px */}
           <div className="grid md:grid-cols-2 gap-[1.5px] bg-slate-200 border-[1.5px] border-slate-200 shadow-xl">
             {/* History */}
             <div className="bg-white p-12 md:p-16">
@@ -92,7 +90,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* 3. VALUES - Bordure orange réduite à 3px */}
+      {/* 3. VALUES */}
       <section className="relative py-32 overflow-hidden bg-slate-50 border-t-[3px] border-accent">
         <WatermarkOverlay image={IMG_MOLECULE} variant="dark" opacity={0.2} zIndex={1} />
         <div className="container mx-auto px-4 relative z-10">
@@ -100,13 +98,12 @@ const About = () => {
             <h2 className="text-5xl md:text-7xl font-black text-slate-900 uppercase tracking-tighter italic">
               {t('about.values_title')}
             </h2>
-            {/* Ligne décorative réduite de h-2 (8px) à 2px */}
             <div className="h-[2px] bg-accent w-32 mx-auto mt-4"></div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
-              {/* Bordure de bas de carte réduite de 8px à 2.5px */}
+              /* Bordure basse réduite à 2.5px */
               <div key={index} className="p-10 bg-white border-b-[2.5px] border-accent shadow-xl transition-all hover:-translate-y-2 group">
                 <div className="text-accent mb-8 group-hover:scale-110 transition-transform">
                   <value.icon className="h-14 w-14" strokeWidth={1.5} />
@@ -123,7 +120,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* 4. COMPANY STATS - Double bordure orange réduite à 3px */}
+      {/* 4. COMPANY STATS */}
       <section className="bg-slate-900 text-white border-t-[3px] border-accent border-b-[3px] border-accent py-20 relative overflow-hidden">
         <WatermarkOverlay image={LOGO_URL} variant="light" opacity={0.1} size={150} repeat="repeat" />
         <div className="container mx-auto px-4 relative z-10">
@@ -134,7 +131,7 @@ const About = () => {
               { val: '9', label: t('about.history_title').includes('Histoire') ? 'Catégories' : 'Categories', icon: Target },
               { val: '500+', label: t('about.history_title').includes('Histoire') ? 'Clients satisfaits' : 'Satisfied Clients', icon: Users },
             ].map((s, i) => (
-              {/* Bordure d'indicateur réduite à 2.5px */}
+              /* Bordure indicateur réduite à 2.5px */
               <div key={i} className="flex flex-col border-l-[2.5px] border-accent pl-8">
                 <s.icon className="h-8 w-8 text-accent mb-4" />
                 <span className="text-5xl font-black text-white tracking-tighter italic">{s.val}</span>
