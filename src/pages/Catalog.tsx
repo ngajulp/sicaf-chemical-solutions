@@ -1,12 +1,11 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Download, Filter, ChevronRight, Loader2 } from 'lucide-react';
+import { Search, Download, Filter, ChevronRight, Loader2, Beaker, Factory } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   Select,
   SelectContent,
@@ -23,183 +22,159 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
+// Réutilisation du composant WatermarkOverlay
+const WatermarkOverlay: React.FC<{
+  image: string;
+  opacity?: number;
+  size?: string | number;
+  variant?: 'light' | 'dark'; 
+  zIndex?: number;
+  repeat?: 'repeat' | 'no-repeat';
+}> = ({ image, opacity = 0.2, size = 'cover', variant = 'dark', zIndex = 0, repeat = 'no-repeat' }) => (
+  <div
+    className="absolute inset-0 pointer-events-none"
+    style={{
+      backgroundImage: `url(${image})`,
+      backgroundRepeat: repeat,
+      backgroundSize: typeof size === 'number' ? `${size}px` : size,
+      opacity,
+      zIndex,
+      filter: variant === 'light' ? 'brightness(0) invert(1) contrast(1.5)' : 'grayscale(100%) contrast(1.3)',
+    } as React.CSSProperties}
+  />
+);
+
 const Catalog = () => {
   const { t, language } = useLanguage();
   const { products, categories, loading, searchProducts, getProductsByCategory } = useGitHubProducts();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
+  const LOGO_URL = "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png";
+  const IMG_LAB = "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industriechimie.png";
+
   const filteredProducts = useMemo(() => {
     let result = products;
-
-    // Filter by category
-    if (selectedCategory !== 'all') {
-      result = getProductsByCategory(selectedCategory);
-    }
-
-    // Filter by search query
+    if (selectedCategory !== 'all') result = getProductsByCategory(selectedCategory);
     if (searchQuery) {
       result = searchProducts(searchQuery, language);
-      if (selectedCategory !== 'all') {
-        result = result.filter(p => p.category === selectedCategory);
-      }
+      if (selectedCategory !== 'all') result = result.filter(p => p.category === selectedCategory);
     }
-
     return result;
   }, [searchQuery, selectedCategory, language, products, searchProducts, getProductsByCategory]);
 
   const handleDownloadBrochure = () => {
-    alert(language === 'fr' 
-      ? 'Le téléchargement de la brochure va commencer...'
-      : 'Brochure download will start...');
+    alert(language === 'fr' ? 'Le téléchargement de la brochure va commencer...' : 'Brochure download will start...');
   };
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="gradient-hero text-primary-foreground py-16 md:py-24">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
-            {t('catalog.title')}
-          </h1>
-          <p className="text-xl text-primary-foreground/90 max-w-2xl mx-auto">
-            {t('catalog.subtitle')}
-          </p>
+      {/* 1. HERO SECTION */}
+      <section className="relative py-24 md:py-32 text-white overflow-hidden bg-slate-900 border-t-8 border-accent">
+        <WatermarkOverlay image={IMG_LAB} variant="dark" opacity={0.4} zIndex={0} />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent" />
+        <div className="relative z-10 container mx-auto px-4">
+          <div className="max-w-4xl border-l-4 border-accent pl-8 md:pl-12">
+            <h1 className="text-5xl md:text-7xl font-black mb-4 uppercase tracking-tighter italic">
+              {t('catalog.title')}
+            </h1>
+            <p className="text-lg md:text-xl text-slate-300 font-bold uppercase italic bg-slate-800/50 inline-block p-2">
+              {t('catalog.subtitle')}
+            </p>
+          </div>
         </div>
       </section>
 
-      <section className="py-8 md:py-12 bg-muted sticky top-0 z-30">
+      {/* 2. FILTERS BAR (Brutaliste) */}
+      <section className="py-8 bg-white border-t-8 border-accent sticky top-0 z-30 shadow-xl">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-            {/* Search */}
             <div className="relative flex-1 max-w-md w-full">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
               <Input
                 type="search"
                 placeholder={t('catalog.search')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-background"
+                className="pl-12 h-14 rounded-none border-2 border-slate-200 focus:border-accent focus:ring-0 text-lg font-bold"
               />
             </div>
 
-            {/* Filter */}
             <div className="flex items-center gap-4 w-full md:w-auto">
-              <div className="flex items-center gap-2 flex-1 md:flex-initial">
-                <Filter className="h-5 w-5 text-muted-foreground" />
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="w-full md:w-64 bg-background">
-                    <SelectValue placeholder={t('catalog.filter')} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">{t('catalog.all')}</SelectItem>
-                    {categories.map((category) => (
-                      <SelectItem key={category.id} value={category.id}>
-                        {category.icon} {category.name[language]}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger className="w-full md:w-72 h-14 rounded-none border-2 border-slate-200 font-bold uppercase tracking-wider">
+                  <SelectValue placeholder={t('catalog.filter')} />
+                </SelectTrigger>
+                <SelectContent className="rounded-none border-2 border-slate-900">
+                  <SelectItem value="all">{t('catalog.all')}</SelectItem>
+                  {categories.map((category) => (
+                    <SelectItem key={category.id} value={category.id}>
+                      {category.name[language]}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
-              {/* Download Button */}
-              <Button onClick={handleDownloadBrochure} variant="outline" className="gap-2">
-                <Download className="h-4 w-4" />
+              <Button onClick={handleDownloadBrochure} className="h-14 rounded-none bg-slate-900 hover:bg-accent text-white px-8 gap-3 font-black uppercase tracking-widest transition-all">
+                <Download className="h-5 w-5" />
                 <span className="hidden sm:inline">{t('catalog.download')}</span>
               </Button>
             </div>
           </div>
-
-          <p className="text-sm text-muted-foreground mt-4">
-            {filteredProducts.length} {t('catalog.products_count')}
-          </p>
         </div>
       </section>
 
-      <section className="py-8 md:py-12 bg-background">
+      {/* 3. MAIN CONTENT */}
+      <section className="py-12 bg-slate-50 border-t-8 border-accent border-b-8 border-accent min-h-screen">
         <div className="container mx-auto px-4">
           {loading ? (
-            <div className="flex justify-center items-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <div className="flex justify-center items-center py-24">
+              <Loader2 className="h-16 w-16 animate-spin text-accent" />
             </div>
           ) : (
             <>
-              {/* Category Cards */}
+              {/* Categories Grid (Visuels comme Index) */}
               {selectedCategory === 'all' && !searchQuery && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                  {categories.map((category) => {
-                    const count = products.filter(p => p.category === category.id).length;
-                    return (
-                      <Link key={category.id} to={`/products/${category.id}`}>
-                        <Card className="category-card group h-48 relative overflow-hidden">
-                          {category.img ? (
-                            <img 
-                              src={category.img} 
-                              alt={category.name[language]}
-                              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            />
-                          ) : (
-                            <div className="absolute inset-0 gradient-hero" />
-                          )}
-                          <div className="category-card-overlay" />
-                          <CardContent className="relative z-10 h-full flex flex-col justify-end p-6">
-                            <div className="flex items-center gap-3 mb-2">
-                              <span className="text-3xl drop-shadow-lg">{category.icon}</span>
-                              <h3 className="font-heading font-bold text-xl text-white drop-shadow-lg">
-                                {category.name[language]}
-                              </h3>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <p className="text-sm text-white/80">
-                                {count} {language === 'fr' ? 'produits' : 'products'}
-                              </p>
-                              <ChevronRight className="h-5 w-5 text-white group-hover:translate-x-1 transition-transform" />
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </Link>
-                    );
-                  })}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-slate-200 border-4 border-slate-200 mb-16">
+                  {categories.map((category) => (
+                    <Link key={category.id} to={`/products/${category.id}`} className="group bg-white p-12 hover:bg-slate-900 transition-all duration-500">
+                      <div className="text-accent group-hover:text-white mb-6 transform group-hover:scale-110 transition-transform">
+                        <Beaker size={48} strokeWidth={2.5} />
+                      </div>
+                      <h3 className="font-black text-2xl text-slate-900 group-hover:text-white uppercase mb-2">
+                        {category.name[language]}
+                      </h3>
+                      <p className="text-slate-500 group-hover:text-slate-400 font-bold text-sm uppercase">
+                        {products.filter(p => p.category === category.id).length} {language === 'fr' ? 'Produits disponibles' : 'Products available'}
+                      </p>
+                    </Link>
+                  ))}
                 </div>
               )}
 
-              {/* Products Table */}
-              <Card className="shadow-lg overflow-hidden">
+              {/* Products Table (Style Technique) */}
+              <div className="bg-white border-4 border-slate-900 shadow-[10px_10px_0px_0px_rgba(251,146,60,1)]">
                 <div className="overflow-x-auto">
                   <Table>
                     <TableHeader>
-                      <TableRow className="bg-primary hover:bg-primary">
-                        <TableHead className="text-primary-foreground font-semibold">
-                          {t('table.reference')}
-                        </TableHead>
-                        <TableHead className="text-primary-foreground font-semibold">
-                          {t('table.product')}
-                        </TableHead>
-                        <TableHead className="text-primary-foreground font-semibold hidden md:table-cell">
-                          {t('table.applications')}
-                        </TableHead>
-                        <TableHead className="text-primary-foreground font-semibold hidden sm:table-cell">
-                          {t('table.specifications')}
-                        </TableHead>
+                      <TableRow className="bg-slate-900 hover:bg-slate-900 border-b-4 border-accent">
+                        <TableHead className="text-white font-black uppercase tracking-widest py-6 px-8">REF</TableHead>
+                        <TableHead className="text-white font-black uppercase tracking-widest py-6 px-8">{t('table.product')}</TableHead>
+                        <TableHead className="text-white font-black uppercase tracking-widest py-6 px-8 hidden md:table-cell">{t('table.applications')}</TableHead>
+                        <TableHead className="text-white font-black uppercase tracking-widest py-6 px-8 text-right">SPEC</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {filteredProducts.map((product, index) => (
                         <TableRow 
                           key={product.reference}
-                          className={index % 2 === 0 ? 'bg-background' : 'bg-muted/50'}
+                          className={`hover:bg-accent/5 border-b border-slate-100 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`}
                         >
-                          <TableCell className="font-mono text-sm font-medium text-primary">
-                            {product.reference}
-                          </TableCell>
-                          <TableCell className="font-medium">
-                            {product.name[language]}
-                          </TableCell>
-                          <TableCell className="text-muted-foreground hidden md:table-cell">
-                            {product.applications[language]}
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            <span className="inline-block bg-secondary/20 text-secondary-foreground px-2 py-1 rounded text-sm">
+                          <TableCell className="font-black text-slate-900 py-6 px-8 text-lg">{product.reference}</TableCell>
+                          <TableCell className="font-bold text-slate-700 py-6 px-8">{product.name[language]}</TableCell>
+                          <TableCell className="text-slate-500 font-medium py-6 px-8 hidden md:table-cell max-w-md">{product.applications[language]}</TableCell>
+                          <TableCell className="py-6 px-8 text-right">
+                            <span className="inline-block bg-slate-900 text-white px-4 py-1 font-black text-xs uppercase tracking-tighter">
                               {product.specifications}
                             </span>
                           </TableCell>
@@ -208,17 +183,14 @@ const Catalog = () => {
                     </TableBody>
                   </Table>
                 </div>
-
                 {filteredProducts.length === 0 && (
-                  <div className="p-12 text-center">
-                    <p className="text-muted-foreground">
-                      {language === 'fr' 
-                        ? 'Aucun produit trouvé pour cette recherche.'
-                        : 'No products found for this search.'}
+                  <div className="p-20 text-center bg-slate-50">
+                    <p className="text-2xl font-black text-slate-400 uppercase italic">
+                      {language === 'fr' ? 'Aucune donnée correspondante' : 'No matching data'}
                     </p>
                   </div>
                 )}
-              </Card>
+              </div>
             </>
           )}
         </div>
