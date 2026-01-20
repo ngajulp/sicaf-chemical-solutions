@@ -1,191 +1,203 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Award, Users, Truck, ChevronRight } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useGitHubProducts } from '@/hooks/useGitHubProducts';
+import {
+  ArrowRight,
+  ShieldCheck,
+  FlaskConical,
+  Factory,
+  Microscope,
+  Truck,
+  ChevronRight,
+  Loader2,
+} from 'lucide-react';
+
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import WhatsAppButton from '@/components/WhatsAppButton';
-import { flask, beaker, lab } from '@/assets/icons'; // Icônes chimiques
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 
-// Composant Watermark pour plusieurs images, répétition contrôlée
-const WatermarkOverlay: React.FC<{
+/* =========================================================
+   WATERMARK SYSTEM – CORPORATE CHEMICAL
+========================================================= */
+
+const watermarkImages = [
+  // SICAF LOGO – repeated many times
+  'https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/sicaf.png',
+
+  // Professional chemical / laboratory images (max 2 repetitions)
+  'https://images.unsplash.com/photo-1581093588401-22d07cddf79b?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1581091215369-1a7c8763d219?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1614308457659-2e2e5b7e7c68?auto=format&fit=crop&w=800&q=80',
+];
+
+const WatermarkOverlay = ({
+  opacity = 0.11,
+  size = 650,
+  rotation = -12,
+}: {
   opacity?: number;
   size?: number;
-  rotation?: number[];
-  images?: string[];
-}> = ({ opacity = 0.12, size = 600, rotation = [-12, 5, -8, 10], images = [] }) => {
-  const backgrounds = images.flatMap((img) => [img, img]); // répétition max 2 fois
-  const rotations = rotation.length === 0 ? [0] : rotation;
-  return (
-    <div
-      className="absolute inset-0 pointer-events-none z-0"
-      style={{
-        backgroundImage: backgrounds.map((img, idx) => `url(${img})`).join(', '),
-        backgroundRepeat: 'repeat',
-        backgroundSize: `${size}px`,
-        backgroundPosition: 'center',
-        opacity,
-        transform: `rotate(${rotations[0]}deg)`,
-        filter: 'grayscale(100%) brightness(130%) blur(0.5px)',
-        zIndex: 0,
-      }}
-    />
-  );
-};
+  rotation?: number;
+}) => (
+  <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+    {watermarkImages.map((img, index) => (
+      <div
+        key={index}
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `url(${img})`,
+          backgroundRepeat: index === 0 ? 'repeat' : 'no-repeat',
+          backgroundSize: index === 0 ? `${size}px` : '900px',
+          backgroundPosition: index === 0 ? 'center' : '20% 30%',
+          opacity,
+          transform: `rotate(${rotation}deg)`,
+          filter: 'grayscale(100%) brightness(115%)',
+        }}
+      />
+    ))}
 
-const Index = () => {
+    {/* Overlay for text readability */}
+    <div className="absolute inset-0 bg-white/70" />
+  </div>
+);
+
+/* =========================================================
+   HOME PAGE
+========================================================= */
+
+export default function Index() {
   const { language, t } = useLanguage();
   const { categories, loading } = useGitHubProducts();
 
   const features = [
-    { icon: Shield, titleKey: 'home.quality', descKey: 'home.quality_desc' },
-    { icon: Award, titleKey: 'home.expertise', descKey: 'home.expertise_desc' },
-    { icon: Users, titleKey: 'home.service', descKey: 'home.service_desc' },
-    { icon: Truck, titleKey: 'home.delivery', descKey: 'home.delivery_desc' },
-  ];
-
-  // Liste d'images chimiques / laboratoire pour les filigranes
-  const watermarkImages = [
-    'https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/laboratory.png',
-    'https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public/chemical-products.png',
-    'https://images.unsplash.com/photo-1612832021405-0b7f8f1f1d7c?auto=format&fit=crop&w=700&q=80', // Industrie chimique
-    'https://images.unsplash.com/photo-1596495577886-55eeb0e4f8c3?auto=format&fit=crop&w=700&q=80', // Instruments laboratoire
-    'https://images.unsplash.com/photo-1581092580490-26f0db59f1d1?auto=format&fit=crop&w=700&q=80', // Produits chimiques
+    {
+      icon: FlaskConical,
+      title: 'High-Purity Chemical Products',
+      desc: 'Certified chemicals for industrial, laboratory and research use.',
+    },
+    {
+      icon: Microscope,
+      title: 'Laboratory Instruments',
+      desc: 'Professional analytical and laboratory equipment.',
+    },
+    {
+      icon: Factory,
+      title: 'Industrial & Research Solutions',
+      desc: 'Tailored chemical solutions for industry and R&D.',
+    },
+    {
+      icon: ShieldCheck,
+      title: 'Quality & Compliance',
+      desc: 'International standards, safety and regulatory compliance.',
+    },
   ];
 
   return (
     <Layout>
       <WhatsAppButton variant="floating" />
 
-      {/* Hero Section */}
-      <section className="relative py-24 md:py-32">
-        <WatermarkOverlay
-          opacity={0.12}
-          size={600}
-          rotation={[-12, -5, 10]}
-          images={watermarkImages}
-        />
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-[#0F2A44]">
-            {t('hero.title')}
+      {/* =====================================================
+          HERO
+      ====================================================== */}
+      <section className="relative py-28 bg-[#0F2A44] text-white">
+        <WatermarkOverlay />
+
+        <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl">
+          <h1 className="text-4xl md:text-5xl font-semibold mb-6 leading-tight">
+            Trusted Chemical Solutions for Industry & Research
           </h1>
-          <p className="text-2xl md:text-3xl text-[#0F2A44]/90 mb-8">
-            {t('hero.subtitle')}
+
+          <p className="text-lg md:text-xl text-white/90 mb-10">
+            Chemical products, laboratory instruments and consulting services
+            for industries, laboratories and research centers worldwide.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link to="/catalog">
               <Button
                 size="lg"
-                variant="outline"
-                className="border-2 border-[#0F2A44] text-[#0F2A44] hover:bg-[#0F2A44] hover:text-white w-full sm:w-auto"
+                className="bg-white text-[#0F2A44] hover:bg-white/90 font-semibold"
               >
-                {t('hero.cta')}
+                View Catalog
               </Button>
             </Link>
+
             <Link to="/quote">
               <Button
                 size="lg"
-                className="bg-[#1F6FA8] text-white hover:bg-[#145E85] font-semibold w-full sm:w-auto flex items-center justify-center"
+                variant="outline"
+                className="border-white text-white hover:bg-white hover:text-[#0F2A44]"
               >
-                {t('nav.quote')} <ArrowRight className="ml-2 h-5 w-5" />
+                Request a Quote
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Product Categories */}
-      <section className="relative py-16 md:py-24 bg-white">
-        <WatermarkOverlay
-          opacity={0.1}
-          size={600}
-          rotation={[-10, 5, 12]}
-          images={watermarkImages}
-        />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-[#0F2A44] mb-4">
-              {t('home.products_title')}
+      {/* =====================================================
+          PRODUCTS CATEGORIES
+      ====================================================== */}
+      <section className="relative py-24 bg-gray-50">
+        <WatermarkOverlay opacity={0.1} />
+
+        <div className="relative z-10 container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-semibold text-[#0F2A44] mb-4">
+              Product Categories
             </h2>
-            <p className="text-lg text-[#1F6FA8]/80 max-w-2xl mx-auto">
-              {t('home.products_subtitle')}
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              A complete range of chemical products and laboratory solutions.
             </p>
           </div>
 
           {loading ? (
-            <div className="flex justify-center items-center py-12">
-              <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-[#0F2A44]"></div>
+            <div className="flex justify-center py-12">
+              <Loader2 className="animate-spin h-8 w-8 text-[#1F6FA8]" />
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {categories.map((category) => (
                 <Link key={category.id} to={`/products/${category.id}`}>
-                  <Card className="group h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-[#0F2A44]/10">
+                  <Card className="h-full border border-gray-200 shadow-sm hover:shadow-md transition">
                     <CardContent className="p-6">
-                      <div className="flex items-start gap-4">
-                        <div className="text-4xl p-3 bg-[#0F2A44]/10 rounded-lg flex items-center justify-center">
-                          {category.icon || flask} 
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-heading font-semibold text-lg text-[#0F2A44] mb-2 group-hover:text-[#1F6FA8] transition-colors">
-                            {category.name[language]}
-                          </h3>
-                          <p className="text-sm text-[#1F6FA8]/80">
-                            {category.description[language]}
-                          </p>
-                          <div className="flex items-center text-[#1F6FA8] font-medium text-sm mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                            {t('common.view_products')}
-                            <ChevronRight className="h-4 w-4 ml-1" />
-                          </div>
-                        </div>
-                      </div>
+                      <h3 className="text-lg font-semibold text-[#0F2A44] mb-2">
+                        {category.name[language]}
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-4">
+                        {category.description[language]}
+                      </p>
+                      <span className="text-sm font-medium text-[#1F6FA8] flex items-center">
+                        Explore
+                        <ChevronRight className="h-4 w-4 ml-1" />
+                      </span>
                     </CardContent>
                   </Card>
                 </Link>
               ))}
             </div>
           )}
-
-          <div className="text-center mt-10">
-            <Link to="/catalog">
-              <Button size="lg" className="font-semibold bg-[#0F2A44] text-white hover:bg-[#1F6FA8]">
-                {t('catalog.title')} <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="relative py-16 md:py-24 bg-gray-50">
-        <WatermarkOverlay
-          opacity={0.12}
-          size={600}
-          rotation={[-12, -8, 5]}
-          images={watermarkImages}
-        />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-[#0F2A44] mb-4">
-              {t('home.why_title')}
-            </h2>
-            <p className="text-lg text-[#1F6FA8]/80 max-w-2xl mx-auto">
-              {t('home.why_subtitle')}
-            </p>
-          </div>
+      {/* =====================================================
+          WHY SICAF
+      ====================================================== */}
+      <section className="relative py-24 bg-white">
+        <WatermarkOverlay opacity={0.1} />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <Card key={index} className="text-center border-none shadow-md">
-                <CardContent className="pt-8 pb-6 px-6">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#0F2A44]/10 text-[#0F2A44] mb-4">
-                    <feature.icon className="h-8 w-8" />
-                  </div>
-                  <h3 className="font-heading font-semibold text-lg text-[#0F2A44] mb-2">
-                    {t(feature.titleKey)}
+        <div className="relative z-10 container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+            {features.map((item, idx) => (
+              <Card key={idx} className="border border-gray-200 shadow-sm">
+                <CardContent className="p-8 text-center">
+                  <item.icon className="h-10 w-10 mx-auto text-[#1F6FA8] mb-4" />
+                  <h3 className="font-semibold text-[#0F2A44] mb-2">
+                    {item.title}
                   </h3>
-                  <p className="text-sm text-[#1F6FA8]/80">{t(feature.descKey)}</p>
+                  <p className="text-sm text-gray-600">{item.desc}</p>
                 </CardContent>
               </Card>
             ))}
@@ -193,46 +205,36 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative py-16 md:py-20 bg-[#0F2A44] text-white">
-        <WatermarkOverlay
-          opacity={0.1}
-          size={600}
-          rotation={[5, -10, 12]}
-          images={watermarkImages}
-        />
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
-            {language === 'fr' ? 'Besoin d\'un devis personnalisé ?' : 'Need a custom quote?'}
+      {/* =====================================================
+          CTA
+      ====================================================== */}
+      <section className="relative py-24 bg-gray-50">
+        <WatermarkOverlay opacity={0.1} />
+
+        <div className="relative z-10 container mx-auto px-4 text-center max-w-3xl">
+          <h2 className="text-3xl font-semibold text-[#0F2A44] mb-4">
+            Partner with a Reliable Chemical Supplier
           </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            {language === 'fr'
-              ? 'Notre équipe d\'experts est prête à vous accompagner dans vos projets'
-              : 'Our team of experts is ready to assist you with your projects'}
+
+          <p className="text-gray-600 mb-8">
+            Our experts support industrial and research projects with precision,
+            quality and compliance.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-            <Link to="/quote">
-              <Button size="lg" className="bg-[#1F6FA8] text-white hover:bg-[#145E85] font-semibold w-full sm:w-auto">
-                {t('nav.quote')} <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <Link to="/contact">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-2 border-white text-white hover:bg-white hover:text-[#0F2A44] w-full sm:w-auto"
-              >
-                {t('nav.contact')}
-              </Button>
-            </Link>
-          </div>
-          <div className="pt-4">
-            <WhatsAppButton variant="hero" />
-          </div>
+
+          <Link to="/contact">
+            <Button
+              size="lg"
+              className="bg-[#1F6FA8] hover:bg-[#1F6FA8]/90 text-white font-semibold"
+            >
+              Contact Our Experts
+              <Truck className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
         </div>
       </section>
     </Layout>
   );
-};
+}
+
 
 export default Index;
