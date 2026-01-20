@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
-// Composant Watermark réutilisable avec animation
+// Composant Watermark avec animation
 const WatermarkOverlay: React.FC<{
   image: string;
   opacity?: number;
@@ -93,7 +93,7 @@ export default function Index() {
       </section>
 
       {/* ======================= PRODUCT CATEGORIES ======================= */}
-      <section className="relative overflow-hidden min-h-[800px]">
+      <section className="relative overflow-hidden py-40">
         {/* FILIGRANES */}
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581091215369-1a7c8763d219?auto=format&fit=crop&w=1600&q=80"
@@ -103,7 +103,7 @@ export default function Index() {
         />
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581094277362-cd798e2f2a65?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.15}
+          opacity={0.1}
           rotation={-15}
           size={600}
           animate
@@ -117,27 +117,24 @@ export default function Index() {
         />
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1581092227602-0b06d3f3c8be?auto=format&fit=crop&w=1600&q=80"
-          opacity={0.1}
+          opacity={0.08}
           rotation={5}
           size={550}
           animate
         />
 
-        {/* CONTENU */}
-        <div className="container mx-auto px-4 relative z-10 bg-white/80 backdrop-blur-sm rounded-xl py-16">
-          <div className="text-center mb-14">
-            <h2 className="text-4xl font-bold mb-4">{t('home.products_title')}</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              {t('home.products_subtitle')}
-            </p>
-          </div>
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <h2 className="text-4xl font-bold mb-8">{t('home.products_title')}</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-16">
+            {t('home.products_subtitle')}
+          </p>
 
           {loading ? (
             <div className="flex justify-center items-center py-12">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
               {categories.map((category) => (
                 <Link key={category.id} to={`/products/${category.id}`}>
                   <Card className="group h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 border-transparent hover:border-primary/20">
@@ -165,20 +162,11 @@ export default function Index() {
               ))}
             </div>
           )}
-
-          <div className="text-center mt-10">
-            <Link to="/catalog">
-              <Button size="lg" className="font-semibold">
-                {t('catalog.title')}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </section>
 
       {/* ======================= WHY CHOOSE US ======================= */}
-      <section className="relative overflow-hidden min-h-[700px]">
+      <section className="relative overflow-hidden py-40">
         {/* FILIGRANES */}
         <WatermarkOverlay
           image="https://images.unsplash.com/photo-1614308457659-2e2e5b7e7c68?auto=format&fit=crop&w=1600&q=80"
@@ -208,14 +196,11 @@ export default function Index() {
           animate
         />
 
-        {/* CONTENU */}
-        <div className="container mx-auto px-4 relative z-10 bg-white/80 backdrop-blur-sm rounded-xl py-16">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('home.why_title')}</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t('home.why_subtitle')}</p>
-          </div>
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">{t('home.why_title')}</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-16">{t('home.why_subtitle')}</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             {features.map((feature, index) => (
               <Card key={index} className="text-center border-none shadow-md">
                 <CardContent className="pt-8 pb-6 px-6">
