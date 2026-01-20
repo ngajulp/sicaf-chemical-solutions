@@ -67,10 +67,10 @@ export default function Index() {
 
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-5xl border-l-4 border-accent pl-8 md:pl-16">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-[0.9] uppercase tracking-tighter drop-shadow-2xl italic">
+            <h1 className="text-5xl md:text-[7.6rem] font-black mb-8 leading-[0.85] uppercase tracking-tighter drop-shadow-2xl italic">
               {t('hero.title')}
             </h1>
-            <p className="text-lg md:text-xl text-slate-200 mb-10 max-w-xl font-bold bg-slate-900/40 backdrop-blur-sm inline-block p-2 uppercase italic border-l-2 border-accent/50">
+            <p className="text-lg md:text-[1.6rem] text-slate-200 mb-12 max-w-2xl font-bold bg-slate-900/40 backdrop-blur-sm inline-block p-2 uppercase italic">
               {t('hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-6">
