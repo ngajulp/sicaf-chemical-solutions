@@ -47,7 +47,6 @@ export default function Index() {
   const IMG_MOLECULE = "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/produitschimique.png";
   const IMG_LOGISTICS = "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2000&q=80";
 
-  // Définition des features pour la section "Why Choose Us"
   const features = [
     { icon: Shield, titleKey: 'home.quality', descKey: 'home.quality_desc' },
     { icon: Microscope, titleKey: 'home.expertise', descKey: 'home.expertise_desc' },
@@ -74,7 +73,6 @@ export default function Index() {
               {t('hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-6">
-              {/* BOUTON CATALOGUE : Fond blanc, Texte sombre par défaut */}
               <Link to="/catalog">
                 <Button 
                   size="lg" 
@@ -84,7 +82,6 @@ export default function Index() {
                 </Button>
               </Link>
             
-              {/* BOUTON DEVIS : Bordure blanche, Texte blanc, Fond transparent */}
               <Link to="/quote">
                 <Button 
                   size="lg" 
@@ -99,8 +96,8 @@ export default function Index() {
         </div>
       </section>
 
-      {/* STATS BANNER */}
-      <section className="bg-white border-y-8 border-slate-100 py-16 relative z-10">
+      {/* STATS BANNER - LIGNE AJOUTÉE (border-t-8) */}
+      <section className="bg-white border-t-8 border-accent border-b-8 border-slate-100 py-16 relative z-10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
             {[
@@ -119,8 +116,8 @@ export default function Index() {
         </div>
       </section>
 
-      {/* NOS PRODUITS */}
-      <section className="relative py-32 overflow-hidden bg-slate-50">
+      {/* NOS PRODUITS - LIGNE AJOUTÉE (border-t-8) */}
+      <section className="relative py-32 overflow-hidden bg-slate-50 border-t-8 border-accent">
         <WatermarkOverlay image={IMG_LAB} variant="dark" opacity={0.30} zIndex={1} />
         <WatermarkOverlay image={LOGO_URL} variant="dark" opacity={0.15} size={250} rotation={-15} repeat='repeat' zIndex={2} />
 
@@ -151,8 +148,8 @@ export default function Index() {
         </div>
       </section>
 
-      {/* WHY CHOOSE US (STRUCTURE ENGINEERING / TEXTE FEATURES) */}
-      <section className="relative py-32 overflow-hidden bg-white">
+      {/* WHY CHOOSE US - LIGNE AJOUTÉE (border-t-8) */}
+      <section className="relative py-32 overflow-hidden bg-white border-t-8 border-accent">
         <WatermarkOverlay image={IMG_MOLECULE} variant="dark" opacity={0.25} zIndex={1} />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-20">
@@ -182,7 +179,7 @@ export default function Index() {
         </div>
       </section>
 
-      {/* FINAL CTA SECTION */}
+      {/* FINAL CTA SECTION - DÉJÀ PRÉSENTE (border-t-8) */}
       <section className="relative py-56 bg-slate-900 text-white overflow-hidden border-t-8 border-accent">
         <WatermarkOverlay image={IMG_LOGISTICS} variant="dark" opacity={0.40} zIndex={0} />
         <div className="absolute inset-0 z-[1] bg-slate-900/60 backdrop-brightness-50" />
