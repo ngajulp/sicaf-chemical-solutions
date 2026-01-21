@@ -24,8 +24,18 @@ const Index = () => {
       <WhatsAppButton variant="floating" />
 
       {/* Hero Section */}
-      <section className="gradient-hero text-primary-foreground py-20 md:py-32 relative">
-        <div className="container mx-auto px-4">
+      <section className="gradient-hero text-primary-foreground py-20 md:py-32 relative overflow-hidden">
+        {/* Filigrane Hero */}
+        <div 
+          className="absolute inset-0 z-0 opacity-20 pointer-events-none grayscale"
+          style={{
+            backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        />
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               {t('hero.title')}
@@ -50,7 +60,7 @@ const Index = () => {
         </div>
         
         {/* Decorative wave */}
-        <div className="absolute bottom-0 left-0 right-0 overflow-hidden">
+        <div className="absolute bottom-0 left-0 right-0 overflow-hidden z-10">
           <svg className="relative w-full h-12 md:h-20" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" 
                   opacity=".25" 
@@ -65,8 +75,19 @@ const Index = () => {
       </section>
 
       {/* Product Categories */}
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container mx-auto px-4">
+      <section className="py-16 md:py-24 bg-background relative overflow-hidden">
+        {/* Filigrane Produits */}
+        <div 
+          className="absolute inset-0 z-0 opacity-10 pointer-events-none"
+          style={{
+            backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/produitschimique.png')`,
+            backgroundSize: '400px',
+            backgroundPosition: 'right bottom',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
               {t('home.products_title')}
@@ -84,7 +105,7 @@ const Index = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {categories.map((category) => (
                 <Link key={category.id} to={`/products/${category.id}`}>
-                  <Card className="group h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 border-transparent hover:border-primary/20">
+                  <Card className="group h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 border-transparent hover:border-primary/20 bg-white/80 backdrop-blur-sm">
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
                         <div className="text-4xl p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
@@ -154,8 +175,18 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-20 gradient-primary text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
+      <section className="py-16 md:py-20 gradient-primary text-primary-foreground relative overflow-hidden">
+        {/* Filigrane CTA */}
+        <div 
+          className="absolute inset-0 z-0 opacity-15 pointer-events-none mix-blend-overlay"
+          style={{
+            backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industriechimie.png')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        />
+
+        <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
             {language === 'fr' ? 'Besoin d\'un devis personnalisé ?' : 'Need a custom quote?'}
           </h2>
