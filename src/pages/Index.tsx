@@ -22,7 +22,7 @@ const Index = () => {
     <Layout>
       <WhatsAppButton variant="floating" />
 
-      {/* Hero Section - Retour à l'original */}
+      {/* --- 1. HERO SECTION (Original) --- */}
       <section className="gradient-hero text-primary-foreground py-20 md:py-32 relative overflow-hidden">
         <div 
           className="absolute inset-0 z-0 opacity-20 pointer-events-none grayscale"
@@ -55,6 +55,8 @@ const Index = () => {
             </div>
           </div>
         </div>
+        
+        {/* Wave Separator */}
         <div className="absolute bottom-0 left-0 right-0 overflow-hidden z-10">
           <svg className="relative w-full h-12 md:h-20" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" className="fill-background" />
@@ -64,15 +66,15 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Product Categories - SECTION MISE À JOUR (Conservée) */}
+      {/* --- 2. NOS PRODUITS (Style Industriel Premium avec Images) --- */}
       <section className="py-24 md:py-32 bg-background relative overflow-hidden">
-        {/* FILIGRANE OPTIMISÉ */}
+        {/* Filigrane Labochimie */}
         <div 
-          className="absolute inset-0 z-0 opacity-[0.08] pointer-events-none grayscale"
+          className="absolute inset-0 z-0 opacity-[0.06] pointer-events-none grayscale"
           style={{
-            backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/stockageproduits.png')`,
-            backgroundSize: '1000px',
-            backgroundPosition: 'right -100px center',
+            backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png')`,
+            backgroundSize: '900px',
+            backgroundPosition: 'left -100px center',
             backgroundRepeat: 'no-repeat'
           }}
         />
@@ -85,34 +87,58 @@ const Index = () => {
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
               {t('home.products_subtitle')}
             </p>
-            <div className="h-1 w-20 bg-primary mx-auto mt-6" />
+            <div className="h-1.5 w-24 bg-primary mx-auto mt-6" />
           </div>
 
           {loading ? (
             <div className="flex justify-center items-center py-20">
-              <Loader2 className="h-10 w-10 animate-spin text-primary" />
+              <Loader2 className="h-12 w-12 animate-spin text-primary" />
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
               {categories.map((category) => (
                 <Link key={category.id} to={`/products/${category.id}`} className="group">
-                  <Card className="h-full transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] hover:-translate-y-2 border-none bg-white/90 backdrop-blur-md rounded-none border-l-0 group-hover:border-l-4 group-hover:border-primary">
-                    <CardContent className="p-8">
-                      <div className="flex flex-col gap-6">
-                        <div className="text-5xl group-hover:scale-110 transition-transform duration-300 origin-left">
+                  <Card className="h-full border-none shadow-[0_10px_30px_rgba(0,0,0,0.05)] rounded-none overflow-hidden transition-all duration-500 group-hover:shadow-[0_20px_60px_rgba(0,102,204,0.15)] group-hover:-translate-y-2 bg-white">
+                    {/* Image de Catégorie */}
+                    <div className="relative h-64 overflow-hidden">
+                      {category.img ? (
+                        <img 
+                          src={category.img} 
+                          alt={category.name[language]}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[0.3] group-hover:grayscale-0"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-slate-100 flex items-center justify-center">
+                           <span className="text-6xl opacity-20">{category.icon}</span>
+                        </div>
+                      )}
+                      
+                      {/* Badge Icône contextuel */}
+                      <div className="absolute top-4 left-4">
+                        <div className="bg-primary text-white p-3 shadow-2xl flex items-center justify-center text-2xl">
                           {category.icon}
                         </div>
-                        <div>
-                          <h3 className="font-heading font-black text-xl text-foreground mb-3 uppercase italic tracking-tighter group-hover:text-primary transition-colors">
-                            {category.name[language]}
-                          </h3>
-                          <p className="text-sm text-muted-foreground leading-relaxed">
-                            {category.description[language]}
-                          </p>
-                          <div className="flex items-center text-primary font-bold text-xs mt-6 uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-all transform translate-x-[-10px] group-hover:translate-x-0">
-                            {t('common.view_products')}
-                            <ChevronRight className="h-4 w-4 ml-1" />
-                          </div>
+                      </div>
+                    </div>
+
+                    <CardContent className="p-8 space-y-4">
+                      <h3 className="text-2xl font-black uppercase italic tracking-tighter text-slate-900 group-hover:text-primary transition-colors leading-tight">
+                        {category.name[language]}
+                      </h3>
+                      
+                      {/* Barre de progression décorative */}
+                      <div className="h-1 w-12 bg-secondary group-hover:w-full transition-all duration-500" />
+                      
+                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                        {category.description[language]}
+                      </p>
+
+                      <div className="pt-4 flex items-center justify-between border-t border-slate-50">
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary flex items-center gap-2">
+                          {t('common.view_products')} <ChevronRight className="h-3 w-3" />
+                        </span>
+                        <div className="w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
+                          <ChevronRight className="h-5 w-5 group-hover:text-white" />
                         </div>
                       </div>
                     </CardContent>
@@ -124,7 +150,7 @@ const Index = () => {
 
           <div className="text-center mt-16">
             <Link to="/catalog">
-              <Button size="lg" className="font-black uppercase tracking-widest italic shadow-xl px-10 h-16">
+              <Button size="lg" className="h-16 px-12 font-black uppercase tracking-widest italic shadow-2xl hover:scale-105 transition-transform">
                 {t('catalog.title')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
@@ -133,7 +159,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Why Choose Us - Retour à l'original */}
+      {/* --- 3. WHY CHOOSE US (Original) --- */}
       <section className="py-16 md:py-24 bg-muted relative overflow-hidden">
         <div 
           className="absolute inset-0 z-0 opacity-15 pointer-events-none grayscale"
@@ -174,7 +200,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CTA Section - Retour à l'original */}
+      {/* --- 4. CTA SECTION (Original) --- */}
       <section className="py-16 md:py-20 gradient-primary text-primary-foreground relative overflow-hidden">
         <div 
           className="absolute inset-0 z-0 opacity-15 pointer-events-none mix-blend-overlay"
