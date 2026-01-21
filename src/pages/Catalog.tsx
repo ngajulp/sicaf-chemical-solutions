@@ -13,7 +13,6 @@ const Catalog = () => {
   const { categories, products, loading } = useGitHubProducts();
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Filtrage des produits par nom ou référence
   const filteredProducts = products.filter(product => 
     product.name[language].toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.reference.toLowerCase().includes(searchTerm.toLowerCase())
@@ -21,23 +20,27 @@ const Catalog = () => {
 
   return (
     <Layout>
-      {/* 1. HERO CATALOGUE */}
-      <section className="relative text-white min-h-[350px] flex items-center py-20 overflow-hidden bg-slate-900">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1532187875605-2fe358a3d46a?auto=format&fit=crop&q=80" 
-            className="w-full h-full object-cover opacity-30 grayscale"
-            alt="Laboratory background"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-transparent" />
-        </div>
+      {/* 1. HERO CATALOGUE - FILIGRANE VISIBLE */}
+      <section className="relative text-white min-h-[400px] flex items-center py-24 overflow-hidden bg-slate-900">
+        {/* L'IMAGE EN FILIGRANE */}
+        <div 
+          className="absolute inset-0 z-0 opacity-30 grayscale brightness-125"
+          style={{
+            backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        />
+        {/* LE DÉGRADÉ (placé derrière le texte pour la lisibilité mais laisse passer le filigrane) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/40 to-transparent z-1" />
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl">
-            <h1 className="font-heading text-5xl md:text-7xl font-black mb-6 uppercase italic tracking-tighter leading-none">
+            <h1 className="font-heading text-5xl md:text-7xl font-black mb-6 uppercase italic tracking-tighter leading-none drop-shadow-lg">
               {t('catalog.title')}
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 font-medium italic border-l-4 border-secondary pl-6 max-w-2xl">
+            <p className="text-xl md:text-2xl text-white font-medium italic border-l-4 border-secondary pl-6 max-w-2xl drop-shadow-md">
               {language === 'fr' 
                 ? "Accédez à l'intégralité de nos solutions chimiques haute performance."
                 : "Access our full range of high-performance chemical solutions."}
@@ -46,7 +49,7 @@ const Catalog = () => {
         </div>
       </section>
 
-      {/* 2. BARRE DE RECHERCHE - STICKY */}
+      {/* 2. BARRE DE RECHERCHE */}
       <section className="bg-slate-50 border-b border-slate-200 py-8 sticky top-16 z-30 shadow-sm">
         <div className="container mx-auto px-4">
           <div className="relative max-w-2xl mx-auto">
@@ -62,12 +65,10 @@ const Catalog = () => {
         </div>
       </section>
 
-      {/* 3. GRILLE DE PRODUITS */}
+      {/* 3. GRILLE DE PRODUITS - FILIGRANE ÉGALEMENT VISIBLE ICI */}
       <section className="py-20 md:py-32 bg-background relative overflow-hidden">
-        
-        {/* FILIGRANE LABOCHIMIE - Pleine largeur et visible */}
         <div 
-          className="absolute inset-0 z-0 opacity-10 pointer-events-none grayscale"
+          className="absolute inset-0 z-0 opacity-15 pointer-events-none grayscale"
           style={{
             backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png')`,
             backgroundSize: 'cover',
@@ -80,103 +81,56 @@ const Catalog = () => {
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 gap-4">
               <Loader2 className="h-12 w-12 text-primary animate-spin" />
-              <p className="font-black uppercase tracking-[0.3em] text-slate-400">
-                {language === 'fr' ? "Mise à jour de l'inventaire..." : "Updating inventory..."}
-              </p>
+              <p className="font-black uppercase tracking-[0.3em] text-slate-400">Chargement...</p>
             </div>
           ) : (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                {filteredProducts.map((product) => {
-                  
-                  // SECURITÉ : Détection de la catégorie pour éviter le "undefined"
-                  const catId = product.categoryId || product.category || "all";
-                  const category = categories.find(c => c.id === catId);
-                  
-                  return (
-                    /* NAVIGATION CORRIGÉE : Utilise catId pour garantir une URL valide */
-                    <Link 
-                      key={product.reference} 
-                      to={`/products/${catId}/${product.reference}`}
-                      className="group"
-                    >
-                      <Card className="h-full border-none shadow-[0_10px_30px_rgba(0,0,0,0.05)] rounded-none overflow-hidden transition-all duration-500 group-hover:shadow-[0_25px_70px_rgba(0,102,204,0.15)] group-hover:-translate-y-2 bg-white/95 backdrop-blur-sm">
-                        
-                        {/* Image du Produit */}
-                        <div className="relative h-64 overflow-hidden bg-slate-100">
-                          {product.img ? (
-                            <img 
-                              src={product.img} 
-                              alt={product.name[language]}
-                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                              <Package className="h-16 w-16 text-slate-300" />
-                            </div>
-                          )}
-                          
-                          {/* Badges Flottants */}
-                          <div className="absolute top-4 left-4 flex flex-col gap-2">
-                            <div className="bg-primary text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest shadow-lg">
-                              {product.reference}
-                            </div>
-                            {category && (
-                              <div className="bg-secondary text-primary text-[9px] font-black px-2 py-1 uppercase tracking-widest">
-                                {category.name[language]}
-                              </div>
-                            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              {filteredProducts.map((product) => {
+                const catId = product.categoryId || product.category || "all";
+                const category = categories.find(c => c.id === catId);
+                
+                return (
+                  <Link 
+                    key={product.reference} 
+                    to={`/products/${catId}/${product.reference}`}
+                    className="group"
+                  >
+                    <Card className="h-full border-none shadow-[0_10px_30px_rgba(0,0,0,0.05)] rounded-none overflow-hidden transition-all duration-500 group-hover:shadow-[0_25px_70px_rgba(0,102,204,0.15)] group-hover:-translate-y-2 bg-white/95 backdrop-blur-sm">
+                      <div className="relative h-64 overflow-hidden bg-slate-100">
+                        {product.img ? (
+                          <img src={product.img} alt={product.name[language]} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <Package className="h-16 w-16 text-slate-300" />
+                          </div>
+                        )}
+                        <div className="absolute top-4 left-4 flex flex-col gap-2">
+                          <div className="bg-primary text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest shadow-lg">{product.reference}</div>
+                          {category && <div className="bg-secondary text-primary text-[9px] font-black px-2 py-1 uppercase tracking-widest">{category.name[language]}</div>}
+                        </div>
+                      </div>
+
+                      <CardContent className="p-8 space-y-4">
+                        <h2 className="text-2xl font-black uppercase italic tracking-tighter text-slate-900 group-hover:text-primary transition-colors leading-tight min-h-[64px]">
+                          {product.name[language]}
+                        </h2>
+                        <div className="h-1 w-12 bg-secondary group-hover:w-full transition-all duration-500" />
+                        <div className="space-y-2">
+                          <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Spécification technique</p>
+                          <p className="font-mono font-bold text-lg text-slate-700 truncate">{product.specifications || "N/A"}</p>
+                        </div>
+                        <div className="pt-4 flex items-center justify-between border-t border-slate-50">
+                          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary flex items-center gap-2">Voir la Fiche <ChevronRight className="h-3 w-3" /></span>
+                          <div className="w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
+                            <ChevronRight className="h-5 w-5 group-hover:text-white" />
                           </div>
                         </div>
-
-                        <CardContent className="p-8 space-y-4">
-                          <h2 className="text-2xl font-black uppercase italic tracking-tighter text-slate-900 group-hover:text-primary transition-colors leading-tight min-h-[64px]">
-                            {product.name[language]}
-                          </h2>
-                          
-                          <div className="h-1 w-12 bg-secondary group-hover:w-full transition-all duration-500" />
-                          
-                          <div className="space-y-2">
-                            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-                              {language === 'fr' ? "Spécification technique" : "Technical specification"}
-                            </p>
-                            <p className="font-mono font-bold text-lg text-slate-700 truncate">
-                              {product.specifications || "Consultable sur demande"}
-                            </p>
-                          </div>
-
-                          <div className="pt-4 flex items-center justify-between border-t border-slate-50">
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary flex items-center gap-2">
-                              {language === 'fr' ? "Fiche Technique" : "Datasheet"} 
-                              <ChevronRight className="h-3 w-3" />
-                            </span>
-                            <div className="w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
-                              <ChevronRight className="h-5 w-5 group-hover:text-white" />
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  );
-                })}
-              </div>
-
-              {filteredProducts.length === 0 && (
-                <div className="text-center py-20">
-                  <Beaker className="h-16 w-16 text-slate-200 mx-auto mb-4" />
-                  <p className="text-xl font-bold text-slate-400 uppercase tracking-widest">
-                    {language === 'fr' ? "Aucun produit trouvé" : "No products found"}
-                  </p>
-                  <Button 
-                    variant="link" 
-                    onClick={() => setSearchTerm('')}
-                    className="mt-4 text-primary font-black uppercase italic"
-                  >
-                    {language === 'fr' ? "Réinitialiser la recherche" : "Reset search"}
-                  </Button>
-                </div>
-              )}
-            </>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                );
+              })}
+            </div>
           )}
         </div>
       </section>
