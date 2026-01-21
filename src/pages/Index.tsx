@@ -66,22 +66,24 @@ const Index = () => {
         </div>
       </section>
 
-      {/* --- 2. NOS PRODUITS (Style Industriel Premium avec Images) --- */}
+      {/* --- 2. NOS PRODUITS (Filigrane Pleine Largeur et Cartes Style Catalog) --- */}
       <section className="py-24 md:py-32 bg-background relative overflow-hidden">
-        {/* Filigrane Labochimie */}
+        
+        {/* FILIGRANE LABOCHIMIE - Visible et occupant tout l'espace */}
         <div 
-          className="absolute inset-0 z-0 opacity-[0.06] pointer-events-none grayscale"
+          className="absolute inset-0 z-0 opacity-15 pointer-events-none grayscale"
           style={{
             backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png')`,
-            backgroundSize: '900px',
-            backgroundPosition: 'left -100px center',
-            backgroundRepeat: 'no-repeat'
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            filter: 'contrast(1.1)'
           }}
         />
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="font-heading text-4xl md:text-5xl font-black text-foreground mb-6 uppercase italic tracking-tighter">
+            <h2 className="font-heading text-4xl md:text-5xl font-black text-foreground mb-6 uppercase italic tracking-tighter drop-shadow-sm">
               {t('home.products_title')}
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
@@ -98,8 +100,8 @@ const Index = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
               {categories.map((category) => (
                 <Link key={category.id} to={`/products/${category.id}`} className="group">
-                  <Card className="h-full border-none shadow-[0_10px_30px_rgba(0,0,0,0.05)] rounded-none overflow-hidden transition-all duration-500 group-hover:shadow-[0_20px_60px_rgba(0,102,204,0.15)] group-hover:-translate-y-2 bg-white">
-                    {/* Image de Catégorie */}
+                  <Card className="h-full border-none shadow-[0_10px_30px_rgba(0,0,0,0.08)] rounded-none overflow-hidden transition-all duration-500 group-hover:shadow-[0_25px_70px_rgba(0,102,204,0.2)] group-hover:-translate-y-2 bg-white/95 backdrop-blur-sm">
+                    {/* Image de Catégorie Style Catalog */}
                     <div className="relative h-64 overflow-hidden">
                       {category.img ? (
                         <img 
@@ -122,11 +124,11 @@ const Index = () => {
                     </div>
 
                     <CardContent className="p-8 space-y-4">
-                      <h3 className="text-2xl font-black uppercase italic tracking-tighter text-slate-900 group-hover:text-primary transition-colors leading-tight">
+                      <h3 className="text-2xl font-black uppercase italic tracking-tighter text-slate-900 group-hover:text-primary transition-colors leading-tight min-h-[64px]">
                         {category.name[language]}
                       </h3>
                       
-                      {/* Barre de progression décorative */}
+                      {/* Barre de progression décorative style Catalog */}
                       <div className="h-1 w-12 bg-secondary group-hover:w-full transition-all duration-500" />
                       
                       <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
