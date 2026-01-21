@@ -1,9 +1,10 @@
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Loader2, Package, Eye, ClipboardList } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Loader2, Package, Eye } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import {
   Table,
   TableBody,
@@ -22,6 +23,7 @@ const ProductCategory = () => {
   const category = getCategoryById(categoryId || '');
   const products = getProductsByCategory(categoryId || '');
 
+  // Get adjacent categories for navigation
   const currentIndex = categories.findIndex(c => c.id === categoryId);
   const prevCategory = currentIndex > 0 ? categories[currentIndex - 1] : null;
   const nextCategory = currentIndex < categories.length - 1 ? categories[currentIndex + 1] : null;
@@ -29,8 +31,8 @@ const ProductCategory = () => {
   if (loading) {
     return (
       <Layout>
-        <div className="container mx-auto px-4 py-32 text-center">
-          <Loader2 className="h-12 w-12 animate-spin text-accent mx-auto" />
+        <div className="container mx-auto px-4 py-20 text-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto" />
         </div>
       </Layout>
     );
@@ -39,14 +41,12 @@ const ProductCategory = () => {
   if (!category) {
     return (
       <Layout>
-        <div className="container mx-auto px-4 py-32 text-center">
-          <h1 className="text-4xl font-black uppercase italic text-slate-900 mb-8 tracking-tighter">
-            Catégorie Inconnue
+        <div className="container mx-auto px-4 py-20 text-center">
+          <h1 className="font-heading text-3xl font-bold text-foreground mb-4">
+            {language === 'fr' ? 'Catégorie non trouvée' : 'Category not found'}
           </h1>
           <Link to="/catalog">
-            <Button className="rounded-none bg-slate-900 h-14 px-8 font-black uppercase border-b-[3px] border-accent">
-              RETOUR AU CATALOGUE
-            </Button>
+            <Button>{t('common.back_to_catalog')}</Button>
           </Link>
         </div>
       </Layout>
@@ -55,82 +55,120 @@ const ProductCategory = () => {
 
   return (
     <Layout>
-      {/* 1. HERO SECTION - Bordure haute 2.5px */}
-      <section className="relative py-20 md:py-24 text-white bg-slate-900 border-t-[2.5px] border-accent">
-        {category.img && (
+      {/* Hero with category image */}
+      <section className="relative text-primary-foreground py-16 md:py-24 overflow-hidden">
+        {category.img ? (
           <>
             <img 
               src={category.img} 
               alt={category.name[language]}
-              className="absolute inset-0 w-full h-full object-cover opacity-30 grayscale"
+              className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
           </>
+        ) : (
+          <div className="absolute inset-0 gradient-hero" />
         )}
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl border-l-[3px] border-accent pl-6">
-            <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">{category.icon}</div>
-            <h1 className="text-4xl md:text-6xl font-black mb-3 uppercase tracking-tighter italic leading-none">
-              {category.name[language]}
-            </h1>
-            <p className="text-lg text-slate-300 font-bold uppercase italic bg-slate-800/50 inline-block p-2">
-              {category.description[language]}
-            </p>
-            <div className="mt-6 flex items-center gap-4">
-               <span className="bg-accent text-slate-900 font-black px-4 py-1 uppercase text-[10px] tracking-widest border border-slate-900">
-                 {products.length} RÉFÉRENCES EN STOCK
-               </span>
-            </div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="text-6xl mb-4 drop-shadow-lg">{category.icon}</div>
+          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">
+            {category.name[language]}
+          </h1>
+          <p className="text-xl text-white/90 max-w-2xl mx-auto drop-shadow">
+            {category.description[language]}
+          </p>
+          <p className="mt-4 text-white/70">
+            {products.length} {language === 'fr' ? 'produits disponibles' : 'products available'}
+          </p>
+        </div>
+      </section>
+
+      {/* Breadcrumb */}
+      <section className="bg-muted py-4">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center gap-2 text-sm">
+            <Link to="/" className="text-muted-foreground hover:text-primary">
+              {t('nav.home')}
+            </Link>
+            <span className="text-muted-foreground">/</span>
+            <Link to="/catalog" className="text-muted-foreground hover:text-primary">
+              {t('nav.catalog')}
+            </Link>
+            <span className="text-muted-foreground">/</span>
+            <span className="text-foreground font-medium">{category.name[language]}</span>
           </div>
         </div>
       </section>
 
-      {/* 2. TABLEAU DE DONNÉES TECHNIQUES */}
-      <section className="py-16 bg-white">
+      {/* Products Table */}
+      <section className="py-12 md:py-16 bg-background">
         <div className="container mx-auto px-4">
-          <div className="flex items-center gap-3 mb-8 border-b-[1.5px] border-slate-100 pb-4">
-            <ClipboardList className="text-accent h-5 w-5" />
-            <h2 className="text-xl font-black uppercase tracking-tighter italic text-slate-900">Registre Technique des Produits</h2>
-          </div>
-
-          {/* Tableau - Bordure 2.5px et ombre 5px */}
-          <div className="relative border-[2.5px] border-slate-900 shadow-[5px_5px_0px_0px_rgba(15,23,42,1)] overflow-hidden">
+          <Card className="shadow-lg overflow-hidden">
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow className="bg-slate-900 hover:bg-slate-900 border-b-[2.5px] border-accent">
-                    <TableHead className="text-white font-black uppercase tracking-widest py-5 text-[10px]">RÉF</TableHead>
-                    <TableHead className="text-white font-black uppercase tracking-widest text-[10px]">DESIGNATION</TableHead>
-                    <TableHead className="text-white font-black uppercase tracking-widest hidden md:table-cell text-[10px]">APPLICATIONS</TableHead>
-                    <TableHead className="text-white font-black uppercase tracking-widest text-[10px]">SPECIFICATIONS</TableHead>
-                    <TableHead className="text-white font-black uppercase tracking-widest text-right text-[10px]">DÉTAILS</TableHead>
+                  <TableRow className="bg-primary hover:bg-primary">
+                    <TableHead className="text-primary-foreground font-semibold w-20">
+                      {language === 'fr' ? 'Image' : 'Image'}
+                    </TableHead>
+                    <TableHead className="text-primary-foreground font-semibold">
+                      {t('table.reference')}
+                    </TableHead>
+                    <TableHead className="text-primary-foreground font-semibold">
+                      {t('table.product')}
+                    </TableHead>
+                    <TableHead className="text-primary-foreground font-semibold hidden md:table-cell">
+                      {t('table.applications')}
+                    </TableHead>
+                    <TableHead className="text-primary-foreground font-semibold">
+                      {t('table.specifications')}
+                    </TableHead>
+                    <TableHead className="text-primary-foreground font-semibold w-20">
+                      {language === 'fr' ? 'Détails' : 'Details'}
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {products.map((product) => (
+                  {products.map((product, index) => (
                     <TableRow 
                       key={product.reference}
-                      className="border-b border-slate-100 hover:bg-slate-50 transition-colors group cursor-pointer"
-                      onClick={() => navigate(`/products/${categoryId}/${encodeURIComponent(product.reference)}`)}
+                      className={index % 2 === 0 ? 'bg-background' : 'bg-muted/50'}
                     >
-                      <TableCell className="font-mono font-black text-accent py-5">
+                      <TableCell>
+                        {product.img ? (
+                          <div className="image-hover-zoom rounded-lg overflow-hidden w-14 h-14">
+                            <img 
+                              src={product.img} 
+                              alt={product.name[language]}
+                              className="w-14 h-14 object-cover"
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-14 h-14 bg-muted rounded-lg flex items-center justify-center">
+                            <Package className="h-6 w-6 text-muted-foreground" />
+                          </div>
+                        )}
+                      </TableCell>
+                      <TableCell className="font-mono text-sm font-medium text-primary">
                         {product.reference}
                       </TableCell>
-                      <TableCell className="font-bold text-slate-900 uppercase text-sm">
+                      <TableCell className="font-medium">
                         {product.name[language]}
                       </TableCell>
-                      <TableCell className="text-slate-500 font-bold hidden md:table-cell max-w-xs truncate italic text-xs">
+                      <TableCell className="text-muted-foreground hidden md:table-cell">
                         {product.applications[language]}
                       </TableCell>
                       <TableCell>
-                        <span className="bg-slate-100 text-slate-900 px-2 py-1 font-black text-[10px] border-[1px] border-slate-200 uppercase tracking-tighter">
+                        <span className="inline-block bg-secondary/20 text-secondary-foreground px-2 py-1 rounded text-sm">
                           {product.specifications}
                         </span>
                       </TableCell>
-                      <TableCell className="text-right">
+                      <TableCell>
                         <Button
                           variant="ghost"
-                          className="rounded-none group-hover:bg-accent group-hover:text-slate-900 transition-all p-2 h-auto"
+                          size="sm"
+                          onClick={() => navigate(`/products/${categoryId}/${encodeURIComponent(product.reference)}`)}
+                          className="gap-1 text-primary hover:text-primary/80"
                         >
                           <Eye className="h-4 w-4" />
                         </Button>
@@ -140,55 +178,50 @@ const ProductCategory = () => {
                 </TableBody>
               </Table>
             </div>
-          </div>
+          </Card>
 
-          {/* 3. NAVIGATION INTER-CATÉGORIES */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 border-t-[1.5px] border-slate-100 pt-10">
-            <div className="order-2 md:order-1">
-              {prevCategory && (
-                <Link to={`/products/${prevCategory.id}`} className="group block p-4 border-[2.5px] border-slate-900 hover:border-accent transition-all">
-                  <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-[0.2em] text-left">Précédent</p>
-                  <div className="flex items-center gap-2 font-black text-sm md:text-md uppercase italic group-hover:text-accent truncate">
-                    <ArrowLeft size={14} />
-                    {prevCategory.name[language]}
-                  </div>
-                </Link>
-              )}
-            </div>
-
-            <div className="order-1 md:order-2 flex items-center justify-center">
-              <Link to="/catalog">
-                <Button variant="outline" className="rounded-none border-[2px] border-slate-900 font-black uppercase h-12 px-6 hover:bg-slate-900 hover:text-white transition-all text-[10px] tracking-widest">
-                  CATALOGUE COMPLET
+          {/* Navigation between categories */}
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8">
+            {prevCategory ? (
+              <Link to={`/products/${prevCategory.id}`}>
+                <Button variant="outline" className="gap-2">
+                  <ArrowLeft className="h-4 w-4" />
+                  {prevCategory.icon} {prevCategory.name[language]}
                 </Button>
               </Link>
-            </div>
+            ) : (
+              <div />
+            )}
 
-            <div className="order-3 text-right">
-              {nextCategory && (
-                <Link to={`/products/${nextCategory.id}`} className="group block p-4 border-[2.5px] border-slate-900 hover:border-accent transition-all">
-                  <p className="text-[9px] font-black text-slate-400 mb-1 uppercase tracking-[0.2em]">Suivant</p>
-                  <div className="flex items-center justify-end gap-2 font-black text-sm md:text-md uppercase italic group-hover:text-accent truncate">
-                    {nextCategory.name[language]}
-                    <ArrowRight size={14} />
-                  </div>
-                </Link>
-              )}
-            </div>
+            <Link to="/catalog">
+              <Button variant="ghost">{t('common.back_to_catalog')}</Button>
+            </Link>
+
+            {nextCategory ? (
+              <Link to={`/products/${nextCategory.id}`}>
+                <Button variant="outline" className="gap-2">
+                  {nextCategory.name[language]} {nextCategory.icon}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </Link>
+            ) : (
+              <div />
+            )}
           </div>
 
-          {/* 4. APPEL À L'ACTION FINAL */}
-          <div className="mt-20 bg-slate-900 p-10 relative overflow-hidden text-center border-b-[3px] border-accent">
-             <div className="relative z-10">
-                <h3 className="text-2xl md:text-3xl font-black text-white uppercase italic tracking-tighter mb-6">
-                  Besoin d'un approvisionnement spécifique ?
-                </h3>
-                <Link to="/quote">
-                  <Button className="bg-accent hover:bg-white text-slate-900 h-14 px-10 rounded-none font-black uppercase tracking-[0.15em] text-md transition-all border-none">
-                    {t('nav.quote')}
-                  </Button>
-                </Link>
-             </div>
+          {/* CTA */}
+          <div className="mt-12 text-center">
+            <p className="text-muted-foreground mb-4">
+              {language === 'fr' 
+                ? 'Intéressé par ces produits ?'
+                : 'Interested in these products?'}
+            </p>
+            <Link to="/quote">
+              <Button size="lg" className="font-semibold">
+                {t('nav.quote')}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
