@@ -21,7 +21,7 @@ const Catalog = () => {
 
   return (
     <Layout>
-      {/* 1. HERO CATALOGUE - Design Industriel Aéré */}
+      {/* 1. HERO CATALOGUE */}
       <section className="relative text-white min-h-[350px] flex items-center py-20 overflow-hidden bg-slate-900">
         <div className="absolute inset-0 z-0">
           <img 
@@ -46,7 +46,7 @@ const Catalog = () => {
         </div>
       </section>
 
-      {/* 2. BARRE DE RECHERCHE - Sticky */}
+      {/* 2. BARRE DE RECHERCHE - STICKY */}
       <section className="bg-slate-50 border-b border-slate-200 py-8 sticky top-16 z-30 shadow-sm">
         <div className="container mx-auto px-4">
           <div className="relative max-w-2xl mx-auto">
@@ -62,7 +62,7 @@ const Catalog = () => {
         </div>
       </section>
 
-      {/* 3. GRILLE DE PRODUITS - Style Identique à ProductCategory */}
+      {/* 3. GRILLE DE PRODUITS */}
       <section className="py-20 md:py-32 bg-background relative overflow-hidden">
         
         {/* FILIGRANE LABOCHIMIE - Pleine largeur et visible */}
@@ -88,16 +88,20 @@ const Catalog = () => {
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {filteredProducts.map((product) => {
-                  const category = categories.find(c => c.id === product.categoryId);
+                  
+                  // SECURITÉ : Détection de la catégorie pour éviter le "undefined"
+                  const catId = product.categoryId || product.category || "all";
+                  const category = categories.find(c => c.id === catId);
                   
                   return (
-                    /* NAVIGATION CORRIGÉE : Lien direct vers le détail produit */
+                    /* NAVIGATION CORRIGÉE : Utilise catId pour garantir une URL valide */
                     <Link 
                       key={product.reference} 
-                      to={`/products/${product.categoryId}/${product.reference}`}
+                      to={`/products/${catId}/${product.reference}`}
                       className="group"
                     >
                       <Card className="h-full border-none shadow-[0_10px_30px_rgba(0,0,0,0.05)] rounded-none overflow-hidden transition-all duration-500 group-hover:shadow-[0_25px_70px_rgba(0,102,204,0.15)] group-hover:-translate-y-2 bg-white/95 backdrop-blur-sm">
+                        
                         {/* Image du Produit */}
                         <div className="relative h-64 overflow-hidden bg-slate-100">
                           {product.img ? (
@@ -130,7 +134,6 @@ const Catalog = () => {
                             {product.name[language]}
                           </h2>
                           
-                          {/* Barre d'accentuation animée */}
                           <div className="h-1 w-12 bg-secondary group-hover:w-full transition-all duration-500" />
                           
                           <div className="space-y-2">
@@ -138,13 +141,13 @@ const Catalog = () => {
                               {language === 'fr' ? "Spécification technique" : "Technical specification"}
                             </p>
                             <p className="font-mono font-bold text-lg text-slate-700 truncate">
-                              {product.specifications}
+                              {product.specifications || "Consultable sur demande"}
                             </p>
                           </div>
 
                           <div className="pt-4 flex items-center justify-between border-t border-slate-50">
                             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary flex items-center gap-2">
-                              {language === 'fr' ? "Voir la Fiche" : "View Datasheet"} 
+                              {language === 'fr' ? "Fiche Technique" : "Datasheet"} 
                               <ChevronRight className="h-3 w-3" />
                             </span>
                             <div className="w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
@@ -158,7 +161,6 @@ const Catalog = () => {
                 })}
               </div>
 
-              {/* État vide si aucune recherche ne correspond */}
               {filteredProducts.length === 0 && (
                 <div className="text-center py-20">
                   <Beaker className="h-16 w-16 text-slate-200 mx-auto mb-4" />
