@@ -22,7 +22,7 @@ const Index = () => {
     <Layout>
       <WhatsAppButton variant="floating" />
 
-      {/* --- 1. HERO SECTION (Original) --- */}
+      {/* --- 1. HERO SECTION (Référence pour l'uniformité) --- */}
       <section className="gradient-hero text-primary-foreground py-20 md:py-32 relative overflow-hidden">
         <div 
           className="absolute inset-0 z-0 opacity-20 pointer-events-none grayscale"
@@ -56,7 +56,6 @@ const Index = () => {
           </div>
         </div>
         
-        {/* Wave Separator */}
         <div className="absolute bottom-0 left-0 right-0 overflow-hidden z-10">
           <svg className="relative w-full h-12 md:h-20" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" className="fill-background" />
@@ -66,10 +65,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* --- 2. NOS PRODUITS (Filigrane Pleine Largeur et Cartes Style Catalog) --- */}
+      {/* --- 2. NOS PRODUITS (Section Harmonisée) --- */}
       <section className="py-24 md:py-32 bg-background relative overflow-hidden">
-        
-        {/* FILIGRANE LABOCHIMIE - Visible et occupant tout l'espace */}
         <div 
           className="absolute inset-0 z-0 opacity-15 pointer-events-none grayscale"
           style={{
@@ -83,10 +80,10 @@ const Index = () => {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="font-heading text-4xl md:text-5xl font-black text-foreground mb-6 uppercase italic tracking-tighter drop-shadow-sm">
+            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight uppercase tracking-tight">
               {t('home.products_title')}
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
               {t('home.products_subtitle')}
             </p>
             <div className="h-1.5 w-24 bg-primary mx-auto mt-6" />
@@ -101,7 +98,6 @@ const Index = () => {
               {categories.map((category) => (
                 <Link key={category.id} to={`/products/${category.id}`} className="group">
                   <Card className="h-full border-none shadow-[0_10px_30px_rgba(0,0,0,0.08)] rounded-none overflow-hidden transition-all duration-500 group-hover:shadow-[0_25px_70px_rgba(0,102,204,0.2)] group-hover:-translate-y-2 bg-white/95 backdrop-blur-sm">
-                    {/* Image de Catégorie Style Catalog */}
                     <div className="relative h-64 overflow-hidden">
                       {category.img ? (
                         <img 
@@ -115,28 +111,27 @@ const Index = () => {
                         </div>
                       )}
                       
-                      {/* Badge Icône contextuel */}
                       <div className="absolute top-4 left-4">
-                        <div className="bg-primary text-white p-3 shadow-2xl flex items-center justify-center text-2xl">
+                        {/* Badge harmonisé avec la couleur accent du Hero */}
+                        <div className="bg-accent text-accent-foreground p-3 shadow-2xl flex items-center justify-center text-2xl">
                           {category.icon}
                         </div>
                       </div>
                     </div>
 
                     <CardContent className="p-8 space-y-4">
-                      <h3 className="text-2xl font-black uppercase italic tracking-tighter text-slate-900 group-hover:text-primary transition-colors leading-tight min-h-[64px]">
+                      <h3 className="text-2xl font-bold uppercase tracking-tight text-slate-900 group-hover:text-primary transition-colors leading-tight min-h-[64px]">
                         {category.name[language]}
                       </h3>
                       
-                      {/* Barre de progression décorative style Catalog */}
                       <div className="h-1 w-12 bg-secondary group-hover:w-full transition-all duration-500" />
                       
-                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                      <p className="text-lg text-muted-foreground leading-relaxed line-clamp-2">
                         {category.description[language]}
                       </p>
 
                       <div className="pt-4 flex items-center justify-between border-t border-slate-50">
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary flex items-center gap-2">
+                        <span className="text-[11px] font-bold uppercase tracking-widest text-primary flex items-center gap-2">
                           {t('common.view_products')} <ChevronRight className="h-3 w-3" />
                         </span>
                         <div className="w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
@@ -152,7 +147,7 @@ const Index = () => {
 
           <div className="text-center mt-16">
             <Link to="/catalog">
-              <Button size="lg" className="h-16 px-12 font-black uppercase tracking-widest italic shadow-2xl hover:scale-105 transition-transform">
+              <Button size="lg" className="h-16 px-12 font-bold uppercase tracking-widest shadow-2xl hover:scale-105 transition-transform">
                 {t('catalog.title')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
@@ -161,7 +156,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* --- 3. WHY CHOOSE US (Original) --- */}
+      {/* --- 3. WHY CHOOSE US --- */}
       <section className="py-16 md:py-24 bg-muted relative overflow-hidden">
         <div 
           className="absolute inset-0 z-0 opacity-15 pointer-events-none grayscale"
@@ -202,7 +197,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* --- 4. CTA SECTION (Original) --- */}
+      {/* --- 4. CTA SECTION --- */}
       <section className="py-16 md:py-20 gradient-primary text-primary-foreground relative overflow-hidden">
         <div 
           className="absolute inset-0 z-0 opacity-15 pointer-events-none mix-blend-overlay"
