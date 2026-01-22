@@ -1,5 +1,6 @@
 [
   {
+     "ID":1,
      "categorie": "Eau et environnenemt",
      "products": ["Sulfate d'Alumine", "Hypochlorite de Calcium (Chlore Choc)", "Charbon Actif", "Polymères Floculants", "Antiscalants"],
      "expertise": "Potabilisation de l'eau et traitement des effluents industriels (STEP).",
@@ -7,6 +8,7 @@
      "img":""
   },
   {
+    "ID":2,
     "categorie": "Acides minéraux",
     "products": ["Acide Sulfurique 98%", "Acide Chlorhydrique 33%", "Acide Nitrique 68%", "Acide Phosphorique 85%", "Acide Formique", "Acide Citrique"],
     "expertise": "Solutions de décapage, ajustement de pH et processus de synthèse industrielle.",
@@ -14,6 +16,7 @@
     "img":""
   },
   {
+    "ID":3,
     "categorie": "Acides organiques",
     "products": ["Acide Sulfurique 98%", "Acide Chlorhydrique 33%", "Acide Nitrique 68%", "Acide Phosphorique 85%", "Acide Formique", "Acide Citrique"],
     "expertise": "Solutions de décapage, ajustement de pH et processus de synthèse industrielle.",
@@ -21,6 +24,7 @@
     "img":""
   },
   {
+  "ID":4,
   "categorie": "Agriculture",
   "products": [
     "Urée technique 46%",
@@ -35,6 +39,7 @@
   "description": "SICAF accompagne les acteurs agricoles avec des intrants chimiques de qualité, adaptés aux cultures tropicales et aux exigences des sols africains, tout en respectant les normes environnementales."
 },
 {
+  "ID":5,
   "categorie": "Résines & Adsorbants",
   "products": [
     "Résines échangeuses d’ions cationiques",
@@ -49,6 +54,7 @@
   "description": "Nos résines et adsorbants sont utilisés dans les systèmes de traitement d’eau, l’industrie chimique et pharmaceutique pour garantir une purification efficace et durable."
 },
 {
+  "ID":6,
   "categorie": "Sels & composés minéraux",
   "products": [
     "Sulfate de cuivre",
@@ -63,6 +69,7 @@
   "description": "SICAF fournit une large gamme de sels et composés minéraux utilisés dans l’industrie, le traitement de l’eau, l’agroalimentaire et les applications techniques spécialisées."
 },
 {
+  "ID":7,
   "categorie": "Bases & Hydroxydes",
   "products": [
     "Soude caustique (Hydroxyde de sodium)",
@@ -77,6 +84,7 @@
   "description": "Nos bases et hydroxydes sont destinés aux industries de transformation, au traitement des eaux et aux procédés nécessitant une régulation chimique fiable et maîtrisée."
 },
 {
+  "ID":8,
   "categorie": "Acides organiques",
   "products": [
     "Acide acétique",
