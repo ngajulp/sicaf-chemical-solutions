@@ -6,46 +6,32 @@ const GITHUB_BASE_URL = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GIT
 const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/public-data`;
 
 let cachedToken: string | null = null;
-//export const fetchGitHubToken = async (): Promise<string> => {
-//  if (cachedToken) return cachedToken;
-//  
-//  try {
-//    const response = await fetch(`${GITHUB_BASE_URL}/tokens.json?t=${Date.now()}`);
-//    if (!response.ok) throw new Error('Failed to fetch token');
-//    const data = await response.json();
-//    cachedToken = data.tokengit;
-//    return cachedToken || '';
-//  } catch (error) {
-//    console.error('Error fetching GitHub token:', error);
-//    throw error;
-//  }
-//};
+
+// ==================== AUTHENTIFICATION ====================
+
 export const fetchGitHubToken = async (): Promise<string> => {
   if (cachedToken) return cachedToken;
-
   const response = await fetch("/.netlify/functions/githubs");
   if (!response.ok) throw new Error("Failed to fetch GitHub token");
-
   const data = await response.json();
   cachedToken = data.token;
   return cachedToken;
 };
-// Clear cached token (useful when token expires)
+
 export const clearTokenCache = () => {
   cachedToken = null;
 };
 
-// Fetch raw file content (for public read-only access)
+// ==================== CORE FUNCTIONS (UTF-8 & SHA) ====================
+
 export const fetchRawFile = async (filename: string): Promise<any> => {
   const response = await fetch(`${GITHUB_BASE_URL}/${filename}?t=${Date.now()}`);
   if (!response.ok) throw new Error(`Failed to fetch ${filename}`);
   return response.json();
 };
 
-// Fetch file with SHA (for updates - requires token)
 export const fetchFileContent = async (filename: string): Promise<{ content: any; sha: string }> => {
   const token = await fetchGitHubToken();
-  
   const response = await fetch(`${GITHUB_API_URL}/${filename}`, {
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -54,24 +40,15 @@ export const fetchFileContent = async (filename: string): Promise<{ content: any
   });
   
   if (!response.ok) {
-    // Clear cache if auth fails
-    if (response.status === 401) {
-      clearTokenCache();
-    }
+    if (response.status === 401) clearTokenCache();
     throw new Error(`Failed to fetch ${filename}`);
   }
   
   const data = await response.json();
-  //const content = JSON.parse(atob(data.content));
-  const content = JSON.parse(
-  decodeURIComponent(
-    escape(atob(data.content))
-  )
-);
+  const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
   return { content, sha: data.sha };
 };
 
-// Update file content on GitHub (UTF-8 SAFE)
 export const updateFileContent = async (
   filename: string,
   content: any,
@@ -79,10 +56,8 @@ export const updateFileContent = async (
   message: string
 ): Promise<{ success: boolean; newSha: string }> => {
   const token = await fetchGitHubToken();
-
-  const encodedContent = Buffer
-    .from(JSON.stringify(content, null, 2), 'utf-8')
-    .toString('base64');
+  // Encodage Base64 compatible UTF-8 pour les accents
+  const encodedContent = btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2))));
 
   const response = await fetch(`${GITHUB_API_URL}/${filename}`, {
     method: 'PUT',
@@ -108,135 +83,127 @@ export const updateFileContent = async (
   return { success: true, newSha: result.content.sha };
 };
 
+// ==================== PRODUCTS CRUD ====================
 
-// Products CRUD
-//export const getProducts = async () => {
-//  return fetchFileContent('products.json');
-//};
-export const getProducts = async () => {
-  return fetchRawFile('products.json');
-};
-export const getProductsRaw = async () => {
-  return fetchRawFile('products.json');
+export const getProducts = () => fetchRawFile('products.json');
+export const getProductsRaw = () => fetchRawFile('products.json');
+
+export const getProductsSha = async (): Promise<string> => {
+  const { sha } = await fetchFileContent('products.json');
+  return sha;
 };
 
-export const updateProducts = async (products: any[], sha: string, message: string) => {
+export const updateProducts = (products: any[], sha: string, message: string) => {
   return updateFileContent('products.json', products, sha, message);
 };
 
-export const getProductsSha = async (): Promise<string> => {
-  const token = await fetchGitHubToken();
+// ==================== INDUSTRIES (CATEGORIES) CRUD PARALLÈLE ====================
 
-  const response = await fetch(`${GITHUB_API_URL}/products.json`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/vnd.github.v3+json',
-    },
-  });
+export const getIndustries = () => fetchRawFile('productsindustries.json');
 
-  if (!response.ok) {
-    throw new Error('Impossible de récupérer le SHA produits');
+/**
+ * SAUVEGARDE PARALLÈLE : Gère l'ID automatique et synchronise les produits associés.
+ */
+export const updateIndustriesAndProducts = async (categoryData: any) => {
+  // 1. Récupération simultanée des versions fraîches (SHA + Contenu)
+  const [indRes, prodRes] = await Promise.all([
+    fetchFileContent('productsindustries.json'),
+    fetchFileContent('products.json')
+  ]);
+
+  let finalCategory = { ...categoryData };
+  let newIndustries = [...indRes.content];
+
+  // 2. GESTION DE L'ID (Calcul du max pour auto-incrémentation)
+  const isNew = !categoryData.ID || categoryData.ID === 0;
+
+  if (isNew) {
+    const maxId = indRes.content.reduce((max: number, item: any) => 
+      (item.ID && item.ID > max) ? item.ID : max, 0
+    );
+    finalCategory.ID = maxId + 1;
+    newIndustries.push(finalCategory);
+  } else {
+    newIndustries = newIndustries.map((cat: any) => 
+      cat.ID === finalCategory.ID ? finalCategory : cat
+    );
   }
 
-  const data = await response.json();
-  return data.sha;
-};
-
-
-// Users CRUD
-//export const getUsers = async () => {
-//  return fetchFileContent('users.json');
-//};
-export const getUsers = async () => {
-  return fetchRawFile('users.json');
-};
-export const getUsersRaw = async () => {
-  return fetchRawFile('users.json');
-};
-
-export const updateUsers = async (users: any[], sha: string, message: string) => {
-  return updateFileContent('users.json', users, sha, message);
-};
-
-export const getUsersSha = async (): Promise<string> => {
-  const token = await fetchGitHubToken();
-
-  const response = await fetch(`${GITHUB_API_URL}/users.json`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/vnd.github.v3+json',
-    },
+  // 3. SYNCHRONISATION DES PRODUITS (On propage img et nom de catégorie)
+  const newProducts = prodRes.content.map((p: any) => {
+    if (p.category_id === finalCategory.ID || p.ID_categorie === finalCategory.ID) {
+      return { 
+        ...p, 
+        img: finalCategory.img, 
+        categorie: finalCategory.categorie 
+      };
+    }
+    return p;
   });
 
-  if (!response.ok) {
-    throw new Error('Impossible de récupérer le SHA users');
-  }
+  // 4. ÉCRITURE SIMULTANÉE SUR GITHUB
+  await Promise.all([
+    updateFileContent('productsindustries.json', newIndustries, indRes.sha, `Admin: ${isNew ? 'Create' : 'Update'} category ${finalCategory.categorie}`),
+    updateFileContent('products.json', newProducts, prodRes.sha, `Admin: Sync products for category ID ${finalCategory.ID}`)
+  ]);
 
-  const data = await response.json();
-  return data.sha;
+  return finalCategory;
 };
 
-export const getHistorySha = async (): Promise<string> => {
-  const token = await fetchGitHubToken();
+export const deleteCategoryAndSyncProducts = async (categoryId: number) => {
+  const [indRes, prodRes] = await Promise.all([
+    fetchFileContent('productsindustries.json'),
+    fetchFileContent('products.json')
+  ]);
 
-  const response = await fetch(`${GITHUB_API_URL}/history.json`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/vnd.github.v3+json',
-    },
+  const newIndustries = indRes.content.filter((c: any) => c.ID !== categoryId);
+  const newProducts = prodRes.content.map((p: any) => {
+    if (p.category_id === categoryId || p.ID_categorie === categoryId) {
+      return { ...p, categorie: "Non classé", img: "" }; 
+    }
+    return p;
   });
 
-  if (!response.ok) {
-    throw new Error('Impossible de récupérer le SHA history');
+  return Promise.all([
+    updateFileContent('productsindustries.json', newIndustries, indRes.sha, `Admin: Delete category ID ${categoryId}`),
+    updateFileContent('products.json', newProducts, prodRes.sha, `Admin: Cleanup products for deleted category`)
+  ]);
+};
+
+// ==================== USERS & HISTORY ====================
+
+export const getUsers = () => fetchRawFile('users.json');
+export const updateUsers = (users: any[], sha: string, message: string) => 
+  updateFileContent('users.json', users, sha, message);
+
+export const getHistory = () => fetchRawFile('history.json');
+export const updateHistory = (history: any[], sha: string, message: string) => 
+  updateFileContent('history.json', history, sha, message);
+
+export const addConnectionLog = async (userId: number, action: string = 'connexion') => {
+  try {
+    const { content: history, sha } = await fetchFileContent('history.json');
+    const newLog = {
+      id: userId,
+      date: new Date().toISOString().split('T')[0],
+      heure: new Date().toTimeString().split(' ')[0],
+      action
+    };
+    const updatedHistory = [...history, newLog];
+    await updateHistory(updatedHistory, sha, `Ajout log connexion user ${userId}`);
+    return true;
+  } catch (error) {
+    console.error('Error adding connection log:', error);
+    return false;
   }
-
-  const data = await response.json();
-  return data.sha;
 };
 
-// History CRUD
-//export const getHistory = async () => {
-//  return fetchFileContent('history.json');
-//};
-export const getHistory = async () => {
-  return fetchRawFile('history.json');
-};
-export const getHistoryRaw = async () => {
-  return fetchRawFile('history.json');
-};
+// ==================== COMPANY INFO & COUNTERS ====================
 
-export const updateHistory = async (history: any[], sha: string, message: string) => {
-  return updateFileContent('history.json', history, sha, message);
-};
+export const getCompanyInfo = () => fetchRawFile('infospersonnelles.json');
+export const updateCompanyInfo = (info: any, sha: string, message: string) => 
+  updateFileContent('infospersonnelles.json', info, sha, message);
 
-// Company Info CRUD
-export const getCompanyInfo = async () => {
-  return fetchRawFile('infospersonnelles.json');
-};
-
-export const getCompanyInfoSha = async (): Promise<string> => {
-  const token = await fetchGitHubToken();
-
-  const response = await fetch(`${GITHUB_API_URL}/infospersonnelles.json`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/vnd.github.v3+json',
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Impossible de récupérer le SHA company info');
-  }
-
-  const data = await response.json();
-  return data.sha;
-};
-
-export const updateCompanyInfo = async (info: any, sha: string, message: string) => {
-  return updateFileContent('infospersonnelles.json', info, sha, message);
-};
-
-// Document Counters for sequential numbering
 export interface DocumentCounters {
   proforma: number;
   devis: number;
@@ -248,280 +215,112 @@ export const getCounters = async (): Promise<DocumentCounters> => {
   try {
     return await fetchRawFile('counters.json');
   } catch {
-    // Return default counters if file doesn't exist
     return { proforma: 0, devis: 0, facture: 0, lastUpdate: new Date().toISOString() };
   }
 };
 
-export const getCountersSha = async (): Promise<string> => {
-  const token = await fetchGitHubToken();
-
-  const response = await fetch(`${GITHUB_API_URL}/counters.json`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/vnd.github.v3+json',
-    },
-  });
-
-  if (!response.ok) {
-    // File may not exist, we'll create it
-    throw new Error('Counters file not found');
-  }
-
-  const data = await response.json();
-  return data.sha;
-};
-
-export const updateCounters = async (counters: DocumentCounters, sha: string, message: string) => {
-  return updateFileContent('counters.json', counters, sha, message);
-};
-
-export const createCountersFile = async (): Promise<{ success: boolean; sha: string }> => {
-  const token = await fetchGitHubToken();
-  const initialCounters: DocumentCounters = {
-    proforma: 0,
-    devis: 0,
-    facture: 0,
-    lastUpdate: new Date().toISOString()
-  };
-
-  const encodedContent = btoa(unescape(encodeURIComponent(JSON.stringify(initialCounters, null, 2))));
-
-  const response = await fetch(`${GITHUB_API_URL}/counters.json`, {
-    method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      message: 'Création fichier compteurs documents',
-      content: encodedContent,
-      branch: GITHUB_BRANCH,
-    }),
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to create counters file');
-  }
-
-  const result = await response.json();
-  return { success: true, sha: result.content.sha };
-};
-
-// Increment counter and return new number
-export const getNextDocumentNumber = async (type: 'proforma' | 'devis' | 'facture'): Promise<{ number: string; newCounters: DocumentCounters }> => {
-  let counters = await getCounters();
-  let sha: string;
-  
-  try {
-    sha = await getCountersSha();
-  } catch {
-    // Create file if it doesn't exist
-    const result = await createCountersFile();
-    sha = result.sha;
-    counters = { proforma: 0, devis: 0, facture: 0, lastUpdate: new Date().toISOString() };
-  }
-  
-  // Increment the counter
-  counters[type] = counters[type] + 1;
+export const getNextDocumentNumber = async (type: 'proforma' | 'devis' | 'facture') => {
+  const { content: counters, sha } = await fetchFileContent('counters.json');
+  counters[type] += 1;
   counters.lastUpdate = new Date().toISOString();
+  await updateFileContent('counters.json', counters, sha, `Incrémentation compteur ${type}`);
   
-  // Update on GitHub
-  const result = await updateCounters(counters, sha, `Incrémentation compteur ${type}: ${counters[type]}`);
-  
-  // Format number with padding
   const year = new Date().getFullYear();
   const prefix = type === 'proforma' ? 'PRO' : type === 'devis' ? 'DEV' : 'FAC';
-  const paddedNumber = counters[type].toString().padStart(5, '0');
-  
   return {
-    number: `${prefix}-${year}-${paddedNumber}`,
+    number: `${prefix}-${year}-${counters[type].toString().padStart(5, '0')}`,
     newCounters: counters
   };
 };
 
-// Add connection log
-export const addConnectionLog = async (userId: number, action: string = 'connexion') => {
-  try {
-    const { content: history, sha } = await getHistory();
-    const newLog = {
-      id: userId,
-      date: new Date().toISOString().split('T')[0],
-      heure: new Date().toTimeString().split(' ')[0],
-      action
-    };
-    
-    const updatedHistory = [...history, newLog];
-    await updateHistory(updatedHistory, sha, `Ajout log connexion user ${userId}`);
-    return true;
-  } catch (error) {
-    console.error('Error adding connection log:', error);
-    return false;
-  }
-};
+// ==================== FILE UPLOAD (IMAGE & PDF) ====================
 
-// ==================== FILE UPLOAD FUNCTIONS ====================
-
-const GITHUB_UPLOAD_API = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents`;
-
-// Convert file to base64
 export const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => {
-      const result = reader.result as string;
-      // Remove data:*/*;base64, prefix
-      const base64 = result.split(',')[1];
-      resolve(base64);
-    };
+    reader.onload = () => resolve((reader.result as string).split(',')[1]);
     reader.onerror = reject;
   });
 };
 
-// Upload image en utilisant la référence comme nom de fichier
-export const uploadImageToGitHub = async (
-  file: File,
-  reference: string
-): Promise<{ success: boolean; url: string }> => {
+export const uploadImageToGitHub = async (file: File, reference: string) => {
   const token = await fetchGitHubToken();
   const base64Content = await fileToBase64(file);
-
-  // Nom du fichier basé sur la référence
-  const fileName = `${reference}.png`; // ou jpg selon ton standard
-  const filePath = `public-data/img/${fileName}`;
-
-  // Vérifier si le fichier existe déjà pour récupérer le SHA
+  const fileName = `${reference}.png`;
+  
   let sha: string | undefined;
   try {
     const res = await fetch(`${GITHUB_API_URL}/img/${fileName}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/vnd.github.v3+json',
-      },
+      headers: { Authorization: `Bearer ${token}` }
     });
     if (res.ok) {
       const data = await res.json();
-      sha = data.sha; // SHA existant pour écrasement
+      sha = data.sha;
     }
-  } catch {
-    // Si n'existe pas, SHA reste undefined => création
-  }
+  } catch {}
 
   const response = await fetch(`${GITHUB_API_URL}/img/${fileName}`, {
     method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json',
-    },
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       message: `Upload image: ${fileName}`,
       content: base64Content,
       branch: GITHUB_BRANCH,
-      sha, // présent si on écrase
+      sha
     }),
   });
 
-  if (!response.ok) {
-    const err = await response.json();
-    throw new Error(err.message || 'Image upload failed');
-  }
-
-  const rawUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${filePath}`;
-  return { success: true, url: rawUrl };
+  if (!response.ok) throw new Error('Image upload failed');
+  return { success: true, url: `${GITHUB_BASE_URL}/img/${fileName}` };
 };
 
-// Upload PDF en utilisant la référence comme nom de fichier
-export const uploadPdfToGitHub = async (
-  file: File,
-  reference: string
-): Promise<{ success: boolean; url: string }> => {
+export const uploadPdfToGitHub = async (file: File, reference: string) => {
   const token = await fetchGitHubToken();
   const base64Content = await fileToBase64(file);
-
-  // Nom du fichier basé sur la référence
   const fileName = `${reference}.pdf`;
-  const filePath = `public-data/pdf/${fileName}`;
 
-  // Vérifier si le fichier existe déjà pour récupérer le SHA
   let sha: string | undefined;
   try {
     const res = await fetch(`${GITHUB_API_URL}/pdf/${fileName}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/vnd.github.v3+json',
-      },
+      headers: { Authorization: `Bearer ${token}` }
     });
     if (res.ok) {
       const data = await res.json();
-      sha = data.sha; // SHA existant pour écrasement
+      sha = data.sha;
     }
-  } catch {
-    // Si n'existe pas, SHA reste undefined => création
-  }
+  } catch {}
 
   const response = await fetch(`${GITHUB_API_URL}/pdf/${fileName}`, {
     method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json',
-    },
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       message: `Upload PDF: ${fileName}`,
       content: base64Content,
       branch: GITHUB_BRANCH,
-      sha, // présent si on écrase
+      sha
     }),
   });
 
-  if (!response.ok) {
-    const err = await response.json();
-    throw new Error(err.message || 'PDF upload failed');
-  }
-
-  const rawUrl = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${filePath}`;
-  return { success: true, url: rawUrl };
+  if (!response.ok) throw new Error('PDF upload failed');
+  return { success: true, url: `${GITHUB_BASE_URL}/pdf/${fileName}` };
 };
 
-
-
-// ==================== UPDATE PRODUCT WITH FILES ====================
-
-export const updateProductWithFile = async (
-  reference: string,
-  updatedData: Partial<any>,
-  newImage?: File,
-  newPdf?: File
-) => {
-  // 1️⃣ Récupérer produits existants et SHA
+export const updateProductWithFile = async (reference: string, updatedData: Partial<any>, newImage?: File, newPdf?: File) => {
   const { content: products, sha } = await fetchFileContent('products.json');
+  const index = products.findIndex((p: any) => p.reference === reference);
+  if (index === -1) throw new Error('Produit non trouvé');
 
-  // 2️⃣ Trouver le produit par référence
-  const productIndex = products.findIndex((p: any) => p.reference === reference);
-  if (productIndex === -1) throw new Error('Produit non trouvé');
-
-  // 3️⃣ Vérifier les fichiers et les uploader (écrase l’existant)
   if (newImage) {
-    if (newImage.size > 1 * 1024 * 1024) throw new Error('L\'image doit être inférieure à 1MB');
-    const { url } = await uploadImageToGitHub(newImage, reference); // Nom basé sur référence
+    const { url } = await uploadImageToGitHub(newImage, reference);
     updatedData.img = url;
   }
-
   if (newPdf) {
-    if (newPdf.size > 5 * 1024 * 1024) throw new Error('Le PDF doit être inférieur à 5MB');
-    const { url } = await uploadPdfToGitHub(newPdf, reference); // Nom basé sur référence
+    const { url } = await uploadPdfToGitHub(newPdf, reference);
     updatedData.pdf = url;
   }
 
-  // 4️⃣ Mettre à jour le produit
-  products[productIndex] = { ...products[productIndex], ...updatedData };
-
-  // 5️⃣ Envoyer sur GitHub
+  products[index] = { ...products[index], ...updatedData };
   await updateFileContent('products.json', products, sha, `Update product ${reference}`);
-
-  // 6️⃣ Retourner le produit mis à jour
-  return products[productIndex];
+  return products[index];
 };
