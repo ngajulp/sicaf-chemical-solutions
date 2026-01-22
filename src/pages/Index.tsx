@@ -22,7 +22,7 @@ const Index = () => {
     <Layout>
       <WhatsAppButton variant="floating" />
 
-      {/* --- 1. HERO SECTION (Référence pour l'uniformité) --- */}
+      {/* --- 1. HERO SECTION --- */}
       <section className="gradient-hero text-primary-foreground py-20 md:py-32 relative overflow-hidden">
         <div 
           className="absolute inset-0 z-0 opacity-20 pointer-events-none grayscale"
@@ -65,7 +65,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* --- 2. NOS PRODUITS (Section Harmonisée) --- */}
+      {/* --- 2. NOS PRODUITS (Version Défilement Vertical 4 par 4) --- */}
       <section className="py-24 md:py-32 bg-background relative overflow-hidden">
         <div 
           className="absolute inset-0 z-0 opacity-15 pointer-events-none grayscale"
@@ -94,58 +94,66 @@ const Index = () => {
               <Loader2 className="h-12 w-12 animate-spin text-primary" />
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-              {categories.map((category) => (
-                <Link key={category.id} to={`/products/${category.id}`} className="group">
-                  <Card className="h-full border-none shadow-[0_10px_30px_rgba(0,0,0,0.08)] rounded-none overflow-hidden transition-all duration-500 group-hover:shadow-[0_25px_70px_rgba(0,102,204,0.2)] group-hover:-translate-y-2 bg-white/95 backdrop-blur-sm">
-                    <div className="relative h-64 overflow-hidden">
-                      {category.img ? (
-                        <img 
-                          src={category.img} 
-                          alt={category.name[language]}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[0.3] group-hover:grayscale-0"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-slate-100 flex items-center justify-center">
-                           <span className="text-6xl opacity-20">{category.icon}</span>
+            <div className="relative max-w-5xl mx-auto">
+              {/* Conteneur avec hauteur fixe pour afficher 4 éléments verticalement (ajustable selon le design) */}
+              <div className="h-[600px] overflow-hidden relative">
+                <div className="animate-vertical-scroll space-y-6">
+                  {/* On double la liste pour un défilement infini fluide */}
+                  {[...categories, ...categories].map((category, idx) => (
+                    <Link key={`${category.id}-${idx}`} to={`/products/${category.id}`} className="block group">
+                      <Card className="flex flex-row items-center border-none shadow-[0_5px_15px_rgba(0,0,0,0.05)] rounded-none overflow-hidden transition-all duration-500 group-hover:shadow-[0_15px_30px_rgba(0,102,204,0.1)] group-hover:-translate-y-1 bg-white/95 backdrop-blur-sm h-32">
+                        {/* Image miniature style catalogue */}
+                        <div className="w-40 h-full overflow-hidden shrink-0 relative">
+                          {category.img ? (
+                            <img 
+                              src={category.img} 
+                              alt={category.name[language]}
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-slate-100 flex items-center justify-center">
+                               <span className="text-2xl opacity-20">{category.icon}</span>
+                            </div>
+                          )}
+                          <div className="absolute top-2 left-2">
+                            <div className="bg-accent text-accent-foreground p-1.5 shadow-lg text-sm">
+                              {category.icon}
+                            </div>
+                          </div>
                         </div>
-                      )}
-                      
-                      <div className="absolute top-4 left-4">
-                        {/* Badge harmonisé avec la couleur accent du Hero */}
-                        <div className="bg-accent text-accent-foreground p-3 shadow-2xl flex items-center justify-center text-2xl">
-                          {category.icon}
-                        </div>
-                      </div>
-                    </div>
 
-                    <CardContent className="p-8 space-y-4">
-                      <h3 className="text-2xl font-bold uppercase tracking-tight text-slate-900 group-hover:text-primary transition-colors leading-tight min-h-[64px]">
-                        {category.name[language]}
-                      </h3>
-                      
-                      <div className="h-1 w-12 bg-secondary group-hover:w-full transition-all duration-500" />
-                      
-                      <p className="text-lg text-muted-foreground leading-relaxed line-clamp-2">
-                        {category.description[language]}
-                      </p>
+                        <CardContent className="p-6 flex flex-row items-center justify-between w-full">
+                          <div className="space-y-1">
+                            <h3 className="text-lg font-bold uppercase tracking-tight text-slate-900 group-hover:text-primary transition-colors leading-tight">
+                              {category.name[language]}
+                            </h3>
+                            <p className="text-sm text-muted-foreground line-clamp-1 max-w-md">
+                              {category.description[language]}
+                            </p>
+                          </div>
 
-                      <div className="pt-4 flex items-center justify-between border-t border-slate-50">
-                        <span className="text-[11px] font-bold uppercase tracking-widest text-primary flex items-center gap-2">
-                          {t('common.view_products')} <ChevronRight className="h-3 w-3" />
-                        </span>
-                        <div className="w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
-                          <ChevronRight className="h-5 w-5 group-hover:text-white" />
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
+                          <div className="flex items-center gap-4">
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-primary hidden md:flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                              {t('common.view_products')} <ChevronRight className="h-3 w-3" />
+                            </span>
+                            <div className="w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
+                              <ChevronRight className="h-5 w-5 group-hover:text-white" />
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+                
+                {/* Masques de dégradé pour l'effet de disparition haut/bas */}
+                <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
+              </div>
             </div>
           )}
 
-          <div className="text-center mt-16">
+          <div className="text-center mt-12">
             <Link to="/catalog">
               <Button size="lg" className="h-16 px-12 font-bold uppercase tracking-widest shadow-2xl hover:scale-105 transition-transform">
                 {t('catalog.title')}
@@ -234,6 +242,20 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Styles CSS pour l'animation de défilement vertical */}
+      <style>{`
+        @keyframes vertical-scroll {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(-50%); }
+        }
+        .animate-vertical-scroll {
+          animation: vertical-scroll 30s linear infinite;
+        }
+        .animate-vertical-scroll:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
     </Layout>
   );
 };
