@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import AdminLayout from '@/components/layout/AdminLayout'; // Import du Layout
+import AdminLayout from '@/components/admin/AdminLayout'; // Import du Layout
 
 interface Category {
   ID: number;
