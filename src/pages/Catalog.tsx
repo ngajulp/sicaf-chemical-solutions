@@ -1,138 +1,184 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Package, ChevronRight, Beaker, Search, Loader2 } from 'lucide-react';
+import { ChevronRight, Loader2, Beaker, Factory, ShieldCheck, Microscope } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { useState } from 'react';
+
+// Interface alignée sur votre JSON GitHub
+interface IndustryItem {
+  ID: number;
+  categorie: string;
+  products: string[];
+  expertise: string;
+  description: string;
+  img: string;
+}
 
 const Catalog = () => {
   const { language, t } = useLanguage();
-  const { categories, products, loading } = useGitHubProducts();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [industries, setIndustries] = useState<IndustryItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredProducts = products.filter(product => 
-    product.name[language].toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.reference.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  useEffect(() => {
+    const fetchCatalog = async () => {
+      try {
+        const response = await fetch('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/productsindustries.json');
+        const data = await response.json();
+        setIndustries(data);
+      } catch (error) {
+        console.error("Erreur catalogue:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCatalog();
+  }, []);
 
   return (
     <Layout>
-      {/* 1. HERO CATALOGUE - FILIGRANE VISIBLE */}
-      <section className="relative text-white min-h-[400px] flex items-center py-24 overflow-hidden bg-slate-900">
-        {/* L'IMAGE EN FILIGRANE */}
+      {/* 1. HERO SECTION - VISION GLOBALE */}
+      <section className="relative text-white min-h-[450px] flex items-center py-24 overflow-hidden bg-slate-900">
         <div 
           className="absolute inset-0 z-0 opacity-30 grayscale brightness-125"
           style={{
             backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
           }}
         />
-        {/* LE DÉGRADÉ (placé derrière le texte pour la lisibilité mais laisse passer le filigrane) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/40 to-transparent z-1" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent z-1" />
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl">
-            <h1 className="font-heading text-5xl md:text-7xl font-black mb-6 uppercase italic tracking-tighter leading-none drop-shadow-lg">
-              {t('catalog.title')}
+          <div className="max-w-4xl">
+            <div className="inline-flex items-center gap-2 bg-secondary/20 text-secondary px-4 py-2 rounded-none mb-6 border-l-4 border-secondary">
+              <ShieldCheck className="h-5 w-5" />
+              <span className="text-xs font-black uppercase tracking-[0.2em]">Normes Internationales Certifiées</span>
+            </div>
+            <h1 className="font-heading text-6xl md:text-8xl font-black mb-6 uppercase italic tracking-tighter leading-none">
+              {language === 'fr' ? 'Portfolio' : 'Portfolio'} <br/>
+              <span className="text-primary-foreground/50">Industriel</span>
             </h1>
-            <p className="text-xl md:text-2xl text-white font-medium italic border-l-4 border-secondary pl-6 max-w-2xl drop-shadow-md">
-              {language === 'fr' 
-                ? "Accédez à l'intégralité de nos solutions chimiques haute performance."
-                : "Access our full range of high-performance chemical solutions."}
+            <p className="text-xl md:text-2xl text-slate-300 font-medium italic max-w-2xl leading-relaxed">
+              Explorez nos divisions spécialisées et accédez aux fiches techniques de nos solutions chimiques.
             </p>
           </div>
         </div>
       </section>
 
-      {/* 2. BARRE DE RECHERCHE */}
-      <section className="bg-slate-50 border-b border-slate-200 py-8 sticky top-16 z-30 shadow-sm">
+      {/* 2. GRILLE DES DIVISIONS INDUSTRIELLES */}
+      <section className="py-24 bg-white relative">
         <div className="container mx-auto px-4">
-          <div className="relative max-w-2xl mx-auto">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
-            <Input 
-              type="text" 
-              placeholder={language === 'fr' ? "Rechercher par nom ou référence..." : "Search by name or reference..."}
-              className="pl-12 h-14 bg-white border-2 border-slate-200 rounded-none focus-visible:ring-primary font-bold uppercase tracking-widest text-xs"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div>
+              <h2 className="text-4xl font-black uppercase italic tracking-tighter text-slate-900">
+                Nos Domaines d'Intervention
+              </h2>
+              <div className="h-1.5 w-20 bg-primary mt-4" />
+            </div>
+            <p className="text-slate-500 font-bold uppercase tracking-widest text-[10px] md:text-right">
+              {industries.length} Divisions Spécialisées <br/> 
+              Sourcing International & Distribution
+            </p>
           </div>
-        </div>
-      </section>
 
-      {/* 3. GRILLE DE PRODUITS - FILIGRANE ÉGALEMENT VISIBLE ICI */}
-      <section className="py-20 md:py-32 bg-background relative overflow-hidden">
-        <div 
-          className="absolute inset-0 z-0 opacity-15 pointer-events-none grayscale"
-          style={{
-            backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-          }}
-        />
-
-        <div className="container mx-auto px-4 relative z-10">
           {loading ? (
-            <div className="flex flex-col items-center justify-center py-20 gap-4">
-              <Loader2 className="h-12 w-12 text-primary animate-spin" />
-              <p className="font-black uppercase tracking-[0.3em] text-slate-400">Chargement...</p>
+            <div className="flex flex-col items-center justify-center py-24">
+              <Loader2 className="h-16 w-16 text-primary animate-spin" />
+              <p className="mt-4 font-black uppercase tracking-[0.3em] text-slate-400">Synchronisation Catalogue...</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {filteredProducts.map((product) => {
-                const catId = product.categoryId || product.category || "all";
-                const category = categories.find(c => c.id === catId);
-                
-                return (
-                  <Link 
-                    key={product.reference} 
-                    to={`/products/${catId}/${product.reference}`}
-                    className="group"
-                  >
-                    <Card className="h-full border-none shadow-[0_10px_30px_rgba(0,0,0,0.05)] rounded-none overflow-hidden transition-all duration-500 group-hover:shadow-[0_25px_70px_rgba(0,102,204,0.15)] group-hover:-translate-y-2 bg-white/95 backdrop-blur-sm">
-                      <div className="relative h-64 overflow-hidden bg-slate-100">
-                        {product.img ? (
-                          <img src={product.img} alt={product.name[language]} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <Package className="h-16 w-16 text-slate-300" />
-                          </div>
-                        )}
-                        <div className="absolute top-4 left-4 flex flex-col gap-2">
-                          <div className="bg-primary text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest shadow-lg">{product.reference}</div>
-                          {category && <div className="bg-secondary text-primary text-[9px] font-black px-2 py-1 uppercase tracking-widest">{category.name[language]}</div>}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {industries.map((item) => (
+                <Link key={item.ID} to={`/products/${item.ID}`} className="group">
+                  <Card className="border-none shadow-[0_30px_60px_rgba(0,0,0,0.05)] rounded-none overflow-hidden hover:shadow-[0_40px_90px_rgba(0,0,0,0.12)] transition-all duration-700 bg-slate-50">
+                    <div className="flex flex-col md:flex-row">
+                      {/* Image à gauche */}
+                      <div className="md:w-2/5 relative h-64 md:h-auto overflow-hidden bg-slate-200">
+                        <img 
+                          src={item.img || 'https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industriechimie.png'} 
+                          alt={item.categorie} 
+                          className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000"
+                        />
+                        <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors" />
+                        <div className="absolute top-4 left-4 bg-slate-900 text-white p-3">
+                           <Factory className="h-5 w-5" />
                         </div>
                       </div>
 
-                      <CardContent className="p-8 space-y-4">
-                        <h2 className="text-2xl font-black uppercase italic tracking-tighter text-slate-900 group-hover:text-primary transition-colors leading-tight min-h-[64px]">
-                          {product.name[language]}
-                        </h2>
-                        <div className="h-1 w-12 bg-secondary group-hover:w-full transition-all duration-500" />
-                        <div className="space-y-2">
-                          <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Spécification technique</p>
-                          <p className="font-mono font-bold text-lg text-slate-700 truncate">{product.specifications || "N/A"}</p>
-                        </div>
-                        <div className="pt-4 flex items-center justify-between border-t border-slate-50">
-                          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary flex items-center gap-2">Voir la Fiche <ChevronRight className="h-3 w-3" /></span>
-                          <div className="w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
-                            <ChevronRight className="h-5 w-5 group-hover:text-white" />
+                      {/* Contenu à droite */}
+                      <CardContent className="md:w-3/5 p-10 flex flex-col justify-between">
+                        <div>
+                          <div className="flex items-center gap-2 mb-4">
+                            <span className="h-px w-8 bg-secondary" />
+                            <span className="text-[10px] font-black uppercase tracking-widest text-primary">Division {item.ID}</span>
                           </div>
+                          <h3 className="text-3xl font-black uppercase italic tracking-tighter text-slate-900 mb-4 group-hover:text-primary transition-colors">
+                            {item.categorie}
+                          </h3>
+                          <p className="text-slate-500 text-sm leading-relaxed mb-6 line-clamp-3 italic">
+                            {item.description}
+                          </p>
+                        </div>
+
+                        <div className="space-y-4">
+                           <div className="flex flex-wrap gap-2">
+                             {item.products.slice(0, 3).map((prod, i) => (
+                               <span key={i} className="text-[9px] bg-white border border-slate-200 px-2 py-1 font-bold uppercase text-slate-400">
+                                 {prod}
+                               </span>
+                             ))}
+                             {item.products.length > 3 && (
+                               <span className="text-[9px] font-bold text-primary italic">+{item.products.length - 3} autres</span>
+                             )}
+                           </div>
+                           
+                           <div className="pt-6 border-t border-slate-200 flex items-center justify-between">
+                             <span className="text-[10px] font-black uppercase tracking-widest text-slate-900 group-hover:translate-x-2 transition-transform duration-300 flex items-center gap-2">
+                               Explorer la gamme <ChevronRight className="h-4 w-4 text-secondary" />
+                             </span>
+                           </div>
                         </div>
                       </CardContent>
-                    </Card>
-                  </Link>
-                );
-              })}
+                    </div>
+                  </Card>
+                </Link>
+              ))}
             </div>
           )}
         </div>
+      </section>
+
+      {/* 3. SECTION RÉASSURANCE / BUREAU TECHNIQUE */}
+      <section className="py-24 bg-slate-900 text-white overflow-hidden relative">
+         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-12 relative z-10">
+            <div className="md:w-1/2">
+               <h2 className="text-4xl md:text-5xl font-black uppercase italic tracking-tighter leading-none mb-8">
+                 Besoin d'un sourcing <br/> <span className="text-secondary">sur-mesure</span> ?
+               </h2>
+               <p className="text-slate-400 text-lg mb-10 max-w-lg leading-relaxed font-medium">
+                 Notre bureau technique collabore avec les plus grands laboratoires mondiaux pour sourcer des molécules spécifiques non listées dans ce catalogue.
+               </p>
+               <Link to="/contact">
+                 <Button className="bg-white text-slate-900 hover:bg-secondary hover:text-white font-black px-10 h-16 rounded-none transition-all uppercase tracking-widest text-xs">
+                   Consulter nos ingénieurs
+                 </Button>
+               </Link>
+            </div>
+            <div className="md:w-1/2 grid grid-cols-2 gap-4">
+               <div className="bg-white/5 p-8 border border-white/10 text-center">
+                  <Beaker className="h-10 w-10 text-secondary mx-auto mb-4" />
+                  <p className="text-2xl font-black">99.9%</p>
+                  <p className="text-[9px] uppercase font-bold tracking-widest text-slate-500">Pureté Garantie</p>
+               </div>
+               <div className="bg-white/5 p-8 border border-white/10 text-center mt-8">
+                  <Microscope className="h-10 w-10 text-secondary mx-auto mb-4" />
+                  <p className="text-2xl font-black">ISO</p>
+                  <p className="text-[9px] uppercase font-bold tracking-widest text-slate-500">Certifications</p>
+               </div>
+            </div>
+         </div>
       </section>
     </Layout>
   );
