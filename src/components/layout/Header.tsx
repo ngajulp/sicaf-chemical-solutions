@@ -17,7 +17,7 @@ const Header = () => {
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
   const location = useLocation();
-  const { categories, loading } = useGitHubProducts(); // ✅ hook à l’intérieur
+  const { categories, loading } = useGitHubProducts();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -87,9 +87,9 @@ const Header = () => {
               </Link>
             ))}
 
-            {/* Products Dropdown */}
+            {/* --- MODIFICATION ICI : MEGA MENU EN TABLEAU --- */}
             <DropdownMenu open={isProductsOpen} onOpenChange={setIsProductsOpen}>
-              <DropdownMenuTrigger className="flex items-center gap-1 font-medium transition-colors hover:text-primary">
+              <DropdownMenuTrigger className="flex items-center gap-1 font-medium transition-colors hover:text-primary outline-none">
                 {t('nav.products')}
                 <ChevronDown
                   className={`h-4 w-4 transition-transform ${
@@ -98,23 +98,33 @@ const Header = () => {
                 />
               </DropdownMenuTrigger>
 
-              <DropdownMenuContent className="w-64 bg-card" align="start">
+              {/* Ajustement de la largeur (min-w-[700px]) et du layout grid */}
+              <DropdownMenuContent 
+                className="bg-card p-6 shadow-xl border-t-2 border-primary min-w-[800px]" 
+                align="center"
+              >
                 {loading ? (
-                  <p className="p-2 text-sm text-muted-foreground">Chargement...</p>
+                  <div className="flex justify-center p-4">
+                    <p className="text-sm text-muted-foreground italic">Chargement des catégories...</p>
+                  </div>
                 ) : categories.length > 0 ? (
-                  categories.map((category) => (
-                    <DropdownMenuItem key={category.id} asChild>
-                      <Link
-                        to={`/products/${category.id}`}
-                        className="flex items-center gap-2 cursor-pointer"
-                      >
-                        <span>{category.icon}</span>
-                        <span>{category.name[language]}</span>
-                      </Link>
-                    </DropdownMenuItem>
-                  ))
+                  <div className="grid grid-cols-3 gap-x-8 gap-y-2">
+                    {categories.map((category) => (
+                      <DropdownMenuItem key={category.id} asChild className="p-0 focus:bg-transparent">
+                        <Link
+                          to={`/products/${category.id}`}
+                          className="group flex items-center gap-3 py-3 border-b border-border/50 hover:border-primary transition-all cursor-pointer"
+                        >
+                          <span className="text-xl group-hover:scale-110 transition-transform">{category.icon}</span>
+                          <span className="text-xs font-bold uppercase tracking-wide text-foreground/80 group-hover:text-primary">
+                            {category.name[language]}
+                          </span>
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </div>
                 ) : (
-                  <p className="p-2 text-sm text-muted-foreground">Aucune catégorie</p>
+                  <p className="p-2 text-sm text-muted-foreground">Aucune catégorie disponible</p>
                 )}
               </DropdownMenuContent>
             </DropdownMenu>
@@ -142,7 +152,7 @@ const Header = () => {
             </Link>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu button (Inchangé) */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden p-2 text-foreground"
@@ -151,7 +161,7 @@ const Header = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation (Inchangé) */}
         {isOpen && (
           <div className="lg:hidden mt-4 pb-4 border-t pt-4">
             <div className="flex flex-col gap-3">
