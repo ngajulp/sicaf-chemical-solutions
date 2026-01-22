@@ -175,7 +175,41 @@ export const deleteCategoryAndSyncProducts = async (categoryId: number) => {
 export const getUsers = () => fetchRawFile('users.json');
 export const updateUsers = (users: any[], sha: string, message: string) => 
   updateFileContent('users.json', users, sha, message);
+export const getUsersSha = async (): Promise<string> => {
+  const token = await fetchGitHubToken();
 
+  const response = await fetch(`${GITHUB_API_URL}/users.json`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Impossible de récupérer le SHA users');
+  }
+
+  const data = await response.json();
+  return data.sha;
+};
+
+export const getHistorySha = async (): Promise<string> => {
+  const token = await fetchGitHubToken();
+
+  const response = await fetch(`${GITHUB_API_URL}/history.json`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Impossible de récupérer le SHA history');
+  }
+
+  const data = await response.json();
+  return data.sha;
+};
 export const getHistory = () => fetchRawFile('history.json');
 export const updateHistory = (history: any[], sha: string, message: string) => 
   updateFileContent('history.json', history, sha, message);
@@ -210,6 +244,24 @@ export interface DocumentCounters {
   facture: number;
   lastUpdate: string;
 }
+
+export const getCompanyInfoSha = async (): Promise<string> => {
+  const token = await fetchGitHubToken();
+
+  const response = await fetch(`${GITHUB_API_URL}/infospersonnelles.json`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Impossible de récupérer le SHA company info');
+  }
+
+  const data = await response.json();
+  return data.sha;
+};
 
 export const getCounters = async (): Promise<DocumentCounters> => {
   try {
