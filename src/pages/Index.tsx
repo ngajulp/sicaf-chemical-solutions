@@ -51,38 +51,41 @@ const Index = () => {
 
       {/* --- 1. HERO SECTION --- */}
       {/* SECTION HERO UNIFORMISÉE */}
-      <section className="relative text-white min-h-[450px] md:h-[600px] flex items-center py-24 overflow-hidden bg-slate-900">
-        {/* Fond : Filigrane Laboratoire (Identique sur tout le site) */}
+      <section className="gradient-hero text-primary-foreground py-24 md:py-36 relative overflow-hidden">
         <div 
-          className="absolute inset-0 z-0 opacity-25 grayscale brightness-125 scale-105"
+          className="absolute inset-0 z-0 opacity-20 pointer-events-none grayscale"
           style={{
             backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png')`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: 'center'
           }}
         />
-        
-        {/* Overlay : Dégradé profond pour la lisibilité du texte */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-transparent z-1" />
-      
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl">
-            {/* Badge de catégorie (Facultatif) */}
-            <div className="inline-flex items-center gap-3 bg-primary/20 text-secondary px-4 py-2 border-l-4 border-secondary mb-8 animate-in slide-in-from-left-4">
-              <span className="text-[10px] font-black uppercase tracking-[0.3em]">Division Industrielle Certifiée</span>
-            </div>
-      
-            {/* Titre : Typographie massive uniformisée */}
-            <h1 className="text-6xl md:text-8xl font-black mb-8 uppercase italic tracking-tighter leading-[0.9] drop-shadow-2xl">
-              {title} <br/>
-              <span className="text-primary-foreground/40">{subtitle}</span>
+        <div className="container mx-auto px-4 relative z-10 text-center">
+            <h1 className="font-heading text-5xl md:text-7xl font-black mb-8 uppercase tracking-tighter italic leading-none">
+              {t('hero.title')}
             </h1>
-      
-            {/* Accroche : Style bordure gauche */}
-            <p className="text-xl md:text-2xl text-slate-300 font-medium italic border-l-4 border-primary pl-8 max-w-2xl leading-relaxed">
-              {description}
+            <p className="text-xl md:text-2xl text-primary-foreground/90 mb-12 italic max-w-3xl mx-auto font-medium">
+              {t('hero.subtitle')}
             </p>
-          </div>
+            <div className="flex flex-col sm:flex-row gap-5 justify-center">
+              <Link to="/catalog">
+                <Button size="lg" className="bg-white text-primary hover:bg-secondary hover:text-white font-black px-12 h-16 rounded-none shadow-2xl transition-all uppercase tracking-widest text-xs">
+                  {t('hero.cta')}
+                </Button>
+              </Link>
+              <Link to="/quote">
+                <Button size="lg" className="bg-slate-900 text-white font-black px-12 h-16 rounded-none shadow-2xl hover:bg-primary transition-all uppercase tracking-widest text-xs">
+                  {t('nav.quote')} <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>      
+            </div>
+        </div>
+        
+        {/* Séparateur SVG stylisé */}
+        <div className="absolute bottom-0 left-0 right-0 overflow-hidden z-10">
+          <svg className="relative w-full h-12 md:h-20" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" className="fill-background" />
+          </svg>
         </div>
       </section>
 
