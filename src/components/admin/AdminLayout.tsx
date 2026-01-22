@@ -12,7 +12,8 @@ import {
   X,
   ChevronRight,
   History,
-  Building2
+  Building2,
+  Folders // Ajout de l'icône pour les catégories
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -62,8 +63,10 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     navigate('/admin');
   };
 
+  // Tableau de navigation mis à jour
   const menuItems = [
     { path: '/admin/dashboard', label: 'Tableau de bord', icon: LayoutDashboard },
+    { path: '/admin/categories', label: 'Catégories', icon: Folders }, // <-- NOUVEL ONGLET
     { path: '/admin/products', label: 'Produits', icon: Package },
     { path: '/admin/proforma', label: 'Proforma / Devis', icon: FileText },
     { path: '/admin/company', label: 'Entreprise', icon: Building2 },
@@ -146,13 +149,13 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                     className={cn(
                       "flex items-center gap-3 px-4 py-3 rounded-lg transition-all",
                       isActive
-                        ? "bg-primary-foreground/20 text-primary-foreground"
+                        ? "bg-primary-foreground/20 text-primary-foreground shadow-inner"
                         : "text-primary-foreground/70 hover:bg-primary-foreground/10 hover:text-primary-foreground"
                     )}
                   >
                     <item.icon className="h-5 w-5" />
-                    <span className="font-medium">{item.label}</span>
-                    {isActive && <ChevronRight className="h-4 w-4 ml-auto" />}
+                    <span className="font-medium text-sm uppercase tracking-wider">{item.label}</span>
+                    {isActive && <ChevronRight className="h-4 w-4 ml-auto opacity-50" />}
                   </Link>
                 );
               })}
@@ -162,15 +165,15 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             <div className="p-4 border-t border-primary-foreground/20">
               <div className="mb-4 px-4">
                 <p className="text-sm text-primary-foreground/70">Connecté en tant que</p>
-                <p className="font-medium">{user?.login}</p>
-                <p className="text-xs text-primary-foreground/50">
-                  {user?.isadmin === 1 ? 'Administrateur' : 'Utilisateur'}
+                <p className="font-medium truncate">{user?.login}</p>
+                <p className="text-[10px] font-black uppercase text-primary-foreground/50 tracking-tighter">
+                  {user?.isadmin === 1 ? 'Chef de projet / Admin' : 'Opérateur'}
                 </p>
               </div>
               <Button
                 variant="ghost"
                 onClick={handleLogout}
-                className="w-full justify-start text-primary-foreground/70 hover:text-primary-foreground hover:bg-primary-foreground/10"
+                className="w-full justify-start text-primary-foreground/70 hover:text-primary-foreground hover:bg-primary-foreground/10 rounded-none border-t border-white/5 pt-4"
               >
                 <LogOut className="h-5 w-5 mr-3" />
                 Déconnexion
@@ -188,24 +191,30 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
         )}
 
         {/* Main Content */}
-        <main className="flex-1 min-h-screen lg:min-h-[calc(100vh)]">
+        <main className="flex-1 min-h-screen">
           <div className="p-6">
             {/* Company Header */}
             {companyInfo && (
-              <div className="mb-6 p-4 bg-card rounded-lg shadow-sm border">
+              <div className="mb-6 p-4 bg-white rounded-none border-l-4 border-primary shadow-sm">
                 <div className="flex items-center justify-between flex-wrap gap-4">
                   <div>
-                    <h2 className="font-heading font-bold text-lg text-foreground">
+                    <h2 className="font-black uppercase italic text-xl text-slate-900 tracking-tighter">
                       {companyInfo.nomentreprise}
                     </h2>
-                    <p className="text-sm text-muted-foreground">
-                      {companyInfo.siege} | {companyInfo.Telephone} | {companyInfo.email}
+                    <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-4">
+                      <span>📍 {companyInfo.siege}</span>
+                      <span className="text-primary">|</span>
+                      <span>📞 {companyInfo.Telephone}</span>
+                      <span className="text-primary">|</span>
+                      <span>✉️ {companyInfo.email}</span>
                     </p>
                   </div>
                 </div>
               </div>
             )}
-            {children}
+            <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+              {children}
+            </div>
           </div>
         </main>
       </div>
