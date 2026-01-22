@@ -1,11 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Edit, Trash2, Plus, Save, X, Image as ImageIcon, Search, Loader2 } from 'lucide-react';
+import { Edit, Trash2, Plus, Save, X, Image as ImageIcon, Search, Loader2, Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import AdminLayout from '@/components/admin/AdminLayout'; // Import du Layout
+import AdminLayout from '@/components/admin/AdminLayout';
+// Import des services GitHub
+import { 
+  getIndustries, 
+  updateIndustriesAndProducts, 
+  deleteCategoryAndSyncProducts,
+  uploadImageToGitHub 
+} from '@/lib/github';
 
 interface Category {
   ID: number;
@@ -16,11 +23,10 @@ interface Category {
   img: string;
 }
 
-const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/productsindustries.json';
-
 const AdminCategories = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [editingId, setEditingId] = useState<number | null>(null);
   const [formData, setFormData] = useState<Category | null>(null);
@@ -31,15 +37,14 @@ const AdminCategories = () => {
   }, []);
 
   const fetchCategories = async () => {
+    setLoading(true);
     try {
-      const response = await fetch(GITHUB_RAW_URL);
-      if (!response.ok) throw new Error();
-      const data = await response.json();
+      const data = await getIndustries();
       setCategories(data);
     } catch (error) {
       toast({ 
-        title: "Erreur de chargement", 
-        description: "Impossible de récupérer les données RAW.",
+        title: "Erreur", 
+        description: "Impossible de charger les catégories depuis GitHub.",
         variant: "destructive" 
       });
     } finally {
@@ -53,34 +58,80 @@ const AdminCategories = () => {
   };
 
   const handleAddNew = () => {
-    const newId = categories.length > 0 ? Math.max(...categories.map(c => c.ID)) + 1 : 1;
     const newCat: Category = {
-      ID: newId,
-      categorie: "Nouvelle Catégorie",
+      ID: 0, // ID à 0 pour indiquer une création au service
+      categorie: "",
       products: [],
       expertise: "",
       description: "",
       img: ""
     };
-    setEditingId(newId);
+    setEditingId(0);
     setFormData(newCat);
-    // On l'ajoute temporairement en haut de la liste pour l'édition
-    setCategories([newCat, ...categories]);
+  };
+
+  // Gestion de l'upload d'image spécifique à la catégorie
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || !e.target.files[0] || !formData) return;
+    
+    setIsSaving(true);
+    try {
+      const file = e.target.files[0];
+      // On utilise le nom de la catégorie (nettoyé) comme référence pour l'image
+      const ref = formData.categorie.toLowerCase().replace(/\s+/g, '-');
+      const { url } = await uploadImageToGitHub(file, `cat-${ref || 'new'}`);
+      
+      setFormData({ ...formData, img: url });
+      toast({ title: "Image prête", description: "L'image a été uploadée avec succès." });
+    } catch (error) {
+      toast({ title: "Erreur Upload", description: "Impossible d'envoyer l'image.", variant: "destructive" });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const saveChanges = async () => {
-    if (!formData) return;
+    if (!formData || !formData.categorie) {
+      toast({ title: "Attention", description: "Le nom de la catégorie est requis.", variant: "destructive" });
+      return;
+    }
     
-    // TODO: Appel API GitHub pour mettre à jour productsindustries.json ET products.json
-    console.log("Données à synchroniser :", formData);
+    setIsSaving(true);
+    try {
+      // Le service gère l'ID (Max + 1) et la synchro avec products.json
+      const result = await updateIndustriesAndProducts(formData);
+      
+      toast({
+        title: "Succès",
+        description: `Catégorie ${result.ID === formData.ID ? 'mise à jour' : 'créée'} et produits synchronisés.`,
+      });
+      
+      setEditingId(null);
+      await fetchCategories(); // Rechargement complet pour être à jour avec le SHA
+    } catch (error) {
+      toast({ 
+        title: "Erreur de sauvegarde", 
+        description: "Échec de la mise à jour sur GitHub.", 
+        variant: "destructive" 
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    if (!confirm("Supprimer ce secteur ? Les produits liés seront marqués 'Non classés'.")) return;
     
-    toast({
-      title: "Mise à jour réussie",
-      description: `La catégorie ${formData.categorie} est prête à être poussée sur GitHub.`,
-    });
-    
-    setEditingId(null);
-    setCategories(prev => prev.map(c => c.ID === formData.ID ? formData : c));
+    setIsSaving(true);
+    try {
+      await deleteCategoryAndSyncProducts(id);
+      toast({ title: "Supprimé", description: "Secteur retiré avec succès." });
+      await fetchCategories();
+    } catch (error) {
+      toast({ title: "Erreur", description: "Échec de la suppression.", variant: "destructive" });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const filteredCategories = categories.filter(c => 
@@ -90,7 +141,6 @@ const AdminCategories = () => {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        {/* Header de la page */}
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-black uppercase italic tracking-tight text-slate-900">
@@ -98,12 +148,15 @@ const AdminCategories = () => {
             </h1>
             <p className="text-muted-foreground text-sm font-medium">Gestion des secteurs d'activité et expertise</p>
           </div>
-          <Button onClick={handleAddNew} className="bg-primary hover:bg-slate-900 gap-2 font-bold uppercase text-xs rounded-none shadow-lg h-11">
+          <Button 
+            onClick={handleAddNew} 
+            disabled={editingId !== null}
+            className="bg-primary hover:bg-slate-900 gap-2 font-bold uppercase text-xs rounded-none shadow-lg h-11"
+          >
             <Plus className="h-4 w-4" /> Ajouter un secteur
           </Button>
         </div>
 
-        {/* Barre de recherche */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input 
@@ -114,101 +167,106 @@ const AdminCategories = () => {
           />
         </div>
 
-        {loading ? (
-          <div className="flex flex-col items-center justify-center py-12">
+        {(loading || isSaving) && (
+          <div className="flex flex-col items-center justify-center py-4">
             <Loader2 className="h-8 w-8 animate-spin text-primary mb-2" />
-            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Lecture des données Raw...</p>
-          </div>
-        ) : (
-          <div className="grid gap-4">
-            {filteredCategories.map((cat) => (
-              <Card key={cat.ID} className={`rounded-none border-y-0 border-r-0 border-l-[6px] transition-all ${editingId === cat.ID ? 'border-l-secondary shadow-md' : 'border-l-primary/20'}`}>
-                <CardContent className="p-6">
-                  {editingId === cat.ID ? (
-                    /* FORMULAIRE D'EDITION */
-                    <div className="space-y-4">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <label className="text-[10px] font-black uppercase text-primary tracking-wider">Nom de la Catégorie</label>
-                          <Input 
-                            value={formData?.categorie} 
-                            className="rounded-none focus:border-secondary"
-                            onChange={e => setFormData(prev => prev ? {...prev, categorie: e.target.value} : null)}
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-[10px] font-black uppercase text-primary tracking-wider">URL Image de fond</label>
-                          <Input 
-                            value={formData?.img} 
-                            className="rounded-none focus:border-secondary"
-                            onChange={e => setFormData(prev => prev ? {...prev, img: e.target.value} : null)}
-                            placeholder="https://raw.githubusercontent.com/..."
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase text-primary tracking-wider">Expertise (Slogan court)</label>
-                        <Input 
-                          value={formData?.expertise} 
-                          className="rounded-none focus:border-secondary"
-                          onChange={e => setFormData(prev => prev ? {...prev, expertise: e.target.value} : null)}
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase text-primary tracking-wider">Description détaillée du secteur</label>
-                        <Textarea 
-                          value={formData?.description} 
-                          className="rounded-none focus:border-secondary min-h-[100px]"
-                          onChange={e => setFormData(prev => prev ? {...prev, description: e.target.value} : null)}
-                        />
-                      </div>
-
-                      <div className="flex justify-end gap-3 pt-4 border-t">
-                        <Button variant="ghost" onClick={() => setEditingId(null)} className="font-bold uppercase text-[10px] rounded-none">Annuler</Button>
-                        <Button onClick={saveChanges} className="bg-secondary text-slate-900 hover:bg-slate-900 hover:text-white font-black uppercase text-[10px] gap-2 rounded-none px-6">
-                          <Save className="h-4 w-4" /> Enregistrer & Sync
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    /* AFFICHAGE SIMPLE */
-                    <div className="flex items-start gap-6">
-                      <div className="w-24 h-24 bg-slate-50 border rounded-none overflow-hidden flex-shrink-0">
-                        {cat.img ? (
-                          <img src={cat.img} alt={cat.categorie} className="w-full h-full object-cover" />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-slate-200"><ImageIcon size={32} /></div>
-                        )}
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h3 className="text-lg font-black uppercase text-slate-900 leading-none">{cat.categorie}</h3>
-                            <p className="text-primary font-bold italic text-xs mt-1">{cat.expertise}</p>
-                          </div>
-                          <div className="flex gap-1">
-                            <Button variant="ghost" size="icon" onClick={() => handleEdit(cat)} className="h-8 w-8 hover:text-secondary"><Edit className="h-4 w-4" /></Button>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 text-red-500 hover:bg-red-50 hover:text-red-700"><Trash2 className="h-4 w-4" /></Button>
-                          </div>
-                        </div>
-                        <p className="text-slate-500 text-xs mt-2 line-clamp-2 italic">{cat.description || "Aucune description fournie."}</p>
-                        <div className="flex flex-wrap gap-1.5 mt-3">
-                          {cat.products?.map((p, i) => (
-                            <span key={i} className="text-[9px] bg-slate-100 border border-slate-200 px-2 py-0.5 font-bold text-slate-500 uppercase">
-                              {p}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
+            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Synchronisation GitHub...</p>
           </div>
         )}
+
+        <div className="grid gap-4">
+          {filteredCategories.map((cat) => (
+            <Card key={cat.ID} className={`rounded-none border-y-0 border-r-0 border-l-[6px] transition-all ${editingId === cat.ID ? 'border-l-secondary shadow-md' : 'border-l-primary/20'}`}>
+              <CardContent className="p-6">
+                {editingId === cat.ID ? (
+                  <div className="space-y-4">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-black uppercase text-primary tracking-wider">Nom de la Catégorie</label>
+                        <Input 
+                          value={formData?.categorie} 
+                          className="rounded-none focus:border-secondary"
+                          onChange={e => setFormData(prev => prev ? {...prev, categorie: e.target.value} : null)}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-black uppercase text-primary tracking-wider">Image (Upload ou URL)</label>
+                        <div className="flex gap-2">
+                          <Input 
+                            value={formData?.img} 
+                            className="rounded-none focus:border-secondary flex-1"
+                            onChange={e => setFormData(prev => prev ? {...prev, img: e.target.value} : null)}
+                            placeholder="URL de l'image"
+                          />
+                          <div className="relative">
+                            <input 
+                              type="file" 
+                              className="absolute inset-0 opacity-0 cursor-pointer" 
+                              onChange={handleImageUpload}
+                              accept="image/*"
+                            />
+                            <Button variant="outline" className="rounded-none bg-slate-50"><Upload className="h-4 w-4" /></Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-primary tracking-wider">Expertise (Slogan court)</label>
+                      <Input 
+                        value={formData?.expertise} 
+                        className="rounded-none focus:border-secondary"
+                        onChange={e => setFormData(prev => prev ? {...prev, expertise: e.target.value} : null)}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-primary tracking-wider">Description détaillée</label>
+                      <Textarea 
+                        value={formData?.description} 
+                        className="rounded-none focus:border-secondary min-h-[100px]"
+                        onChange={e => setFormData(prev => prev ? {...prev, description: e.target.value} : null)}
+                      />
+                    </div>
+
+                    <div className="flex justify-end gap-3 pt-4 border-t">
+                      <Button variant="ghost" onClick={() => {setEditingId(null); fetchCategories();}} className="font-bold uppercase text-[10px] rounded-none">Annuler</Button>
+                      <Button onClick={saveChanges} disabled={isSaving} className="bg-secondary text-slate-900 hover:bg-slate-900 hover:text-white font-black uppercase text-[10px] gap-2 rounded-none px-6 shadow-lg">
+                        <Save className="h-4 w-4" /> Enregistrer & Synchroniser
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-start gap-6">
+                    <div className="w-24 h-24 bg-slate-50 border rounded-none overflow-hidden flex-shrink-0">
+                      {cat.img ? (
+                        <img src={cat.img} alt={cat.categorie} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-slate-200"><ImageIcon size={32} /></div>
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] bg-slate-900 text-white px-1.5 font-bold">ID: {cat.ID}</span>
+                            <h3 className="text-lg font-black uppercase text-slate-900 leading-none">{cat.categorie}</h3>
+                          </div>
+                          <p className="text-primary font-bold italic text-xs mt-1">{cat.expertise}</p>
+                        </div>
+                        <div className="flex gap-1">
+                          <Button variant="ghost" size="icon" onClick={() => handleEdit(cat)} className="h-8 w-8 hover:text-secondary"><Edit className="h-4 w-4" /></Button>
+                          <Button variant="ghost" size="icon" onClick={() => handleDelete(cat.ID)} className="h-8 w-8 text-red-500 hover:bg-red-50 hover:text-red-700"><Trash2 className="h-4 w-4" /></Button>
+                        </div>
+                      </div>
+                      <p className="text-slate-500 text-xs mt-2 line-clamp-2 italic">{cat.description || "Aucune description fournie."}</p>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </AdminLayout>
   );
