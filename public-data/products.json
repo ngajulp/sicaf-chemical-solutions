@@ -1,6 +1,8 @@
 [
   {
     "categorie": "Eau et environnenemt",
+    "img":"",
+    "ID":"",
     "datas": [
       {
         "reference": "WF-EAU-001",
@@ -42,6 +44,8 @@
   },
   {
     "categorie": "Acides minéraux",
+    "img":"",
+    "ID":"",
     "datas": [
       {
         "reference": "WF-AC-101",
@@ -97,6 +101,8 @@
   },
   {
     "categorie": "Acides organiques",
+    "img":"",
+    "ID":"",
     "datas": [
       {
         "reference": "WF-AC-201",
@@ -159,6 +165,8 @@
   },
   {
     "categorie": "Bases & Hydroxydes",
+    "img":"",
+    "ID":"",
     "datas": [
       {
         "reference": "WF-BS-301",
@@ -188,6 +196,8 @@
   },
   {
     "categorie": "Sels & composés minéraux",
+    "img":"",
+    "ID":"",
     "datas": [
       {
         "reference": "WF-SL-401",
@@ -254,6 +264,8 @@
   },
   {
     "categorie": "Résines & Adsorbants",
+    "img":"",
+    "ID":"",
     "datas": [
       {
         "reference": "WF-RS-501",
@@ -307,6 +319,9 @@
   },
   {
     "categorie": "Agriculture",
+    "img":"",
+    "ID":"",
+    "ID":"",
     "datas": []
   }
 ]
