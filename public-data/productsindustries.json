@@ -3,19 +3,22 @@
      "categorie": "Eau et environnenemt",
      "products": ["Sulfate d'Alumine", "Hypochlorite de Calcium (Chlore Choc)", "Charbon Actif", "Polymères Floculants", "Antiscalants"],
      "expertise": "Potabilisation de l'eau et traitement des effluents industriels (STEP).",
-     "description":""
+     "description":"",
+     "img":""
   },
   {
     "categorie": "Acides minéraux",
     "products": ["Acide Sulfurique 98%", "Acide Chlorhydrique 33%", "Acide Nitrique 68%", "Acide Phosphorique 85%", "Acide Formique", "Acide Citrique"],
     "expertise": "Solutions de décapage, ajustement de pH et processus de synthèse industrielle.",
-    "description":""
+    "description":"",
+    "img":""
   },
   {
     "categorie": "Acides organiques",
     "products": ["Acide Sulfurique 98%", "Acide Chlorhydrique 33%", "Acide Nitrique 68%", "Acide Phosphorique 85%", "Acide Formique", "Acide Citrique"],
     "expertise": "Solutions de décapage, ajustement de pH et processus de synthèse industrielle.",
-    "description":""
+    "description":"",
+    "img":""
   },
   {
   "categorie": "Agriculture",
@@ -28,6 +31,7 @@
     "NPK formulé sur mesure"
   ],
   "expertise": "Formulation d’engrais, amélioration de la fertilité des sols et optimisation des rendements agricoles.",
+  "img":"",
   "description": "SICAF accompagne les acteurs agricoles avec des intrants chimiques de qualité, adaptés aux cultures tropicales et aux exigences des sols africains, tout en respectant les normes environnementales."
 },
 {
@@ -41,6 +45,7 @@
     "Alumine activée"
   ],
   "expertise": "Traitement de l’eau, purification des fluides industriels et séparation sélective des ions.",
+  "img":"",
   "description": "Nos résines et adsorbants sont utilisés dans les systèmes de traitement d’eau, l’industrie chimique et pharmaceutique pour garantir une purification efficace et durable."
 },
 {
@@ -54,6 +59,7 @@
     "Nitrate de sodium"
   ],
   "expertise": "Approvisionnement en sels industriels pour la formulation, le traitement et les procédés chimiques.",
+   "img":"",
   "description": "SICAF fournit une large gamme de sels et composés minéraux utilisés dans l’industrie, le traitement de l’eau, l’agroalimentaire et les applications techniques spécialisées."
 },
 {
@@ -67,6 +73,7 @@
     "Hydroxyde de magnésium"
   ],
   "expertise": "Neutralisation chimique, régulation du pH et traitements industriels lourds.",
+  "img":"",
   "description": "Nos bases et hydroxydes sont destinés aux industries de transformation, au traitement des eaux et aux procédés nécessitant une régulation chimique fiable et maîtrisée."
 },
 {
@@ -80,6 +87,7 @@
     "Acide malique"
   ],
   "expertise": "Formulation, conservation et transformation dans les industries agroalimentaire, pharmaceutique et chimique.",
+  "img":"",
   "description": "SICAF propose des acides organiques adaptés aux applications alimentaires, industrielles et techniques, garantissant performance, sécurité et conformité réglementaire."
 }
 ]
