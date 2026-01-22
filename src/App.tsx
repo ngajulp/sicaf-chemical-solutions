@@ -15,6 +15,7 @@ import ProductDetail from "./pages/ProductDetail";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminCategories from "./pages/admin/AdminCategories"; // NOUVEL IMPORT
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminProductDetail from "./pages/admin/AdminProductDetail";
 import AdminCompanyInfo from "./pages/admin/AdminCompanyInfo";
@@ -33,6 +34,7 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <Routes>
+              {/* Public Routes */}
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
@@ -40,15 +42,21 @@ const App = () => (
               <Route path="/catalog" element={<Catalog />} />
               <Route path="/products/:categoryId" element={<ProductCategory />} />
               <Route path="/products/:categoryId/:reference" element={<ProductDetail />} />
+              
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLogin />} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              
+              {/* GESTION DES CATÉGORIES (Insérée ici) */}
+              <Route path="/admin/categories" element={<AdminCategories />} />
+              
               <Route path="/admin/products" element={<AdminProducts />} />
               <Route path="/admin/products/:categoryName/:reference" element={<AdminProductDetail />} />
               <Route path="/admin/company" element={<AdminCompanyInfo />} />
               <Route path="/admin/proforma" element={<AdminProforma />} />
               <Route path="/admin/users" element={<AdminUsers />} />
               <Route path="/admin/history" element={<AdminHistory />} />
+              
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
