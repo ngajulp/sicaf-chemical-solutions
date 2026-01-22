@@ -47,16 +47,30 @@ const Header = () => {
       {/* 1. TOP BAR */}
       <div className="bg-slate-900 text-white">
         <div className="container mx-auto px-4 py-2.5 flex justify-between items-center">
-          <div className="hidden md:flex items-center gap-8 text-[12px] font-bold uppercase tracking-wider">
+          <div className="hidden md:flex items-center gap-8 text-[12px] font-bold uppercase tracking-wider text-slate-300">
             <span className="flex items-center gap-2"><span className="text-secondary">●</span> +237 691 83 70 39</span>
             <span className="flex items-center gap-2"><span className="text-secondary">●</span> sicaf@chimistry.com</span>
           </div>
-          <div className="flex items-center gap-3 ml-auto">
-            <Globe className="h-4 w-4 text-secondary" />
-            <div className="flex bg-white/10 p-0.5 rounded">
-              <button onClick={() => setLanguage('fr')} className={`px-3 py-1 rounded text-[11px] font-black transition-all ${language === 'fr' ? 'bg-secondary text-slate-900' : 'text-white hover:bg-white/5'}`}>FR</button>
-              <button onClick={() => setLanguage('en')} className={`px-3 py-1 rounded text-[11px] font-black transition-all ${language === 'en' ? 'bg-secondary text-slate-900' : 'text-white hover:bg-white/5'}`}>EN</button>
+          
+          <div className="flex items-center gap-6 ml-auto">
+            {/* Langues */}
+            <div className="flex items-center gap-3">
+              <Globe className="h-4 w-4 text-secondary" />
+              <div className="flex bg-white/10 p-0.5 rounded">
+                <button onClick={() => setLanguage('fr')} className={`px-3 py-1 rounded text-[11px] font-black transition-all ${language === 'fr' ? 'bg-secondary text-slate-900' : 'text-white hover:bg-white/5'}`}>FR</button>
+                <button onClick={() => setLanguage('en')} className={`px-3 py-1 rounded text-[11px] font-black transition-all ${language === 'en' ? 'bg-secondary text-slate-900' : 'text-white hover:bg-white/5'}`}>EN</button>
+              </div>
             </div>
+
+            {/* BOUTON ADMINISTRATION - TOUT À DROITE */}
+            <Link 
+              to="/admin" 
+              className="p-1.5 text-slate-400 hover:text-secondary hover:bg-white/5 transition-all rounded flex items-center gap-2 group border-l border-white/10 pl-4"
+              title="Administration Panel"
+            >
+              <Settings className="h-4 w-4 group-hover:rotate-90 transition-transform duration-500" />
+              <span className="text-[10px] font-black uppercase tracking-tighter hidden sm:block">Admin</span>
+            </Link>
           </div>
         </div>
       </div>
@@ -72,7 +86,7 @@ const Header = () => {
             </div>
           </Link>
 
-          {/* Menu Desktop avec "À Propos" réintégré */}
+          {/* Menu Desktop */}
           <div className="hidden lg:flex items-center gap-7">
             <Link to="/" className={`text-[13px] font-black uppercase tracking-widest hover:text-primary transition-colors ${isActive('/') ? 'text-primary' : 'text-slate-600'}`}>
               {t('nav.home')}
@@ -118,11 +132,9 @@ const Header = () => {
                             to={`/products/${item.ID}`}
                             className="group flex items-center gap-4 p-4 border-l-4 border-transparent hover:border-secondary hover:bg-slate-50 transition-all cursor-pointer"
                           >
-                            <div className="flex flex-col">
-                              <span className="text-sm font-black uppercase tracking-tight text-slate-800 group-hover:text-primary">
-                                {item.categorie}
-                              </span>
-                            </div>
+                            <span className="text-sm font-black uppercase tracking-tight text-slate-800 group-hover:text-primary">
+                              {item.categorie}
+                            </span>
                             <ArrowRight className="h-4 w-4 ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-secondary" />
                           </Link>
                         </DropdownMenuItem>
@@ -159,20 +171,12 @@ const Header = () => {
             <div className="flex flex-col gap-6">
               <Link to="/" onClick={() => setIsOpen(false)} className="text-xl font-black uppercase tracking-tighter border-b pb-4">Accueil</Link>
               <Link to="/about" onClick={() => setIsOpen(false)} className="text-xl font-black uppercase tracking-tighter border-b pb-4">À Propos</Link>
+              <Link to="/catalog" onClick={() => setIsOpen(false)} className="text-xl font-black uppercase tracking-tighter border-b pb-4">Catalogue</Link>
+              <Link to="/contact" onClick={() => setIsOpen(false)} className="text-xl font-black uppercase tracking-tighter border-b pb-4">Contact</Link>
               
-              <div className="py-2">
-                <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-6">Secteurs d'activité</p>
-                <div className="grid grid-cols-1 gap-6 ml-2">
-                  {industryData.map((item) => (
-                    <Link key={item.ID} to={`/products/${item.ID}`} onClick={() => setIsOpen(false)} className="text-sm font-black uppercase text-slate-800">
-                      {item.categorie}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              <Link to="/catalog" onClick={() => setIsOpen(false)} className="text-xl font-black uppercase tracking-tighter border-t pt-6">Catalogue</Link>
-              <Link to="/contact" onClick={() => setIsOpen(false)} className="text-xl font-black uppercase tracking-tighter border-b pb-6">Contact</Link>
+              <Link to="/admin" onClick={() => setIsOpen(false)} className="text-xl font-black uppercase tracking-tighter text-primary border-b pb-4 flex items-center gap-3">
+                <Settings size={20} /> Administration
+              </Link>
               
               <Link to="/quote" onClick={() => setIsOpen(false)} className="mt-4">
                 <Button className="w-full bg-primary text-white font-black uppercase tracking-[0.2em] py-8 rounded-none">DEVIS PROFORMA</Button>
