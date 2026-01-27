@@ -75,13 +75,14 @@ const Index = () => {
       {/* --- NOS PRODUITS : SLIDES AVEC CARDS REMODELÉES --- */}
       <section className="py-24 bg-[#f8f9fa] overflow-hidden">
         <div className="container mx-auto px-6 mb-16">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="h-[2px] w-12 bg-[#001529]"></div>
-            <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter text-[#001529]">
-              {t('home.products_title')}
-            </h2>
-          </div>
+        <div className="flex items-center gap-4 mb-4">
+          <div className="h-[2px] w-12 bg-[#001529]"></div>
+          {/* Taille réduite pour correspondre à la section "Why Choose Us" */}
+          <h2 className="font-heading text-3xl md:text-4xl font-black uppercase italic tracking-tighter text-[#001529]">
+            {t('home.products_title')}
+          </h2>
         </div>
+      </div>
       
         {loading ? (
           <div className="flex justify-center py-20">
