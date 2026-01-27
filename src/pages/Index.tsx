@@ -8,7 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
 const Index = () => {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
   const [industryData, setIndustryData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,11 +25,7 @@ const Index = () => {
         const response = await fetch('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/productsindustries.json');
         const data = await response.json();
         setIndustryData(data);
-      } catch (error) {
-        console.error("Erreur:", error);
-      } finally {
-        setLoading(false);
-      }
+      } catch (error) { console.error(error); } finally { setLoading(false); }
     };
     fetchData();
   }, []);
@@ -38,43 +34,44 @@ const Index = () => {
     <Layout>
       <WhatsAppButton variant="floating" />
 
-      {/* --- 1. HERO SECTION (Filigrane conservé + Style SICAF) --- */}
-      <section className="relative text-white min-h-[600px] md:min-h-[750px] flex items-center py-24 overflow-hidden bg-slate-900">
-        {/* FILIGRANE LABORATOIRE CONSERVÉ */}
+      {/* --- SECTION 1: HERO (Le look exact de sicaf.netlify.app) --- */}
+      <section className="relative bg-black text-white min-h-screen flex items-center overflow-hidden">
+        {/* Filigranes conservés selon votre demande */}
         <div 
-          className="absolute inset-0 z-0 opacity-20 grayscale brightness-125 scale-105 pointer-events-none"
-          style={{
-            backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
+          className="absolute inset-0 z-0 opacity-20 grayscale brightness-150 contrast-125"
+          style={{ backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png')`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/90 to-transparent z-1" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-[1]" />
 
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-5xl">
-            <div className="inline-flex items-center gap-3 bg-primary/20 text-secondary px-5 py-2 border-l-4 border-secondary mb-10">
-              <span className="text-[11px] font-black uppercase tracking-[0.4em]">Expertise Chimique Industrielle</span>
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="max-w-full">
+            {/* Petit texte au dessus du titre */}
+            <div className="flex items-center gap-4 mb-8">
+              <div className="h-[2px] w-12 bg-primary"></div>
+              <span className="text-[10px] font-black uppercase tracking-[0.6em] text-primary">Industrie Chimique</span>
             </div>
 
-            <h1 className="text-7xl md:text-[120px] font-black mb-8 uppercase italic tracking-tighter leading-[0.8] drop-shadow-2xl">
+            {/* Titre Massive : Aspect Identique au site de référence */}
+            <h1 className="text-[14vw] md:text-[9vw] font-black uppercase italic leading-[0.75] tracking-tighter mb-12 select-none">
               {t('hero.title').split(' ')[0]} <br/>
-              <span className="text-white/30">{t('hero.title').split(' ').slice(1).join(' ')}</span>
+              <span className="text-transparent" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.4)' }}>
+                {t('hero.title').split(' ').slice(1).join(' ')}
+              </span>
             </h1>
 
-            <p className="text-xl md:text-3xl text-slate-300 font-medium italic border-l-4 border-primary pl-10 max-w-3xl leading-relaxed mb-14">
+            <p className="text-lg md:text-2xl text-slate-400 font-medium italic border-l-4 border-primary pl-8 max-w-2xl leading-tight mb-16">
               {t('hero.subtitle')}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-6">
+            <div className="flex flex-wrap gap-4">
               <Link to="/catalog">
-                <Button className="bg-white text-slate-900 hover:bg-secondary hover:text-white font-black px-14 h-20 rounded-none shadow-2xl transition-all uppercase tracking-widest text-xs">
+                <Button className="bg-white text-black hover:bg-primary hover:text-white px-12 h-20 rounded-none font-black text-[11px] tracking-[0.4em] uppercase transition-all duration-300">
                   {t('hero.cta')}
                 </Button>
               </Link>
               <Link to="/quote">
-                <Button className="bg-primary text-white font-black px-14 h-20 rounded-none shadow-2xl hover:bg-white hover:text-primary transition-all uppercase tracking-widest text-xs">
-                  {t('nav.quote')} <ArrowRight className="ml-3 h-5 w-5" />
+                <Button className="bg-primary text-white border-none px-12 h-20 rounded-none font-black text-[11px] tracking-[0.4em] uppercase hover:bg-white hover:text-black transition-all duration-300 shadow-[20px_20px_0px_rgba(255,255,255,0.05)]">
+                  {t('nav.quote')} <ArrowRight className="ml-4 h-5 w-5" />
                 </Button>
               </Link>      
             </div>
@@ -82,52 +79,38 @@ const Index = () => {
         </div>
       </section>
 
-      {/* --- 2. SECTION PRODUITS (Animation de slide continue) --- */}
+      {/* --- SECTION 2: SLIDER VIVANT (Mouvement continu) --- */}
       <section className="py-32 bg-white overflow-hidden">
-        <div className="container mx-auto px-4 mb-20">
-            <div className="flex items-center gap-4 mb-4">
-               <div className="h-1 w-20 bg-primary" />
-               <p className="text-xs font-black uppercase tracking-[0.5em] text-primary">Secteurs Stratégiques</p>
-            </div>
-            <h2 className="text-5xl md:text-8xl font-black text-slate-900 uppercase italic tracking-tighter">
+        <div className="px-6 mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
+            <h2 className="text-7xl md:text-[10vw] font-black text-black uppercase italic tracking-tighter leading-none">
               {t('home.products_title')}
             </h2>
+            <div className="text-[10px] font-black tracking-[0.5em] text-primary mb-4 animate-pulse">
+              DÉFILEMENT CONTINU •
+            </div>
         </div>
 
         {loading ? (
           <div className="flex justify-center py-20"><Loader2 className="h-16 w-16 animate-spin text-primary" /></div>
         ) : (
-          <div className="relative w-full group">
-            {/* Le mouvement de slide rend la page "vivante" */}
-            <div className="flex animate-scroll-horizontal gap-12 w-max py-10 px-4">
-              {[...industryData, ...industryData].map((item, idx) => (
-                <div key={`${item.ID}-${idx}`} className="w-[400px] md:w-[550px] shrink-0">
-                  <Link to={`/products/${item.ID}`} className="group/card block">
-                    <Card className="border-none shadow-[0_40px_80px_rgba(0,0,0,0.08)] rounded-none overflow-hidden bg-slate-50 transition-all duration-700">
-                      <div className="relative h-[400px] overflow-hidden">
-                        <img 
-                          src={item.img} 
-                          alt={item.categorie} 
-                          className="w-full h-full object-cover grayscale brightness-90 group-hover/card:grayscale-0 group-hover/card:scale-110 transition-all duration-[1.5s]" 
-                        />
-                        <div className="absolute top-0 right-0 bg-slate-950 text-white px-6 py-4 text-xs font-black uppercase tracking-widest">
-                            ID-{item.ID}
-                        </div>
-                      </div>
-
-                      <CardContent className="p-12">
-                        <h3 className="text-4xl font-black uppercase italic text-slate-900 group-hover/card:text-primary transition-colors tracking-tighter mb-6">
-                          {item.categorie}
-                        </h3>
-                        <p className="text-base text-slate-500 line-clamp-2 italic mb-10 font-medium border-l-2 border-primary/30 pl-6">
-                          {item.expertise}
-                        </p>
-                        <div className="flex items-center justify-between pt-8 border-t border-slate-200">
-                          <span className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 group-hover/card:text-primary transition-colors">Explorer la division</span>
-                          <ArrowRight className="h-6 w-6 text-secondary transform group-hover/card:translate-x-4 transition-transform" />
-                        </div>
-                      </CardContent>
-                    </Card>
+          <div className="relative w-full border-y-2 border-black">
+            <div className="flex animate-scroll-horizontal gap-0 w-max hover:pause">
+              {[...industryData, ...industryData, ...industryData].map((item, idx) => (
+                <div key={`${item.ID}-${idx}`} className="w-[350px] md:w-[600px] border-r-2 border-black shrink-0">
+                  <Link to={`/products/${item.ID}`} className="group block relative overflow-hidden h-[500px]">
+                    <img 
+                      src={item.img} 
+                      alt={item.categorie} 
+                      className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" 
+                    />
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500" />
+                    
+                    <div className="absolute bottom-0 left-0 p-10 w-full bg-gradient-to-t from-black to-transparent">
+                      <p className="text-primary font-black text-xs tracking-widest mb-2 italic">DIV-0{item.ID}</p>
+                      <h3 className="text-4xl font-black uppercase italic text-white tracking-tighter">
+                        {item.categorie}
+                      </h3>
+                    </div>
                   </Link>
                 </div>
               ))}
@@ -136,54 +119,48 @@ const Index = () => {
         )}
       </section>
 
-      {/* --- 3. FEATURES (Style Grille Industrielle) --- */}
-      <section className="py-24 bg-slate-50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-slate-200 border border-slate-200 shadow-2xl">
-              {features.map((feature, index) => (
-                <div key={index} className="bg-white p-14 text-center group hover:bg-slate-950 transition-colors duration-500">
-                  <div className="inline-flex items-center justify-center w-20 h-20 bg-slate-50 text-primary mb-8 rounded-none group-hover:bg-primary group-hover:text-white transition-all">
-                      <feature.icon className="h-10 w-10" />
-                  </div>
-                  <h3 className="font-black uppercase italic text-base mb-4 tracking-widest text-slate-900 group-hover:text-white">{t(feature.titleKey)}</h3>
-                  <p className="text-[11px] text-slate-400 leading-relaxed uppercase font-bold tracking-tight group-hover:text-slate-500">{t(feature.descKey)}</p>
-                </div>
-              ))}
-          </div>
+      {/* --- SECTION 3: FEATURES (Grille Brutaliste) --- */}
+      <section className="bg-black py-0">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-0 border-t border-white/20">
+            {features.map((feature, index) => (
+              <div key={index} className="p-16 border-b border-r border-white/10 group hover:bg-primary transition-all duration-500">
+                <feature.icon className="h-12 w-12 text-primary group-hover:text-white mb-10 transition-colors" />
+                <h3 className="font-black uppercase italic text-lg mb-4 tracking-widest text-white">{t(feature.titleKey)}</h3>
+                <p className="text-[10px] text-white/40 leading-relaxed uppercase font-bold tracking-widest group-hover:text-white/80">{t(feature.descKey)}</p>
+              </div>
+            ))}
         </div>
       </section>
 
-      {/* --- 4. CTA FINAL (Filigrane Grille Conservé) --- */}
-      <section className="py-40 bg-slate-950 text-white text-center relative overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-6xl md:text-[110px] font-black uppercase italic mb-14 tracking-tighter leading-[0.85]">
-            Besoin d'un <br/> <span className="text-secondary underline decoration-[15px] underline-offset-[15px]">Support</span> Technique ?
+      {/* --- SECTION 4: CTA (Grille de fond conservée) --- */}
+      <section className="py-40 bg-white text-center relative overflow-hidden border-t-4 border-black">
+        <div className="container mx-auto px-6 relative z-10">
+          <h2 className="text-6xl md:text-[10vw] font-black uppercase italic mb-16 tracking-tighter leading-[0.8] text-black">
+            Besoin d'un <br/> <span className="text-primary border-b-[10px] border-black">Support</span> ?
           </h2>
-          <p className="text-slate-400 mb-16 max-w-3xl mx-auto font-medium text-xl italic leading-relaxed">
-            Nos ingénieurs vous accompagnent dans le choix de vos solutions chimiques et l'optimisation de vos processus.
-          </p>
           <Link to="/quote">
-            <Button className="bg-white text-slate-900 font-black px-20 h-24 rounded-none hover:bg-secondary hover:text-white transition-all text-sm tracking-[0.4em] shadow-2xl">
+            <Button className="bg-black text-white font-black px-20 h-28 rounded-none hover:bg-primary transition-all text-xs tracking-[0.5em]">
               OBTENIR UNE COTATION TECHNIQUE
             </Button>
           </Link>
         </div>
         
-        {/* GRILLE TECHNIQUE EN FOND CONSERVÉE */}
-        <div className="absolute inset-0 opacity-[0.05] pointer-events-none">
-           <div className="h-full w-full bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:70px_70px]" />
+        {/* GRILLE TECHNIQUE CONSERVÉE */}
+        <div className="absolute inset-0 opacity-[0.07] pointer-events-none">
+           <div className="h-full w-full bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:60px_60px]" />
         </div>
       </section>
 
+      {/* CSS POUR L'ANIMATION SLIDE VIVANTE */}
       <style>{`
         @keyframes scroll-horizontal {
           0% { transform: translateX(0); }
-          100% { transform: translateX(calc(-50% - 3rem)); }
+          100% { transform: translateX(calc(-33.33%)); }
         }
         .animate-scroll-horizontal { 
-          animation: scroll-horizontal 70s linear infinite; 
+          animation: scroll-horizontal 30s linear infinite; 
         }
-        .animate-scroll-horizontal:hover { 
+        .hover\\:pause:hover { 
           animation-play-state: paused; 
         }
       `}</style>
