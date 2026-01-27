@@ -107,22 +107,67 @@ const Index = () => {
           </div>
         )}
       </section>
+      {/* Why Choose Us */}
+      <section className="py-16 md:py-24 bg-muted">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+              {t('home.why_title')}
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              {t('home.why_subtitle')}
+            </p>
+          </div>
 
-      {/* --- CTA SECTION : IDENTIQUE COULEUR & FORMAT --- */}
-      <section className="relative py-32 bg-[#001529] text-center overflow-hidden">
-        <div className="container mx-auto px-6 relative z-10">
-          <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter text-white mb-12 leading-tight">
-            BESOIN D'UNE <span className="text-[#DAA520]">EXPERTISE</span> <br/> TECHNIQUE ?
-          </h2>
-          <Link to="/quote">
-            <Button className="bg-white text-[#001529] hover:bg-[#DAA520] hover:text-white px-20 h-20 rounded-none font-black text-[12px] tracking-[0.4em] uppercase transition-all shadow-[0_0_30px_rgba(218,165,32,0.2)]">
-              DEMANDER UN DEVIS
-            </Button>
-          </Link>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, index) => (
+              <Card key={index} className="text-center border-none shadow-md">
+                <CardContent className="pt-8 pb-6 px-6">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-4">
+                    <feature.icon className="h-8 w-8" />
+                  </div>
+                  <h3 className="font-heading font-semibold text-lg text-foreground mb-2">
+                    {t(feature.titleKey)}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {t(feature.descKey)}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
-        
-        {/* Filigrane Grille Technique Conservé (Opacité 5%) */}
-        <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[size:50px_50px] bg-[linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]" />
+      </section>
+      {/* CTA Section */}
+      <section className="py-16 md:py-20 gradient-primary text-primary-foreground">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
+            {language === 'fr' ? 'Besoin d\'un devis personnalisé ?' : 'Need a custom quote?'}
+          </h2>
+          <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+            {language === 'fr' 
+              ? 'Notre équipe d\'experts est prête à vous accompagner dans vos projets'
+              : 'Our team of experts is ready to assist you with your projects'}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+            <Link to="/quote">
+              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold w-full sm:w-auto">
+                {t('nav.quote')}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+            <Link to="/contact">
+              <Button size="lg" variant="outline" className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full sm:w-auto">
+                {t('nav.contact')}
+              </Button>
+            </Link>
+          </div>
+          
+          {/* WhatsApp CTA */}
+          <div className="pt-4">
+            <WhatsAppButton variant="hero" />
+          </div>
+        </div>
       </section>
 
       <style>{`
