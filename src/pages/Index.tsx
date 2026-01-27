@@ -139,36 +139,43 @@ const Index = () => {
         `}</style>
       </section>
       {/* Why Choose Us */}
-      <section className="py-16 md:py-24 bg-muted">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-              {t('home.why_title')}
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              {t('home.why_subtitle')}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <Card key={index} className="text-center border-none shadow-md">
-                <CardContent className="pt-8 pb-6 px-6">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-4">
-                    <feature.icon className="h-8 w-8" />
-                  </div>
-                  <h3 className="font-heading font-semibold text-lg text-foreground mb-2">
-                    {t(feature.titleKey)}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {t(feature.descKey)}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+      <section className="py-16 md:py-24 bg-muted/30">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="font-heading text-3xl md:text-4xl font-black uppercase italic tracking-tighter text-[#001529] mb-4">
+            {t('home.why_title')}
+          </h2>
+          <div className="h-[2px] w-20 bg-[#DAA520] mx-auto mb-6"></div>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-medium italic">
+            {t('home.why_subtitle')}
+          </p>
         </div>
-      </section>
+    
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+          {features.map((feature, index) => (
+            <div 
+              key={index} 
+              className="group bg-white p-8 rounded-xl border-2 border-transparent hover:border-[#DAA520]/20 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex items-start gap-6"
+            >
+              {/* Icône à gauche - Style Moderne SICAF */}
+              <div className="text-4xl p-5 bg-blue-50 text-[#001529] rounded-2xl group-hover:bg-[#001529] group-hover:text-white transition-all duration-500 shadow-inner flex-shrink-0">
+                <feature.icon className="h-8 w-8" />
+              </div>
+    
+              {/* Contenu à droite */}
+              <div className="flex-1">
+                <h3 className="font-heading font-black uppercase italic text-lg text-[#001529] group-hover:text-[#DAA520] transition-colors mb-2 tracking-tight">
+                  {t(feature.titleKey)}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed font-medium">
+                  {t(feature.descKey)}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
       {/* CTA Section */}
       <section className="py-16 md:py-20 gradient-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
