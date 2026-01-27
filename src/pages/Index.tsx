@@ -1,16 +1,15 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Award, Users, Truck, Factory, Loader2 } from 'lucide-react';
+import { ArrowRight, Shield, Award, Users, Truck, ChevronRight, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
 const Index = () => {
-  const { t } = useLanguage();
-  const [industryData, setIndustryData] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { language, t } = useLanguage();
+  const { categories, loading } = useGitHubProducts();
 
   const features = [
     { icon: Shield, titleKey: 'home.quality', descKey: 'home.quality_desc' },
@@ -19,97 +18,85 @@ const Index = () => {
     { icon: Truck, titleKey: 'home.delivery', descKey: 'home.delivery_desc' },
   ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/productsindustries.json');
-        const data = await response.json();
-        setIndustryData(data);
-      } catch (error) { console.error(error); } finally { setLoading(false); }
-    };
-    fetchData();
-  }, []);
-
   return (
     <Layout>
       <WhatsAppButton variant="floating" />
 
-      {/* --- SECTION 1: HERO (Le look exact de sicaf.netlify.app) --- */}
-      <section className="relative bg-black text-white min-h-screen flex items-center overflow-hidden">
-        {/* Filigranes conservés selon votre demande */}
-        <div 
-          className="absolute inset-0 z-0 opacity-20 grayscale brightness-150 contrast-125"
-          style={{ backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png')`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-[1]" />
-
+      {/* --- HERO SECTION : STYLE IDENTIQUE SICAF --- */}
+      <section className="relative bg-[#000000] text-white min-h-[85vh] flex items-center overflow-hidden border-b border-white/10">
+        {/* Filigrane décoratif conservé (Wave SVG en bas) */}
+        <div className="absolute inset-0 z-0 opacity-20 grayscale pointer-events-none bg-[url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png')] bg-cover bg-center" />
+        
         <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-full">
-            {/* Petit texte au dessus du titre */}
+          <div className="max-w-6xl">
             <div className="flex items-center gap-4 mb-8">
-              <div className="h-[2px] w-12 bg-primary"></div>
-              <span className="text-[10px] font-black uppercase tracking-[0.6em] text-primary">Industrie Chimique</span>
+              <span className="w-12 h-[1px] bg-primary"></span>
+              <span className="text-[10px] font-black uppercase tracking-[0.5em] text-primary">Expertise Industrielle</span>
             </div>
 
-            {/* Titre Massive : Aspect Identique au site de référence */}
-            <h1 className="text-[14vw] md:text-[9vw] font-black uppercase italic leading-[0.75] tracking-tighter mb-12 select-none">
+            <h1 className="text-5xl md:text-[100px] font-black uppercase italic leading-[0.85] tracking-tighter mb-10">
               {t('hero.title').split(' ')[0]} <br/>
-              <span className="text-transparent" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.4)' }}>
+              <span className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.7)' }}>
                 {t('hero.title').split(' ').slice(1).join(' ')}
               </span>
             </h1>
 
-            <p className="text-lg md:text-2xl text-slate-400 font-medium italic border-l-4 border-primary pl-8 max-w-2xl leading-tight mb-16">
+            <p className="text-sm md:text-lg text-slate-400 max-w-xl mb-12 font-medium leading-relaxed border-l-2 border-primary pl-8">
               {t('hero.subtitle')}
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col sm:flex-row gap-0">
               <Link to="/catalog">
-                <Button className="bg-white text-black hover:bg-primary hover:text-white px-12 h-20 rounded-none font-black text-[11px] tracking-[0.4em] uppercase transition-all duration-300">
+                <Button className="bg-white text-black hover:bg-primary hover:text-white px-12 h-20 rounded-none font-black text-[11px] tracking-[0.3em] uppercase transition-all duration-300 w-full sm:w-auto">
                   {t('hero.cta')}
                 </Button>
               </Link>
               <Link to="/quote">
-                <Button className="bg-primary text-white border-none px-12 h-20 rounded-none font-black text-[11px] tracking-[0.4em] uppercase hover:bg-white hover:text-black transition-all duration-300 shadow-[20px_20px_0px_rgba(255,255,255,0.05)]">
-                  {t('nav.quote')} <ArrowRight className="ml-4 h-5 w-5" />
+                <Button className="bg-transparent border border-white/20 text-white hover:bg-white hover:text-black px-12 h-20 rounded-none font-black text-[11px] tracking-[0.3em] uppercase transition-all duration-300 w-full sm:w-auto">
+                  {t('nav.quote')} <ArrowRight className="ml-3 h-5 w-5" />
                 </Button>
               </Link>      
             </div>
           </div>
         </div>
+
+        {/* Vos vagues décoratives originales (Fidélité à votre code) */}
+        <div className="absolute bottom-0 left-0 right-0 overflow-hidden z-1 opacity-10">
+          <svg className="relative w-full h-20" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" className="fill-white" />
+          </svg>
+        </div>
       </section>
 
-      {/* --- SECTION 2: SLIDER VIVANT (Mouvement continu) --- */}
-      <section className="py-32 bg-white overflow-hidden">
-        <div className="px-6 mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
-            <h2 className="text-7xl md:text-[10vw] font-black text-black uppercase italic tracking-tighter leading-none">
-              {t('home.products_title')}
-            </h2>
-            <div className="text-[10px] font-black tracking-[0.5em] text-primary mb-4 animate-pulse">
-              DÉFILEMENT CONTINU •
-            </div>
+      {/* --- SECTION PRODUITS : SLIDER VIVANT --- */}
+      <section className="py-24 bg-white overflow-hidden">
+        <div className="container mx-auto px-6 mb-16">
+          <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter text-black">
+            {t('home.products_title')}
+          </h2>
         </div>
 
         {loading ? (
-          <div className="flex justify-center py-20"><Loader2 className="h-16 w-16 animate-spin text-primary" /></div>
+          <div className="flex justify-center py-20"><Loader2 className="h-12 w-12 animate-spin text-primary" /></div>
         ) : (
-          <div className="relative w-full border-y-2 border-black">
-            <div className="flex animate-scroll-horizontal gap-0 w-max hover:pause">
-              {[...industryData, ...industryData, ...industryData].map((item, idx) => (
-                <div key={`${item.ID}-${idx}`} className="w-[350px] md:w-[600px] border-r-2 border-black shrink-0">
-                  <Link to={`/products/${item.ID}`} className="group block relative overflow-hidden h-[500px]">
-                    <img 
-                      src={item.img} 
-                      alt={item.categorie} 
-                      className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" 
-                    />
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500" />
-                    
-                    <div className="absolute bottom-0 left-0 p-10 w-full bg-gradient-to-t from-black to-transparent">
-                      <p className="text-primary font-black text-xs tracking-widest mb-2 italic">DIV-0{item.ID}</p>
-                      <h3 className="text-4xl font-black uppercase italic text-white tracking-tighter">
-                        {item.categorie}
-                      </h3>
+          <div className="relative border-y border-black overflow-hidden group">
+            <div className="flex animate-infinite-scroll py-0 hover:pause">
+              {[...categories, ...categories].map((category, idx) => (
+                <div key={`${category.id}-${idx}`} className="w-[300px] md:w-[450px] border-r border-black shrink-0">
+                  <Link to={`/products/${category.id}`} className="group/item block bg-white hover:bg-black transition-colors duration-500">
+                    <div className="p-12 h-[350px] flex flex-col justify-between">
+                      <div className="text-6xl group-hover/item:scale-110 transition-transform duration-500">
+                        {category.icon}
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-bold text-primary tracking-widest uppercase mb-2 block">Division</span>
+                        <h3 className="text-3xl font-black uppercase italic text-black group-hover/item:text-white transition-colors">
+                          {category.name[language]}
+                        </h3>
+                        <p className="text-xs text-slate-500 mt-4 line-clamp-2 uppercase font-bold tracking-tight">
+                          {category.description[language]}
+                        </p>
+                      </div>
                     </div>
                   </Link>
                 </div>
@@ -119,49 +106,57 @@ const Index = () => {
         )}
       </section>
 
-      {/* --- SECTION 3: FEATURES (Grille Brutaliste) --- */}
-      <section className="bg-black py-0">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-0 border-t border-white/20">
-            {features.map((feature, index) => (
-              <div key={index} className="p-16 border-b border-r border-white/10 group hover:bg-primary transition-all duration-500">
-                <feature.icon className="h-12 w-12 text-primary group-hover:text-white mb-10 transition-colors" />
-                <h3 className="font-black uppercase italic text-lg mb-4 tracking-widest text-white">{t(feature.titleKey)}</h3>
-                <p className="text-[10px] text-white/40 leading-relaxed uppercase font-bold tracking-widest group-hover:text-white/80">{t(feature.descKey)}</p>
+      {/* --- WHY CHOOSE US : GRILLE INDUSTRIELLE --- */}
+      <section className="py-0 bg-black">
+        <div className="grid grid-cols-1 md:grid-cols-4 border-t border-white/10">
+          {features.map((feature, index) => (
+            <div key={index} className="p-16 border-b border-r border-white/10 hover:bg-primary transition-all duration-500 group">
+              <div className="text-primary group-hover:text-white mb-8">
+                <feature.icon className="h-10 w-10" />
               </div>
-            ))}
+              <h3 className="text-white font-black uppercase italic text-sm tracking-widest mb-4">
+                {t(feature.titleKey)}
+              </h3>
+              <p className="text-[10px] text-slate-500 group-hover:text-white/80 uppercase font-bold tracking-widest leading-relaxed">
+                {t(feature.descKey)}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* --- SECTION 4: CTA (Grille de fond conservée) --- */}
-      <section className="py-40 bg-white text-center relative overflow-hidden border-t-4 border-black">
+      {/* --- CTA FINAL : STYLE IDENTIQUE --- */}
+      <section className="py-32 bg-white text-center relative overflow-hidden border-t-4 border-black">
         <div className="container mx-auto px-6 relative z-10">
-          <h2 className="text-6xl md:text-[10vw] font-black uppercase italic mb-16 tracking-tighter leading-[0.8] text-black">
-            Besoin d'un <br/> <span className="text-primary border-b-[10px] border-black">Support</span> ?
+          <h2 className="text-5xl md:text-[90px] font-black uppercase italic mb-12 tracking-tighter leading-none text-black">
+            Besoin d'un <span className="text-primary">Devis</span> ?
           </h2>
-          <Link to="/quote">
-            <Button className="bg-black text-white font-black px-20 h-28 rounded-none hover:bg-primary transition-all text-xs tracking-[0.5em]">
-              OBTENIR UNE COTATION TECHNIQUE
-            </Button>
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/quote">
+              <Button size="lg" className="bg-black text-white hover:bg-primary px-16 h-24 rounded-none font-black text-[12px] tracking-[0.4em] uppercase transition-all shadow-2xl">
+                {t('nav.quote')}
+              </Button>
+            </Link>
+          </div>
         </div>
         
-        {/* GRILLE TECHNIQUE CONSERVÉE */}
-        <div className="absolute inset-0 opacity-[0.07] pointer-events-none">
-           <div className="h-full w-full bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:60px_60px]" />
+        {/* Grille technique en filigrane conservée */}
+        <div className="absolute inset-0 opacity-[0.05] pointer-events-none">
+           <div className="h-full w-full bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:50px_50px]" />
         </div>
       </section>
 
-      {/* CSS POUR L'ANIMATION SLIDE VIVANTE */}
+      {/* ANIMATION CSS POUR LE SLIDER VIVANT */}
       <style>{`
-        @keyframes scroll-horizontal {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(calc(-33.33%)); }
+        @keyframes infinite-scroll {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
         }
-        .animate-scroll-horizontal { 
-          animation: scroll-horizontal 30s linear infinite; 
+        .animate-infinite-scroll {
+          animation: infinite-scroll 35s linear infinite;
         }
-        .hover\\:pause:hover { 
-          animation-play-state: paused; 
+        .hover\\:pause:hover {
+          animation-play-state: paused;
         }
       `}</style>
     </Layout>
