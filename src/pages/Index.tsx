@@ -74,6 +74,14 @@ const Index = () => {
 
       {/* --- NOS PRODUITS : SLIDES AVEC CARDS REMODELÉES --- */}
       <section className="py-24 bg-[#f8f9fa] overflow-hidden">
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-20 grayscale mix-blend-overlay"
+            style={{ 
+              backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/stockageproduits.png')` 
+            }}
+          />
+        </div>
         <div className="container mx-auto px-6 mb-16">
         <div className="flex items-center gap-4 mb-4">
           <div className="h-[2px] w-12 bg-[#001529]"></div>
@@ -140,6 +148,14 @@ const Index = () => {
       </section>
       {/* Why Choose Us */}
       <section className="py-16 md:py-24 bg-muted/30">
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-20 grayscale mix-blend-overlay"
+            style={{ 
+              backgroundImage: `url('https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industriechimie.png')` 
+            }}
+          />
+        </div>
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="font-heading text-3xl md:text-4xl font-black uppercase italic tracking-tighter text-[#001529] mb-4">
