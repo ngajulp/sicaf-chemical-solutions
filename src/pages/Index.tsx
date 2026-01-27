@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Award, Users, Truck, Loader2 } from 'lucide-react';
+import { ArrowRight, Shield, Award, Users, Truck,ChevronRight, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import { Card, CardContent } from '@/components/ui/card';
 const Index = () => {
   const { language, t } = useLanguage();
   const { categories, loading } = useGitHubProducts();
