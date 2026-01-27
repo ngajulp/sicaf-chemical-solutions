@@ -11,10 +11,10 @@ const Index = () => {
   const { categories, loading } = useGitHubProducts();
 
   const features = [
-    { icon: Shield, titleKey: 'home.quality' },
-    { icon: Award, titleKey: 'home.expertise' },
-    { icon: Users, titleKey: 'home.service' },
-    { icon: Truck, titleKey: 'home.delivery' },
+    { icon: Shield, titleKey: 'home.quality', descKey: 'home.quality_desc' },
+    { icon: Award, titleKey: 'home.expertise', descKey: 'home.expertise_desc' },
+    { icon: Users, titleKey: 'home.service', descKey: 'home.service_desc' },
+    { icon: Truck, titleKey: 'home.delivery', descKey: 'home.delivery_desc' },
   ];
 
   return (
