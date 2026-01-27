@@ -4,7 +4,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useGitHubProducts } from '@/hooks/useGitHubProducts';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
-
+import WhatsAppButton from '@/components/WhatsAppButton';
 const Index = () => {
   const { language, t } = useLanguage();
   const { categories, loading } = useGitHubProducts();
