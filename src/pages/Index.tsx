@@ -82,32 +82,38 @@ const Index = () => {
             </h2>
           </div>
         </div>
-
+      
         {loading ? (
-          <div className="flex justify-center py-20"><Loader2 className="animate-spin text-[#001529]" /></div>
+          <div className="flex justify-center py-20">
+            <Loader2 className="animate-spin h-10 w-10 text-[#001529]" />
+          </div>
         ) : (
-          <div className="relative border-y-2 border-[#001529]/10 group bg-white">
-            <div className="flex animate-slide-vif py-0">
+          <div className="relative group">
+            {/* Container du Slider */}
+            <div className="flex animate-slide-vif py-6">
               {[...categories, ...categories].map((cat, i) => (
-                <div key={i} className="w-[350px] md:w-[500px] flex-shrink-0 border-r-2 border-[#001529]/5 group/card cursor-pointer relative overflow-hidden h-[450px]">
+                <div key={i} className="w-[380px] md:w-[450px] flex-shrink-0 px-4">
                   <Link to={`/products/${cat.id}`}>
-                    {/* Background visuel de la card */}
-                    <div className="absolute inset-0 bg-[#001529] opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 z-0" />
-                    
-                    <div className="relative z-10 p-12 h-full flex flex-col justify-between">
-                      <div className="text-7xl mb-6 group-hover/card:scale-110 transition-transform duration-500">
+                    {/* --- ASPECT DES CARDS DU DEUXIÈME CODE --- */}
+                    <div className="bg-white p-8 rounded-xl border-2 border-transparent hover:border-[#DAA520]/20 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 h-full flex items-start gap-6 group/card">
+                      
+                      {/* Icône à gauche avec fond */}
+                      <div className="text-5xl p-5 bg-blue-50 text-[#001529] rounded-2xl group-hover/card:bg-[#001529] group-hover/card:text-white transition-all duration-500 shadow-inner">
                         {cat.icon}
                       </div>
                       
-                      <div>
-                        <h3 className="text-3xl font-black uppercase italic text-[#001529] group-hover/card:text-[#DAA520] tracking-tighter transition-colors mb-4 leading-none">
+                      {/* Contenu à droite */}
+                      <div className="flex-1">
+                        <h3 className="text-xl font-black uppercase italic text-[#001529] group-hover/card:text-[#DAA520] transition-colors mb-2 tracking-tight">
                           {cat.name[language]}
                         </h3>
-                        <p className="text-sm text-gray-500 group-hover/card:text-blue-100 transition-colors line-clamp-3 font-medium italic">
+                        <p className="text-sm text-gray-500 leading-relaxed line-clamp-3 font-medium">
                           {cat.description[language]}
                         </p>
-                        <div className="mt-8 flex items-center text-[#DAA520] font-black text-[10px] tracking-[0.2em] opacity-0 group-hover/card:opacity-100 transition-all transform translate-y-4 group-hover/card:translate-y-0">
-                          EXPLORER LA DIVISION <ArrowRight className="ml-2 h-4 w-4" />
+                        
+                        {/* Petit indicateur d'action */}
+                        <div className="mt-4 flex items-center text-[#DAA520] font-black text-[10px] tracking-widest opacity-0 group-hover/card:opacity-100 transition-all transform translate-x-[-10px] group-hover/card:translate-x-0">
+                          VOIR LA GAMME <ArrowRight className="ml-2 h-3 w-3" />
                         </div>
                       </div>
                     </div>
@@ -117,6 +123,19 @@ const Index = () => {
             </div>
           </div>
         )}
+      
+        <style>{`
+          @keyframes slide-vif {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+          }
+          .animate-slide-vif {
+            animation: slide-vif 45s linear infinite;
+          }
+          .animate-slide-vif:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
       </section>
       {/* Why Choose Us */}
       <section className="py-16 md:py-24 bg-muted">
