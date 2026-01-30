@@ -303,7 +303,7 @@
       "Assistance scientifique"
     ],
     "description": "SICAF accompagne les laboratoires et centres de recherche avec des solutions fiables et adaptées aux exigences analytiques, scientifiques et réglementaires.",
-    "img": "",
+    "img": "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png",
     "pdf": "",
     "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/laboratory.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/laboratory2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/laboratory3.jpg"],
     "watermark": "laboratory-filigrane",
