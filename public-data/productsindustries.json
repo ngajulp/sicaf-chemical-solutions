@@ -30,7 +30,7 @@
       "Protection des milieux aquatiques"
     ],
     "description": "SICAF accompagne collectivités, industries et opérateurs dans toutes les problématiques liées à l’eau et à l’environnement, de la production d’eau potable à la gestion d’effluents complexes, avec une approche technique, réglementaire et durable.",
-    "img": "",
+    "img": "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/environment.png",
     "pdf": "",
     "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/traitementeau1.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/traitementeau2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/traitementeau3.jpg"],
     "watermark": "water-treatment-filigrane",
