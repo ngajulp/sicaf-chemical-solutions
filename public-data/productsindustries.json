@@ -26,6 +26,8 @@
     "Mise à niveau des stations de traitement (STEP)",
     "Protection des milieux aquatiques"
   ],
+  "img":"",
+  "pdf":"",
   "description": "SICAF accompagne collectivités, industries et opérateurs dans toutes les problématiques liées à l’eau et à l’environnement, de la production d’eau potable à la gestion des effluents complexes, avec une approche technique, réglementaire et durable."
 },
 {
@@ -55,6 +57,8 @@
     "Conseil technique aux exploitations",
     "Accompagnement des coopératives agricoles"
   ],
+  "img":"",
+  "pdf":"",
   "description": "SICAF accompagne les acteurs agricoles avec des solutions adaptées aux cultures tropicales, aux sols africains et aux exigences de performance, tout en intégrant les enjeux environnementaux."
 },
 {
@@ -83,6 +87,8 @@
     "Optimisation de la durabilité des matériaux",
     "Solutions pour chantiers complexes"
   ],
+  "img":"",
+  "pdf":"",
   "description": "SICAF accompagne les acteurs du BTP dans la réalisation, la protection et la maintenance des ouvrages, avec des solutions adaptées aux contraintes climatiques et techniques."
 },
 {
@@ -111,6 +117,8 @@
     "Industrie du plastique",
     "Sécurisation des installations"
   ],
+  "img":"",
+  "pdf":"",
   "description": "SICAF intervient comme partenaire technique des industries, en apportant des solutions fiables et adaptées aux exigences de performance, de sécurité et de conformité."
 },
 {
@@ -139,6 +147,8 @@
     "Plans de nettoyage",
     "Conformité sanitaire"
   ],
+  "img":"",
+  "pdf":"",
   "description": "SICAF fournit des solutions adaptées aux exigences sanitaires modernes, pour les collectivités, entreprises et institutions."
 },
 {
@@ -167,6 +177,8 @@
     "Maintenance des surfaces",
     "Réhabilitation des surfaces"
   ],
+  "img":"",
+  "pdf":"",
   "description": "Cette catégorie couvre les solutions destinées à protéger, embellir et prolonger la durée de vie des surfaces dans les environnements industriels et urbains."
 },
 {
@@ -195,6 +207,8 @@
     "Conformité réglementaire",
     "Assistance scientifique"
   ],
+  "img":"",
+  "pdf":"",
   "description": "SICAF accompagne les laboratoires et centres de recherche avec des solutions fiables et adaptées aux exigences analytiques."
 },
 {
@@ -223,6 +237,8 @@
     "Formation technique",
     "Expertise indépendante"
   ],
+  "img":"",
+  "pdf":"",
   "description": "SICAF se positionne comme un véritable partenaire stratégique, capable de concevoir et fournir des solutions chimiques adaptées aux besoins les plus spécifiques."
 },
 {
@@ -253,6 +269,8 @@
     "Conservation du bois en milieu humide",
     "Solutions pour bois exposés aux intempéries"
   ],
+  "img":"",
+  "pdf":"",
   "description": "SICAF accompagne les acteurs du bâtiment, de l’énergie, de l’industrie et de l’ameublement avec des solutions adaptées à la protection et à la durabilité des matériaux bois, notamment en climat tropical."
 },
 {
@@ -283,6 +301,8 @@
     "Solutions agricoles sur mesure",
     "Conseil technique agricole"
   ],
+  "img":"",
+  "pdf":"",
   "description": "SICAF apporte une expertise agrochimique complète, orientée vers la performance agricole, la sécurité alimentaire et l’adaptation aux contraintes climatiques et locales."
 },
 {
@@ -313,6 +333,8 @@
     "Amélioration de la qualité de vie",
     "Solutions domestiques adaptées au climat local"
   ],
+  "img":"",
+  "pdf":"",
   "description": "SICAF répond aux besoins chimiques du quotidien, en proposant des solutions adaptées aux ménages, aux collectivités et aux établissements recevant du public."
 },
 {
@@ -341,6 +363,8 @@
     "Conformité réglementaire publique",
     "Accompagnement des projets publics"
   ],
+  "img":"",
+  "pdf":"",
   "description": "SICAF se positionne comme un partenaire technique des collectivités et institutions, avec des solutions adaptées aux enjeux sanitaires, environnementaux et infrastructurels."
 }
 ]
