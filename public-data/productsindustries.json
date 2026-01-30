@@ -32,7 +32,7 @@
     "description": "SICAF accompagne collectivités, industries et opérateurs dans toutes les problématiques liées à l’eau et à l’environnement, de la production d’eau potable à la gestion d’effluents complexes, avec une approche technique, réglementaire et durable.",
     "img": "",
     "pdf": "",
-    "gallery": [],
+    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/traitementeau1.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/traitementeau2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/traitementeau3.jpg"],
     "watermark": "water-treatment-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -72,7 +72,7 @@
     "description": "SICAF accompagne les acteurs agricoles avec des solutions adaptées aux cultures tropicales, aux sols africains et aux exigences de performance, tout en intégrant les enjeux environnementaux.",
     "img": "",
     "pdf": "",
-    "gallery": [],
+    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimie1.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimie2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimie3.jpg"],
     "watermark": "agrochemistry-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -111,7 +111,7 @@
     "description": "SICAF accompagne les acteurs du BTP dans la réalisation, la protection et la maintenance des ouvrages, avec des solutions adaptées aux contraintes climatiques et techniques.",
     "img": "",
     "pdf": "",
-    "gallery": [],
+    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/btp1.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/btp2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/btp3.jpg"],
     "watermark": "construction-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -150,7 +150,7 @@
     "description": "SICAF propose des solutions adaptées à la protection et à la durabilité des matériaux bois et assimilés, notamment en environnement tropical.",
     "img": "",
     "pdf": "",
-    "gallery": [],
+    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatment.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatment2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatment3.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatment4.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatment5.jpg"],
     "watermark": "wood-treatment-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -189,7 +189,7 @@
     "description": "SICAF fournit des solutions adaptées aux exigences sanitaires modernes pour les collectivités, industries et ménages.",
     "img": "",
     "pdf": "",
-    "gallery": [],
+    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygiene1.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygiene2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygiene3.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygiene4.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygiene5.jpg"],
     "watermark": "hygiene-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -227,7 +227,7 @@
     "description": "SICAF intervient comme partenaire technique des industries en apportant des solutions fiables, performantes et adaptées aux contraintes de production, de sécurité et de conformité réglementaire.",
     "img": "",
     "pdf": "",
-    "gallery": [],
+    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industrie1.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industrie2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industrie3.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industrie4.jpg"],
     "watermark": "industrial-process-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -266,7 +266,7 @@
     "description": "Cette catégorie regroupe les solutions dédiées à la protection, à l’esthétique et à la longévité des surfaces, dans des environnements industriels, urbains et architecturaux.",
     "img": "",
     "pdf": "",
-    "gallery": [],
+    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/painter.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/painter2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/painter3.jpg"],
     "watermark": "coatings-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -305,7 +305,7 @@
     "description": "SICAF accompagne les laboratoires et centres de recherche avec des solutions fiables et adaptées aux exigences analytiques, scientifiques et réglementaires.",
     "img": "",
     "pdf": "",
-    "gallery": [],
+    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/laboratory.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/laboratory2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/laboratory3.jpg"],
     "watermark": "laboratory-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -344,7 +344,7 @@
     "description": "SICAF se positionne comme un partenaire stratégique capable de concevoir et de déployer des solutions chimiques adaptées aux besoins les plus complexes.",
     "img": "",
     "pdf": "",
-    "gallery": [],
+    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/engenner.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/engenner2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/engenner3.jpg"],
     "watermark": "engineering-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -383,7 +383,7 @@
     "description": "SICAF apporte une expertise agrochimique complète orientée vers la performance agricole, la sécurité alimentaire et l’adaptation aux contraintes locales.",
     "img": "",
     "pdf": "",
-    "gallery": [],
+    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimieprotection.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimieprotection2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimieprotection3.jpg"],
     "watermark": "crop-protection-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -422,7 +422,7 @@
     "description": "SICAF répond aux besoins chimiques du quotidien en proposant des solutions adaptées aux ménages, collectivités et établissements recevant du public.",
     "img": "",
     "pdf": "",
-    "gallery": [],
+    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean3.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean4.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean5.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean6.jpg"],
     "watermark": "household-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -461,7 +461,7 @@
     "description": "SICAF se positionne comme un partenaire technique fiable des collectivités et institutions, avec des solutions adaptées aux enjeux sanitaires, environnementaux et infrastructurels.",
     "img": "",
     "pdf": "",
-    "gallery": [],
+    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/public.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/public2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/public3.jpg"],
     "watermark": "public-infrastructure-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
