@@ -29,10 +29,46 @@
       "Mise à niveau des stations de traitement (STEP)",
       "Protection des milieux aquatiques"
     ],
+    "produits": [
+      {
+        "reference": "WF-EAU-001",
+        "nom": "Eau déminéralisée",
+        "utilisation": ["Laboratoires", "Industries pharmaceutique", "Industries électronique"],
+        "specifications": "Conductivité < 1 µS/cm"
+      },
+      {
+        "reference": "WF-EAU-002",
+        "nom": "Eau distillée",
+        "utilisation": ["Analyses scientifiques", "Batteries", "Systèmes de refroidissement"],
+        "specifications": "Pureté > 99.9%"
+      },
+      {
+        "reference": "WF-EAU-003",
+        "nom": "Eau alcaline",
+        "utilisation": ["Traitement des eaux", "Industries alimentaire", "Industries pharmaceutique"],
+        "specifications": "pH 8.5 – 9.5"
+      },
+      {
+        "reference": "SIC-EAU-004",
+        "nom": "Solution de clarification & décantation (service/produit sur demande)",
+        "utilisation": ["Eaux de surface", "Eaux industrielles", "STEP"],
+        "specifications": "Formulation adaptée selon turbidité"
+      },
+      {
+        "reference": "SIC-EAU-005",
+        "nom": "Solution anti-entartrage & anti-corrosion (service/produit sur demande)",
+        "utilisation": ["Circuits de refroidissement", "Chaudières", "Réseaux industriels"],
+        "specifications": "Programme de traitement personnalisé"
+      }
+    ],
     "description": "SICAF accompagne collectivités, industries et opérateurs dans toutes les problématiques liées à l’eau et à l’environnement, de la production d’eau potable à la gestion d’effluents complexes, avec une approche technique, réglementaire et durable.",
     "img": "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/environment.png",
     "pdf": "",
-    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/traitementeau1.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/traitementeau2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/traitementeau3.jpg"],
+    "gallery": [
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/traitementeau1.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/traitementeau2.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/traitementeau3.jpg"
+    ],
     "watermark": "water-treatment-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -69,10 +105,46 @@
       "Conseil technique aux exploitations",
       "Accompagnement des coopératives agricoles"
     ],
+    "produits": [
+      {
+        "reference": "SIC-AGR-001",
+        "nom": "Formulation d’intrants agricoles sur cahier des charges",
+        "utilisation": ["Grandes exploitations", "Coopératives", "Agro-industrie"],
+        "specifications": "Paramétrage selon culture/sol"
+      },
+      {
+        "reference": "SIC-AGR-002",
+        "nom": "Solution d’amélioration de la structure des sols",
+        "utilisation": ["Sols compactés", "Sols pauvres", "Sols lessivés"],
+        "specifications": "Programme technique personnalisé"
+      },
+      {
+        "reference": "SIC-AGR-003",
+        "nom": "Programme de nutrition végétale (sur demande)",
+        "utilisation": ["Cultures vivrières", "Plantations", "Maraîchage"],
+        "specifications": "Dosage selon analyses"
+      },
+      {
+        "reference": "SIC-AGR-004",
+        "nom": "Solution de conservation post-récolte (sur demande)",
+        "utilisation": ["Stockage", "Transport", "Entrepôts"],
+        "specifications": "Adaptation selon filière"
+      },
+      {
+        "reference": "SIC-AGR-005",
+        "nom": "Assistance technique & diagnostic agronomique",
+        "utilisation": ["Optimisation rendements", "Réduction pertes", "Conseil exploitation"],
+        "specifications": "Prestation + recommandations"
+      }
+    ],
     "description": "SICAF accompagne les acteurs agricoles avec des solutions adaptées aux cultures tropicales, aux sols africains et aux exigences de performance, tout en intégrant les enjeux environnementaux.",
     "img": "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agricultureintrans.jpg",
     "pdf": "",
-    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimie1.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimie2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimie3.jpg"],
+    "gallery": [
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimie1.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimie2.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimie3.jpg"
+    ],
     "watermark": "agrochemistry-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -108,10 +180,46 @@
       "Optimisation de la durabilité des matériaux",
       "Solutions pour chantiers complexes"
     ],
+    "produits": [
+      {
+        "reference": "SIC-BTP-001",
+        "nom": "Adjuvant béton haute performance (sur demande)",
+        "utilisation": ["Chantiers", "Génie civil", "Ouvrages hydrauliques"],
+        "specifications": "Dosage selon formulation"
+      },
+      {
+        "reference": "SIC-BTP-002",
+        "nom": "Solution d’étanchéité & protection humidité (sur demande)",
+        "utilisation": ["Toitures", "Sous-sols", "Ouvrages enterrés"],
+        "specifications": "Système adapté au support"
+      },
+      {
+        "reference": "SIC-BTP-003",
+        "nom": "Revêtement de sol industriel (sur demande)",
+        "utilisation": ["Ateliers", "Entrepôts", "Zones de production"],
+        "specifications": "Résistance chimique/abrasion"
+      },
+      {
+        "reference": "SIC-BTP-004",
+        "nom": "Traitement anticorrosion structures métalliques (sur demande)",
+        "utilisation": ["Charpentes", "Ouvrages exposés", "Milieux agressifs"],
+        "specifications": "Système multi-couches"
+      },
+      {
+        "reference": "SIC-BTP-005",
+        "nom": "Peinture technique bâtiment & infrastructure (sur demande)",
+        "utilisation": ["Façades", "Intérieurs", "Zones techniques"],
+        "specifications": "Choix selon environnement"
+      }
+    ],
     "description": "SICAF accompagne les acteurs du BTP dans la réalisation, la protection et la maintenance des ouvrages, avec des solutions adaptées aux contraintes climatiques et techniques.",
     "img": "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/btp.jpg",
     "pdf": "",
-    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/btp1.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/btp2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/btp3.jpg"],
+    "gallery": [
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/btp1.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/btp2.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/btp3.jpg"
+    ],
     "watermark": "construction-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -147,10 +255,48 @@
       "Solutions pour bois exposés aux intempéries",
       "Maintenance des matériaux"
     ],
+    "produits": [
+      {
+        "reference": "SIC-BOIS-001",
+        "nom": "Protection préventive bois (sur demande)",
+        "utilisation": ["Charpentes", "Menuiseries", "Bois de construction"],
+        "specifications": "Adaptation au climat & exposition"
+      },
+      {
+        "reference": "SIC-BOIS-002",
+        "nom": "Traitement curatif bois (sur demande)",
+        "utilisation": ["Bois infesté", "Bois attaqué", "Réhabilitation"],
+        "specifications": "Programme selon diagnostic"
+      },
+      {
+        "reference": "SIC-BOIS-003",
+        "nom": "Protection anti-humidité (sur demande)",
+        "utilisation": ["Bois extérieur", "Zones humides", "Milieux tropicaux"],
+        "specifications": "Choix selon support"
+      },
+      {
+        "reference": "SIC-BOIS-004",
+        "nom": "Stabilisation et durabilité des matériaux (sur demande)",
+        "utilisation": ["Bois d’œuvre", "Palettes", "Emballages"],
+        "specifications": "Spécifications selon usage"
+      },
+      {
+        "reference": "SIC-BOIS-005",
+        "nom": "Vernis/finition protection bois (sur demande)",
+        "utilisation": ["Ameublement", "Menuiserie", "Protection surfaces"],
+        "specifications": "Finition technique/esthétique"
+      }
+    ],
     "description": "SICAF propose des solutions adaptées à la protection et à la durabilité des matériaux bois et assimilés, notamment en environnement tropical.",
     "img": "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatments.jpg",
     "pdf": "",
-    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatment.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatment2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatment3.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatment4.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatment5.jpg"],
+    "gallery": [
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatment.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatment2.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatment3.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatment4.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/woodtreatment5.jpg"
+    ],
     "watermark": "wood-treatment-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -186,17 +332,56 @@
       "Lutte contre les contaminations",
       "Amélioration des conditions sanitaires"
     ],
+    "produits": [
+      {
+        "reference": "SIC-HYG-001",
+        "nom": "Solution désinfection surfaces (sur demande)",
+        "utilisation": ["Hôpitaux", "Écoles", "Marchés"],
+        "specifications": "Usage pro/collectif"
+      },
+      {
+        "reference": "SIC-HYG-002",
+        "nom": "Hygiène cuisine professionnelle (sur demande)",
+        "utilisation": ["Restaurants", "Hôtels", "Cuisines"],
+        "specifications": "Protocole adapté"
+      },
+      {
+        "reference": "SIC-HYG-003",
+        "nom": "Nettoyage industriel (service/produit sur demande)",
+        "utilisation": ["Usines", "Entrepôts", "Ateliers"],
+        "specifications": "Selon surface & salissures"
+      },
+      {
+        "reference": "SIC-HYG-004",
+        "nom": "Traitement odeurs & assainissement (sur demande)",
+        "utilisation": ["Espaces publics", "Zones sensibles", "Sites industriels"],
+        "specifications": "Plan d’action selon contexte"
+      },
+      {
+        "reference": "SIC-HYG-005",
+        "nom": "Plan hygiène & conformité sanitaire (accompagnement)",
+        "utilisation": ["ERP", "Agroalimentaire", "Collectivités"],
+        "specifications": "Audit + recommandations"
+      }
+    ],
     "description": "SICAF fournit des solutions adaptées aux exigences sanitaires modernes pour les collectivités, industries et ménages.",
     "img": "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygienetraitement.jpg",
     "pdf": "",
-    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygiene1.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygiene2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygiene3.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygiene4.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygiene5.jpg"],
+    "gallery": [
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygiene1.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygiene2.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygiene3.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygiene4.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/hygiene5.jpg"
+    ],
     "watermark": "hygiene-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
       "message": "Bonjour SICAF, j’ai un besoin en hygiène ou désinfection. Pouvez-vous m’orienter vers une solution adaptée ?"
     }
   },
- {
+
+  {
     "ID": 6,
     "slug": "industries-procedes-industriels",
     "categorie": "Industries & procédés industriels",
@@ -224,10 +409,47 @@
       "Industrie du plastique",
       "Sécurisation des installations industrielles"
     ],
+    "produits": [
+      {
+        "reference": "SIC-IND-001",
+        "nom": "Programme maintenance chimique équipements (sur demande)",
+        "utilisation": ["Usines", "Unités de production", "Réseaux techniques"],
+        "specifications": "Plan selon process"
+      },
+      {
+        "reference": "SIC-IND-002",
+        "nom": "Nettoyage process & circuits (sur demande)",
+        "utilisation": ["Circuits industriels", "Cuves", "Échangeurs"],
+        "specifications": "Adaptation au matériau"
+      },
+      {
+        "reference": "SIC-IND-003",
+        "nom": "Protection anticorrosion process (sur demande)",
+        "utilisation": ["Pipelines", "Cuves", "Structures"],
+        "specifications": "Choix selon milieu"
+      },
+      {
+        "reference": "SIC-IND-004",
+        "nom": "Traitement effluents industriels (solution projet)",
+        "utilisation": ["Ateliers", "Industrie", "Sites sensibles"],
+        "specifications": "Dimensionnement selon analyses"
+      },
+      {
+        "reference": "SIC-IND-005",
+        "nom": "Optimisation paramètres chimiques (assistance)",
+        "utilisation": ["Qualité", "Performance", "Conformité"],
+        "specifications": "Audit + recommandations"
+      }
+    ],
     "description": "SICAF intervient comme partenaire technique des industries en apportant des solutions fiables, performantes et adaptées aux contraintes de production, de sécurité et de conformité réglementaire.",
     "img": "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/procedesindustriels.jpg",
     "pdf": "",
-    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industrie1.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industrie2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industrie3.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industrie4.jpg"],
+    "gallery": [
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industrie1.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industrie2.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industrie3.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/industrie4.jpg"
+    ],
     "watermark": "industrial-process-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -263,10 +485,46 @@
       "Maintenance des surfaces",
       "Réhabilitation des surfaces"
     ],
+    "produits": [
+      {
+        "reference": "SIC-COAT-001",
+        "nom": "Revêtement anticorrosion industriel (sur demande)",
+        "utilisation": ["Métaux", "Structures", "Milieux agressifs"],
+        "specifications": "Système multi-couches"
+      },
+      {
+        "reference": "SIC-COAT-002",
+        "nom": "Peinture technique bâtiment (sur demande)",
+        "utilisation": ["Façades", "Intérieurs", "Zones techniques"],
+        "specifications": "Choix selon environnement"
+      },
+      {
+        "reference": "SIC-COAT-003",
+        "nom": "Vernis de protection (sur demande)",
+        "utilisation": ["Bois", "Surfaces", "Finition"],
+        "specifications": "Mat/Brillant selon besoin"
+      },
+      {
+        "reference": "SIC-COAT-004",
+        "nom": "Protection sols industriels (sur demande)",
+        "utilisation": ["Entrepôts", "Ateliers", "Usines"],
+        "specifications": "Résistance abrasion/chimique"
+      },
+      {
+        "reference": "SIC-COAT-005",
+        "nom": "Traitement de surface technique (sur demande)",
+        "utilisation": ["Préparation support", "Durabilité", "Performance"],
+        "specifications": "Procédure selon support"
+      }
+    ],
     "description": "Cette catégorie regroupe les solutions dédiées à la protection, à l’esthétique et à la longévité des surfaces, dans des environnements industriels, urbains et architecturaux.",
     "img": "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/paints.jpg",
     "pdf": "",
-    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/painter.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/painter2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/painter3.jpg"],
+    "gallery": [
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/painter.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/painter2.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/painter3.jpg"
+    ],
     "watermark": "coatings-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -302,10 +560,46 @@
       "Conformité réglementaire",
       "Assistance scientifique"
     ],
+    "produits": [
+      {
+        "reference": "WF-EAU-001",
+        "nom": "Eau déminéralisée",
+        "utilisation": ["Laboratoires", "Industries pharmaceutique", "Industries électronique"],
+        "specifications": "Conductivité < 1 µS/cm"
+      },
+      {
+        "reference": "WF-EAU-002",
+        "nom": "Eau distillée",
+        "utilisation": ["Analyses scientifiques", "Batteries", "Systèmes de refroidissement"],
+        "specifications": "Pureté > 99.9%"
+      },
+      {
+        "reference": "WF-SL-404",
+        "nom": "Permanganate de potassium",
+        "utilisation": ["Analyses chimiques", "Traitement des eaux", "Désinfection"],
+        "specifications": "Pureté > 99%"
+      },
+      {
+        "reference": "SIC-LAB-004",
+        "nom": "Réactifs & solutions de laboratoire (sur demande)",
+        "utilisation": ["Contrôle qualité", "Analyses", "R&D"],
+        "specifications": "Selon protocole"
+      },
+      {
+        "reference": "SIC-LAB-005",
+        "nom": "Consommables & standards analytiques (sur demande)",
+        "utilisation": ["Laboratoires", "Tests conformité", "Recherche"],
+        "specifications": "Selon norme"
+      }
+    ],
     "description": "SICAF accompagne les laboratoires et centres de recherche avec des solutions fiables et adaptées aux exigences analytiques, scientifiques et réglementaires.",
     "img": "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/labochimie.png",
     "pdf": "",
-    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/laboratory.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/laboratory2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/laboratory3.jpg"],
+    "gallery": [
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/laboratory.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/laboratory2.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/laboratory3.jpg"
+    ],
     "watermark": "laboratory-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -341,10 +635,46 @@
       "Formation technique",
       "Expertise indépendante"
     ],
+    "produits": [
+      {
+        "reference": "SIC-CONS-001",
+        "nom": "Audit technique & diagnostic (service)",
+        "utilisation": ["Industrie", "Collectivités", "Projets"],
+        "specifications": "Rapport + recommandations"
+      },
+      {
+        "reference": "SIC-CONS-002",
+        "nom": "Étude de faisabilité & dimensionnement (service)",
+        "utilisation": ["Traitement eau", "Process industriels", "BTP"],
+        "specifications": "Approche sur cahier des charges"
+      },
+      {
+        "reference": "SIC-CONS-003",
+        "nom": "Sourcing international (service)",
+        "utilisation": ["Besoins spécifiques", "Urgences", "Confidentiel"],
+        "specifications": "Réseau fournisseurs"
+      },
+      {
+        "reference": "SIC-CONS-004",
+        "nom": "Assistance technique continue (service)",
+        "utilisation": ["Exploitation", "Optimisation", "Support"],
+        "specifications": "Contrat / mission"
+      },
+      {
+        "reference": "SIC-CONS-005",
+        "nom": "Formation & procédures sécurité (service)",
+        "utilisation": ["Équipes", "Sites", "Procédures"],
+        "specifications": "Plan de formation"
+      }
+    ],
     "description": "SICAF se positionne comme un partenaire stratégique capable de concevoir et de déployer des solutions chimiques adaptées aux besoins les plus complexes.",
     "img": "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/consulting.jpg",
     "pdf": "",
-    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/engenner.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/engenner2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/engenner3.jpg"],
+    "gallery": [
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/engenner.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/engenner2.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/engenner3.jpg"
+    ],
     "watermark": "engineering-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -380,10 +710,46 @@
       "Accompagnement des exploitations",
       "Conseil technique agricole"
     ],
+    "produits": [
+      {
+        "reference": "SIC-CROP-001",
+        "nom": "Programme protection cultures (sur demande)",
+        "utilisation": ["Plantations", "Cultures vivrières", "Agro-industrie"],
+        "specifications": "Selon culture & contexte"
+      },
+      {
+        "reference": "SIC-CROP-002",
+        "nom": "Traitement semences (sur demande)",
+        "utilisation": ["Pré-semis", "Protection", "Performance"],
+        "specifications": "Selon filière"
+      },
+      {
+        "reference": "SIC-CROP-003",
+        "nom": "Prévention pertes agricoles (sur demande)",
+        "utilisation": ["Champs", "Stockage", "Transport"],
+        "specifications": "Plan d’action"
+      },
+      {
+        "reference": "SIC-CROP-004",
+        "nom": "Conservation post-récolte (sur demande)",
+        "utilisation": ["Entrepôts", "Silos", "Chaîne logistique"],
+        "specifications": "Selon produit agricole"
+      },
+      {
+        "reference": "SIC-CROP-005",
+        "nom": "Conseil technique cultures (service)",
+        "utilisation": ["Exploitations", "Coopératives", "Projets"],
+        "specifications": "Diagnostic + recommandations"
+      }
+    ],
     "description": "SICAF apporte une expertise agrochimique complète orientée vers la performance agricole, la sécurité alimentaire et l’adaptation aux contraintes locales.",
     "img": "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agricultureprotection.jpg",
     "pdf": "",
-    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimieprotection.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimieprotection2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimieprotection3.jpg"],
+    "gallery": [
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimieprotection.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimieprotection2.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/agrochimieprotection3.jpg"
+    ],
     "watermark": "crop-protection-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -396,7 +762,7 @@
     "slug": "besoins-menagers-usages-quotidiens",
     "categorie": "Besoins ménagers & usages du quotidien",
     "expertise": "Solutions chimiques adaptées aux besoins domestiques, collectifs et communautaires",
-    "tags": ["B2C", "Hygiène", "Domestique"],
+    "tags": ["B2B", "B2C", "Hygiène", "Domestique"],
     "applications": [
       "Traitement de l’eau domestique",
       "Désinfection de l’eau de consommation",
@@ -416,13 +782,52 @@
       "Désinfection des espaces de vie",
       "Traitement des nuisibles",
       "Assainissement des habitats",
-      "Confort sanitaire quotidien",
+      "Confort sanitaire au quotidien",
       "Amélioration de la qualité de vie"
+    ],
+    "produits": [
+      {
+        "reference": "SIC-HOME-001",
+        "nom": "Nettoyage surfaces & sols (sur demande)",
+        "utilisation": ["Maison", "Bureaux", "Espaces communs"],
+        "specifications": "Usage quotidien"
+      },
+      {
+        "reference": "SIC-HOME-002",
+        "nom": "Hygiène sanitaires & cuisine (sur demande)",
+        "utilisation": ["Sanitaires", "Cuisine", "Entretien"],
+        "specifications": "Protocole simple"
+      },
+      {
+        "reference": "SIC-HOME-003",
+        "nom": "Traitement odeurs (sur demande)",
+        "utilisation": ["Espaces fermés", "Collectifs", "Habitat"],
+        "specifications": "Selon source d’odeur"
+      },
+      {
+        "reference": "SIC-HOME-004",
+        "nom": "Désinfection espaces de vie (sur demande)",
+        "utilisation": ["Maison", "Écoles", "Bureaux"],
+        "specifications": "Usage domestique/collectif"
+      },
+      {
+        "reference": "SIC-HOME-005",
+        "nom": "Assainissement habitat & nuisibles (sur demande)",
+        "utilisation": ["Habitat", "Locaux", "Zones sensibles"],
+        "specifications": "Plan d’action selon contexte"
+      }
     ],
     "description": "SICAF répond aux besoins chimiques du quotidien en proposant des solutions adaptées aux ménages, collectivités et établissements recevant du public.",
     "img": "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/chemicalhouseneed.jpg",
     "pdf": "",
-    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean3.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean4.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean5.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean6.jpg"],
+    "gallery": [
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean2.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean3.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean4.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean5.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/clean6.jpg"
+    ],
     "watermark": "household-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -458,10 +863,46 @@
       "Conformité réglementaire publique",
       "Accompagnement des projets publics"
     ],
+    "produits": [
+      {
+        "reference": "SIC-PUB-001",
+        "nom": "Programme hygiène marchés/écoles (sur demande)",
+        "utilisation": ["Marchés", "Écoles", "ERP"],
+        "specifications": "Plan opérationnel"
+      },
+      {
+        "reference": "SIC-PUB-002",
+        "nom": "Assainissement urbain (solution projet)",
+        "utilisation": ["Voiries", "Quartiers", "Zones sensibles"],
+        "specifications": "Selon contexte"
+      },
+      {
+        "reference": "SIC-PUB-003",
+        "nom": "Traitement odeurs urbaines (sur demande)",
+        "utilisation": ["Décharges", "Points noirs", "Canalisations"],
+        "specifications": "Plan d’action"
+      },
+      {
+        "reference": "SIC-PUB-004",
+        "nom": "Maintenance & protection infrastructures (sur demande)",
+        "utilisation": ["Ouvrages", "Bâtiments publics", "Réseaux"],
+        "specifications": "Programme selon diagnostic"
+      },
+      {
+        "reference": "SIC-PUB-005",
+        "nom": "Accompagnement conformité & projets publics",
+        "utilisation": ["Municipalités", "Institutions", "Programmes"],
+        "specifications": "Assistance technique"
+      }
+    ],
     "description": "SICAF se positionne comme un partenaire technique fiable des collectivités et institutions, avec des solutions adaptées aux enjeux sanitaires, environnementaux et infrastructurels.",
     "img": "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/infrastructurepublique.jpg",
     "pdf": "",
-    "gallery": ["https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/public.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/public2.jpg","https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/public3.jpg"],
+    "gallery": [
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/public.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/public2.jpg",
+      "https://raw.githubusercontent.com/ngajulp/sicaf-chemical-solutions/main/public-data/img/public3.jpg"
+    ],
     "watermark": "public-infrastructure-filigrane",
     "cta": {
       "whatsapp": "+237651254307",
@@ -469,4 +910,3 @@
     }
   }
 ]
-
