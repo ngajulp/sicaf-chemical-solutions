@@ -1,0 +1,2113 @@
+[
+  {
+    "ID": 1,
+    "slug": "construction-btp-batiments-travaux-publics",
+    "categorie": "Construction & BTP (Bâtiments et Travaux publics)",
+    "expertise": "Conception, planification et exécution de projets de construction et d’infrastructures complexes, avec standards internationaux HSE, qualité et délais maîtrisés",
+    "tags": ["B2B", "Gouvernements", "Industrie", "Infrastructures", "PPP", "HSE", "Qualité"],
+    "applications": [
+      "Études de faisabilité",
+      "Avant-projets (APS/APD)",
+      "Plans d’exécution (EXE)",
+      "Gestion de projet (PMO)",
+      "Planification (MS Project/Primavera)",
+      "Topographie et implantation",
+      "Terrassement général",
+      "Fondations superficielles",
+      "Fondations profondes (pieux/forage)",
+      "Béton armé (coulé en place)",
+      "Préfabrication béton",
+      "Charpente métallique",
+      "Ouvrages d’art (ponts, dalots)",
+      "Voiries et réseaux divers (VRD)",
+      "Routes (chaussées souples)",
+      "Routes (chaussées rigides)",
+      "Trottoirs et caniveaux",
+      "Stabilisation des sols",
+      "Drainage et ouvrages hydrauliques",
+      "Étanchéité et isolation",
+      "Couverture et bardage",
+      "Cloisons, doublages et plafonds",
+      "Menuiseries (alu, bois, PVC)",
+      "Revêtements (carrelage, peinture)",
+      "Aménagements extérieurs",
+      "Contrôle qualité chantier (QHSE)",
+      "Réception, OPR et levée de réserves"
+    ],
+    "produits": [
+      {
+        "reference": "CE-BTP-001",
+        "nom": "Béton prêt à l’emploi (BPE) – formulation projet",
+        "utilisation": ["Dalles", "Poteaux/poutres", "Ouvrages d’art"],
+        "specifications": "Classes C20/25 à C40/50, adjuvantation selon climat"
+      },
+      {
+        "reference": "CE-BTP-002",
+        "nom": "Ciment (CEM I/CEM II) – approvisionnement chantier",
+        "utilisation": ["Maçonnerie", "Béton", "Enduits"],
+        "specifications": "Normes EN 197-1, traçabilité lot"
+      },
+      {
+        "reference": "CE-BTP-003",
+        "nom": "Acier HA (armatures) – coupe/façonnage",
+        "utilisation": ["Ferraillage", "Fondations", "Ouvrages BA"],
+        "specifications": "Diamètres 6–32 mm, certificats matière"
+      },
+      {
+        "reference": "CE-BTP-004",
+        "nom": "Béton fibré – solution anti-fissuration",
+        "utilisation": ["Dalles industrielles", "Voiries", "Radier"],
+        "specifications": "Fibres acier ou synthétiques selon charges"
+      },
+      {
+        "reference": "CE-BTP-005",
+        "nom": "Géotextile (séparation/filtration)",
+        "utilisation": ["Routes", "Drainage", "Stabilisation sols"],
+        "specifications": "Grammages 150–500 g/m², classes selon ouvrage"
+      },
+      {
+        "reference": "CE-BTP-006",
+        "nom": "Géogrille (renforcement)",
+        "utilisation": ["Talus", "Remblais", "Chaussées"],
+        "specifications": "Résistance traction adaptée au calcul"
+      },
+      {
+        "reference": "CE-BTP-007",
+        "nom": "Enrobé bitumineux – fournitures et mise en œuvre",
+        "utilisation": ["Couches de roulement", "Couches de base", "Réparations"],
+        "specifications": "Formule 0/10, 0/14, PMB si requis"
+      },
+      {
+        "reference": "CE-BTP-008",
+        "nom": "Mortier technique (réparation structurale)",
+        "utilisation": ["Reprises", "Réparations béton", "Calage"],
+        "specifications": "R4, retrait compensé, hautes performances"
+      },
+      {
+        "reference": "CE-BTP-009",
+        "nom": "Système d’étanchéité (membrane + primaire)",
+        "utilisation": ["Toitures", "Sous-sols", "Ouvrages hydrauliques"],
+        "specifications": "Bitumineux/PU selon exposition"
+      },
+      {
+        "reference": "CE-BTP-010",
+        "nom": "Coffrage modulaire (location/service)",
+        "utilisation": ["Voiles", "Poteaux", "Dalles"],
+        "specifications": "Conformes charges chantier, accessoires inclus"
+      }
+    ],
+    "description": "ENCOPS BTP réalise des projets BTP clés en main (bâtiments, routes, VRD et ouvrages d’art) avec une approche intégrée : études, exécution, contrôle qualité, HSE, documentation et réception.",
+    "img": "https://example.com/img/construction-btp.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/construction-1.jpg",
+      "https://example.com/img/construction-2.jpg",
+      "https://example.com/img/construction-3.jpg"
+    ],
+    "watermark": "construction-btp-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour, je souhaite un accompagnement pour un projet de Construction/BTP (études, exécution ou réhabilitation). Pouvez-vous me proposer une solution ?"
+    }
+  },
+  {
+    "ID": 2,
+    "slug": "assainissement-eaux-pluviales-eaux-usees",
+    "categorie": "Assainissement (Eaux pluviales & eaux usées)",
+    "expertise": "Solutions d’assainissement, drainage urbain et gestion des eaux usées avec conformité réglementaire, durabilité et réduction des risques sanitaires",
+    "tags": ["Collectivités", "Industrie", "Hydraulique", "Santé publique", "Environnement", "B2B"],
+    "applications": [
+      "Diagnostic réseaux existants",
+      "Études hydrologiques et hydrauliques",
+      "Dimensionnement collecteurs",
+      "Réseaux séparatifs et unitaires",
+      "Pose de conduites gravitaires",
+      "Pose de conduites sous pression",
+      "Stations de pompage",
+      "Caniveaux et cunettes",
+      "Dalots et buses",
+      "Ouvrages de rétention",
+      "Bassins d’orage",
+      "Traitement des eaux usées (prétraitement)",
+      "Dégrillage, dessablage, déshuilage",
+      "Traitement biologique (concept)",
+      "Traitement tertiaire (concept)",
+      "Curage et hydrocurage réseaux",
+      "Débouchage et inspection CCTV",
+      "Réhabilitation sans tranchée (concept)",
+      "Gestion des boues (concept)",
+      "Lutte contre inondations urbaines",
+      "Drainage de plateformes routières",
+      "Protection contre l’érosion",
+      "Réalisation de regards et avaloirs",
+      "Étanchéité ouvrages enterrés",
+      "Gestion des odeurs (concept)",
+      "Mise en conformité et DOE",
+      "Maintenance et exploitation (contrat)"
+    ],
+    "produits": [
+      {
+        "reference": "CE-AS-001",
+        "nom": "Tuyaux PVC/PEHD assainissement (SN/PN selon projet)",
+        "utilisation": ["Collecteurs", "Branchements", "Drainage"],
+        "specifications": "Diamètres 110–1200 mm, classes selon calcul"
+      },
+      {
+        "reference": "CE-AS-002",
+        "nom": "Regards préfabriqués béton (anneaux + fonds)",
+        "utilisation": ["Réseaux EU/EP", "Chambres de visite", "Interceptions"],
+        "specifications": "Étanchéité joints, charges adaptées trafic"
+      },
+      {
+        "reference": "CE-AS-003",
+        "nom": "Buses/ouvrages hydrauliques (dalots, cadres)",
+        "utilisation": ["Traversées", "Exutoires", "Protection routes"],
+        "specifications": "Calcul hydraulique + ferraillage conforme"
+      },
+      {
+        "reference": "CE-AS-004",
+        "nom": "Pompe de relevage (poste sur mesure)",
+        "utilisation": ["Stations de pompage", "Zones basses", "Industriels"],
+        "specifications": "Débit/hauteur manométrique selon besoin"
+      },
+      {
+        "reference": "CE-AS-005",
+        "nom": "Grilles et avaloirs (fonte/acier galvanisé)",
+        "utilisation": ["Chaussées", "Parkings", "Zones industrielles"],
+        "specifications": "Classe charge D400/E600 selon trafic"
+      },
+      {
+        "reference": "CE-AS-006",
+        "nom": "Géotextile drainant + drain perforé",
+        "utilisation": ["Drainage", "Talus", "Fondations"],
+        "specifications": "Système complet anti-colmatage"
+      },
+      {
+        "reference": "CE-AS-007",
+        "nom": "Vannes et clapets anti-retour",
+        "utilisation": ["Stations", "Exutoires", "Protection reflux"],
+        "specifications": "DN selon réseau, matériaux anticorrosion"
+      },
+      {
+        "reference": "CE-AS-008",
+        "nom": "Service d’inspection caméra (CCTV) – réseau",
+        "utilisation": ["Audit", "Réception", "Maintenance"],
+        "specifications": "Rapport vidéo + localisation défauts"
+      },
+      {
+        "reference": "CE-AS-009",
+        "nom": "Service hydrocurage haute pression",
+        "utilisation": ["Curage", "Débouchage", "Préventif"],
+        "specifications": "Intervention planifiée ou urgence"
+      },
+      {
+        "reference": "CE-AS-010",
+        "nom": "Séparateur hydrocarbures (ouvrage préfabriqué)",
+        "utilisation": ["Parkings", "Ateliers", "Sites industriels"],
+        "specifications": "Dimensionnement selon surfaces et normes"
+      }
+    ],
+    "description": "ENCOPS BTP intervient sur toute la chaîne de l’assainissement : études, construction et maintenance de réseaux EU/EP, ouvrages hydrauliques et solutions anti-inondation adaptées aux villes et sites industriels.",
+    "img": "https://example.com/img/assainissement.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/assainissement-1.jpg",
+      "https://example.com/img/assainissement-2.jpg",
+      "https://example.com/img/assainissement-3.jpg"
+    ],
+    "watermark": "assainissement-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour, j’ai un besoin d’assainissement (EU/EP, drainage, ouvrages hydrauliques ou maintenance). Pouvez-vous m’accompagner ?"
+    }
+  },
+  {
+    "ID": 3,
+    "slug": "plomberie-electricite-courant-fort-faible",
+    "categorie": "Plomberie + Électricité (Courant fort & courant faible)",
+    "expertise": "Conception et réalisation MEP (CVC/Plomberie/Électricité) conforme aux standards, avec performance énergétique, sécurité et maintenance",
+    "tags": ["MEP", "B2B", "Bâtiments", "Industrie", "Sécurité", "Énergie"],
+    "applications": [
+      "Études d’exécution MEP",
+      "Schémas unifilaires et câblage",
+      "Tableaux électriques BT",
+      "Distribution force et éclairage",
+      "Éclairage intérieur/extérieur",
+      "Groupes électrogènes (intégration)",
+      "Onduleurs (UPS) (intégration)",
+      "Mise à la terre et parafoudre",
+      "Systèmes incendie (détection/alarme)",
+      "Contrôle d’accès",
+      "Vidéosurveillance (CCTV)",
+      "Réseau informatique (LAN) (câblage)",
+      "Téléphonie/IP (câblage)",
+      "Interphonie",
+      "Domotique / GTB (concept)",
+      "Pompes et surpresseurs",
+      "Réseaux EF/EC",
+      "Production d’eau chaude (concept)",
+      "Évacuation EU/EV",
+      "Eaux pluviales bâtiment",
+      "Traitement anti-bélier (concept)",
+      "Appareillages sanitaires",
+      "Robinetterie industrielle",
+      "Soudure et raccordement tuyauterie",
+      "Tests d’étanchéité et mise en service",
+      "Mesures électriques et conformité",
+      "Maintenance préventive/corrective"
+    ],
+    "produits": [
+      {
+        "reference": "CE-MEP-001",
+        "nom": "Tableau électrique BT (TGBT/TD) – assemblage",
+        "utilisation": ["Bureaux", "Usines", "Hôpitaux"],
+        "specifications": "Protections sélectives, schémas et repérage"
+      },
+      {
+        "reference": "CE-MEP-002",
+        "nom": "Câbles énergie (U1000 R2V / équivalent)",
+        "utilisation": ["Distribution BT", "Alimentation machines", "Éclairage"],
+        "specifications": "Sections selon calcul, pose goulotte/chemin"
+      },
+      {
+        "reference": "CE-MEP-003",
+        "nom": "Appareillage (disjoncteurs, différentiel, contacteurs)",
+        "utilisation": ["Tableaux", "Protections", "Commande"],
+        "specifications": "Calibres selon étude, marques industrielles"
+      },
+      {
+        "reference": "CE-MEP-004",
+        "nom": "Système CCTV (caméras + NVR) – intégration",
+        "utilisation": ["Sites industriels", "Bâtiments", "Entrepôts"],
+        "specifications": "IP, stockage dimensionné, accès sécurisé"
+      },
+      {
+        "reference": "CE-MEP-005",
+        "nom": "Contrôle d’accès (lecteurs, badges, gâches)",
+        "utilisation": ["Bureaux", "Sites sensibles", "Datacenters"],
+        "specifications": "Gestion des droits, logs d’accès"
+      },
+      {
+        "reference": "CE-MEP-006",
+        "nom": "Détection incendie (centrale + détecteurs)",
+        "utilisation": ["ERP", "Industrie", "Entrepôts"],
+        "specifications": "Architecture selon zones, essais et DOE"
+      },
+      {
+        "reference": "CE-MEP-007",
+        "nom": "Tuyauterie PPR/PEX/Cuivre – réseaux EF/EC",
+        "utilisation": ["Bâtiments", "Hôtels", "Résidentiel"],
+        "specifications": "Diamètres 20–110 mm, accessoires complets"
+      },
+      {
+        "reference": "CE-MEP-008",
+        "nom": "Groupe de surpression (kit complet)",
+        "utilisation": ["Immeubles", "Industries", "Hôpitaux"],
+        "specifications": "Pression constante, variateur selon besoin"
+      },
+      {
+        "reference": "CE-MEP-009",
+        "nom": "Sanitaires (WC, lavabos, douches) – fourniture",
+        "utilisation": ["Bureaux", "Écoles", "Hôtels"],
+        "specifications": "Gamme standard à premium, pièces de rechange"
+      },
+      {
+        "reference": "CE-MEP-010",
+        "nom": "Réseau informatique (câblage Cat6/Cat6A) – service",
+        "utilisation": ["Bureaux", "Call centers", "Sites industriels"],
+        "specifications": "Tests certification, brassage et repérage"
+      }
+    ],
+    "description": "ENCOPS BTP déploie des solutions MEP complètes : plomberie sanitaire, réseaux techniques, électricité courant fort et faible, sécurité, mise en service et contrats de maintenance.",
+    "img": "https://example.com/img/mep.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/mep-1.jpg",
+      "https://example.com/img/mep-2.jpg",
+      "https://example.com/img/mep-3.jpg"
+    ],
+    "watermark": "mep-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour, je souhaite une solution Plomberie/Électricité (courant fort/faible) pour mon bâtiment ou site industriel. Pouvez-vous intervenir ?"
+    }
+  },
+  {
+    "ID": 4,
+    "slug": "climatisation-cvc-ventilation",
+    "categorie": "Climatisation (CVC/ventilation)",
+    "expertise": "Études, installation et maintenance CVC : confort thermique, qualité d’air intérieur, performance énergétique et exploitation fiable",
+    "tags": ["CVC", "B2B", "Bâtiments", "Industrie", "Énergie", "Maintenance"],
+    "applications": [
+      "Audit énergétique CVC",
+      "Calcul de charges thermiques",
+      "Dimensionnement VRV/VRF",
+      "Dimensionnement split/multi-split",
+      "Groupes d’eau glacée (concept)",
+      "CTA – centrales de traitement d’air (concept)",
+      "Réseaux de gaines et diffusion",
+      "Ventilation simple flux",
+      "Ventilation double flux",
+      "Extraction cuisines (concept)",
+      "Désenfumage (concept)",
+      "Filtration (G4/F7/HEPA selon besoin)",
+      "Déshumidification",
+      "Humidification (concept)",
+      "Régulation et thermostats",
+      "GTB/automatisme CVC (concept)",
+      "Traitement acoustique (concept)",
+      "Mise en service et équilibrage",
+      "Mesure QAI (CO2/particules) (concept)",
+      "Maintenance préventive",
+      "Maintenance corrective",
+      "Nettoyage échangeurs et filtres",
+      "Détection et réparation fuites",
+      "Recharge fluide frigorigène",
+      "Installation tuyauteries frigorifiques",
+      "Isolation calorifuge",
+      "Contrat d’exploitation multi-sites"
+    ],
+    "produits": [
+      {
+        "reference": "CE-CVC-001",
+        "nom": "Climatiseur split inverter – fourniture/pose",
+        "utilisation": ["Bureaux", "Commerces", "Résidentiel haut de gamme"],
+        "specifications": "9k–24k BTU, rendement selon contraintes"
+      },
+      {
+        "reference": "CE-CVC-002",
+        "nom": "Système VRV/VRF – projet clé en main",
+        "utilisation": ["Immeubles", "Hôtels", "Centres commerciaux"],
+        "specifications": "Zonage, régulation centralisée, mise en service"
+      },
+      {
+        "reference": "CE-CVC-003",
+        "nom": "Ventilateurs/extracteurs industriels",
+        "utilisation": ["Ateliers", "Entrepôts", "Locaux techniques"],
+        "specifications": "Débits dimensionnés, protections IP adaptées"
+      },
+      {
+        "reference": "CE-CVC-004",
+        "nom": "Gaines (souples/rigides) + accessoires",
+        "utilisation": ["Réseaux aérauliques", "Diffusion", "Rejet"],
+        "specifications": "Classement feu selon exigences"
+      },
+      {
+        "reference": "CE-CVC-005",
+        "nom": "Diffuseurs, grilles et bouches",
+        "utilisation": ["Bureaux", "Hôtels", "Salles techniques"],
+        "specifications": "Débits réglables, intégration architecturale"
+      },
+      {
+        "reference": "CE-CVC-006",
+        "nom": "Isolant calorifuge (mousse élastomère/laine)",
+        "utilisation": ["Tuyauteries", "Gaines", "Chambres froides"],
+        "specifications": "Épaisseurs selon pertes et condensation"
+      },
+      {
+        "reference": "CE-CVC-007",
+        "nom": "Thermostats et régulateurs (programmables)",
+        "utilisation": ["Zonage", "Optimisation énergie", "Confort"],
+        "specifications": "Fil pilote/0-10V selon systèmes"
+      },
+      {
+        "reference": "CE-CVC-008",
+        "nom": "Détecteur qualité d’air (CO2) – option",
+        "utilisation": ["Salles de réunion", "Écoles", "Open spaces"],
+        "specifications": "Pilotage ventilation sur demande"
+      },
+      {
+        "reference": "CE-CVC-009",
+        "nom": "Service d’équilibrage aéraulique",
+        "utilisation": ["Mise en service", "Optimisation", "Réception"],
+        "specifications": "Rapport de mesures + réglages"
+      },
+      {
+        "reference": "CE-CVC-010",
+        "nom": "Contrat de maintenance CVC (SLA)",
+        "utilisation": ["Multi-sites", "Industrie", "Tertiaire"],
+        "specifications": "Visites planifiées, dépannage, reporting"
+      }
+    ],
+    "description": "ENCOPS BTP assure des solutions CVC complètes (études, installation, mise en service, maintenance) pour bâtiments tertiaires, industriels et hôteliers, avec un focus sur la performance et la fiabilité.",
+    "img": "https://example.com/img/cvc.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/cvc-1.jpg",
+      "https://example.com/img/cvc-2.jpg",
+      "https://example.com/img/cvc-3.jpg"
+    ],
+    "watermark": "cvc-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour, j’ai un projet de climatisation/ventilation (CVC) et je souhaite une étude + installation + maintenance. Pouvez-vous m’accompagner ?"
+    }
+  },
+  {
+    "ID": 5,
+    "slug": "ingenierie-architecturale-bim",
+    "categorie": "Ingénierie architecturale (BIM & maîtrise d’œuvre)",
+    "expertise": "Conception architecturale, coordination technique et gestion documentaire BIM pour des projets conformes, esthétiques, fonctionnels et optimisés en coûts",
+    "tags": ["Architecture", "BIM", "MOE", "Conception", "Industrie", "Collectivités", "B2B"],
+    "applications": [
+      "Programmation architecturale",
+      "Esquisse et conception",
+      "APS (Avant-Projet Sommaire)",
+      "APD (Avant-Projet Définitif)",
+      "PRO (Projet)",
+      "DCE/DAO (dossier de consultation)",
+      "Plans d’exécution (EXE) (coordination)",
+      "BIM niveau 1 (maquette simple)",
+      "BIM niveau 2 (coordination disciplines)",
+      "Revue de clash (détection conflits)",
+      "Quantitatifs et métrés",
+      "Estimations budgétaires",
+      "Planning de conception",
+      "Démarches administratives (permis)",
+      "Études d’accessibilité",
+      "Études incendie (concept)",
+      "Études acoustiques (concept)",
+      "Études éclairage naturel (concept)",
+      "Optimisation des surfaces",
+      "Design intérieur (concept)",
+      "Charte matériaux et finitions",
+      "Modifications en cours de chantier",
+      "Visa des plans entreprises",
+      "Suivi et réunions de chantier (MOE)",
+      "OPR (opérations préalables à réception)",
+      "DOE (dossier des ouvrages exécutés)",
+      "Plan de maintenance et exploitation (concept)"
+    ],
+    "produits": [
+      {
+        "reference": "CE-ARC-001",
+        "nom": "Dossier APS complet (plans + note concept)",
+        "utilisation": ["Promoteurs", "Collectivités", "Industriels"],
+        "specifications": "Livrables PDF + DWG, variantes possibles"
+      },
+      {
+        "reference": "CE-ARC-002",
+        "nom": "Dossier APD complet (plans + estimatif)",
+        "utilisation": ["Projets tertiaires", "Logements", "Sites industriels"],
+        "specifications": "Estimation par lots, options techniques"
+      },
+      {
+        "reference": "CE-ARC-003",
+        "nom": "DCE/DAO (pièces écrites + plans)",
+        "utilisation": ["Appels d’offres", "Consultations", "PPP"],
+        "specifications": "CCTP, BPU, DQE, plans et détails"
+      },
+      {
+        "reference": "CE-ARC-004",
+        "nom": "Maquette BIM (LOD adapté) – prestation",
+        "utilisation": ["Coordination", "Synthèse", "Exécution"],
+        "specifications": "LOD 200–350 selon phase"
+      },
+      {
+        "reference": "CE-ARC-005",
+        "nom": "Clash detection & rapport de synthèse",
+        "utilisation": ["BIM coordination", "Prévention erreurs", "Optimisation"],
+        "specifications": "Rapports structurés, priorisation corrections"
+      },
+      {
+        "reference": "CE-ARC-006",
+        "nom": "Rendus 3D / perspectives (pack)",
+        "utilisation": ["Marketing projet", "Validation client", "Concours"],
+        "specifications": "4 à 10 vues selon pack"
+      },
+      {
+        "reference": "CE-ARC-007",
+        "nom": "Plans EXE coordination (structure/MEP) – service",
+        "utilisation": ["Chantiers complexes", "Industriels", "Tertiaire"],
+        "specifications": "Synthèse technique multi-lots"
+      },
+      {
+        "reference": "CE-ARC-008",
+        "nom": "Quantitatifs & métrés (BIM/2D)",
+        "utilisation": ["Devis", "Approvisionnement", "Contrôle coûts"],
+        "specifications": "Tableaux par lot, mises à jour"
+      },
+      {
+        "reference": "CE-ARC-009",
+        "nom": "Assistance permis / dossiers administratifs",
+        "utilisation": ["Projets urbains", "Bâtiments", "Extensions"],
+        "specifications": "Pièces graphiques + notices"
+      },
+      {
+        "reference": "CE-ARC-010",
+        "nom": "AMO/MOE (suivi chantier) – contrat",
+        "utilisation": ["Clients publics", "Promoteurs", "Industriels"],
+        "specifications": "Réunions, visas, OPR, DOE"
+      }
+    ],
+    "description": "ENCOPS BTP combine architecture, ingénierie et BIM pour livrer des projets optimisés : conception, dossiers d’appel d’offres, coordination technique, suivi de chantier et documentation complète.",
+    "img": "https://example.com/img/architecture-bim.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/architecture-1.jpg",
+      "https://example.com/img/architecture-2.jpg",
+      "https://example.com/img/architecture-3.jpg"
+    ],
+    "watermark": "architecture-bim-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour, je cherche une équipe d’ingénierie architecturale (BIM/MOE) pour concevoir et piloter mon projet. Pouvez-vous me faire une proposition ?"
+    }
+  },
+  {
+    "ID": 6,
+    "slug": "location-engins-genie-civil-btp",
+    "categorie": "Location d’engins Génie civil & BTP",
+    "expertise": "Mise à disposition d’engins et équipements avec opérateurs qualifiés, maintenance et logistique, pour chantiers à haute productivité",
+    "tags": ["Location", "Engins", "Terrassement", "BTP", "B2B", "Logistique"],
+    "applications": [
+      "Terrassement de plateformes",
+      "Excavation et fouilles",
+      "Décapage et nivellement",
+      "Ouverture de routes et pistes",
+      "Chargement/déchargement matériaux",
+      "Transport de déblais",
+      "Compactage de remblais",
+      "Compactage chaussées",
+      "Démolition contrôlée (concept)",
+      "Tranchées réseaux",
+      "Pose de caniveaux",
+      "Mise en œuvre graves/latérites",
+      "Reprofilage pistes rurales",
+      "Curage caniveaux (avec engins)",
+      "Extraction en carrières (concept)",
+      "Levage chantier (grues) (concept)",
+      "Manutention industrielle",
+      "Stabilisation de talus (concept)",
+      "Travaux en zones confinées (mini-engins)",
+      "Assistance en urgence (inondations/glissements)",
+      "Location courte durée",
+      "Location longue durée",
+      "Location avec opérateur",
+      "Location sans opérateur (conditions)",
+      "Maintenance sur site",
+      "Gestion carburant (option)",
+      "Suivi productivité et rapports"
+    ],
+    "produits": [
+      {
+        "reference": "CE-LOC-001",
+        "nom": "Pelle hydraulique 20–35T (location)",
+        "utilisation": ["Fouilles", "Terrassement", "Chargement"],
+        "specifications": "Godets adaptés, option brise-roche"
+      },
+      {
+        "reference": "CE-LOC-002",
+        "nom": "Mini-pelle 3–8T (location)",
+        "utilisation": ["Tranchées", "Zones urbaines", "Accès réduit"],
+        "specifications": "Transport facile, accessoires disponibles"
+      },
+      {
+        "reference": "CE-LOC-003",
+        "nom": "Bulldozer (location)",
+        "utilisation": ["Décapage", "Nivellement", "Pistes"],
+        "specifications": "Lame selon chantier, ripper option"
+      },
+      {
+        "reference": "CE-LOC-004",
+        "nom": "Chargeuse (location)",
+        "utilisation": ["Stockpiles", "Chargement camions", "Carrières"],
+        "specifications": "Godet volume selon productivité"
+      },
+      {
+        "reference": "CE-LOC-005",
+        "nom": "Niveleuse (location)",
+        "utilisation": ["Profilage", "Chaussées", "Pistes rurales"],
+        "specifications": "Réglage précision, opérateur qualifié"
+      },
+      {
+        "reference": "CE-LOC-006",
+        "nom": "Rouleau compacteur (location)",
+        "utilisation": ["Compactage", "Chaussées", "Remblais"],
+        "specifications": "Vibrant, tonnage selon couche"
+      },
+      {
+        "reference": "CE-LOC-007",
+        "nom": "Camion benne 6x4/8x4 (location)",
+        "utilisation": ["Transport déblais", "Approvisionnement", "Évacuation"],
+        "specifications": "Capacité selon besoins, rotation optimisée"
+      },
+      {
+        "reference": "CE-LOC-008",
+        "nom": "Tractopelle (location)",
+        "utilisation": ["Chantiers polyvalents", "Tranchées", "Chargement"],
+        "specifications": "Deux outils, idéal zones urbaines"
+      },
+      {
+        "reference": "CE-LOC-009",
+        "nom": "Brise-roche hydraulique (accessoire)",
+        "utilisation": ["Démolition", "Roche", "Décompactage"],
+        "specifications": "Compatibilité pelle, énergie impact adaptée"
+      },
+      {
+        "reference": "CE-LOC-010",
+        "nom": "Groupe électrogène chantier (location)",
+        "utilisation": ["Alimentation chantier", "Secours", "Zones isolées"],
+        "specifications": "Puissance selon charge, maintenance incluse"
+      }
+    ],
+    "description": "ENCOPS BTP propose un parc d’engins BTP disponible à la location, avec options opérateurs, maintenance et logistique, pour améliorer la productivité et sécuriser les délais de chantier.",
+    "img": "https://example.com/img/location-engins.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/engins-1.jpg",
+      "https://example.com/img/engins-2.jpg",
+      "https://example.com/img/engins-3.jpg"
+    ],
+    "watermark": "location-engins-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour, j’ai besoin de louer des engins BTP (avec ou sans opérateur). Pouvez-vous me faire une offre selon mon chantier ?"
+    }
+  },
+
+  {
+    "ID": 7,
+    "slug": "routes-voiries-amenagements-urbains",
+    "categorie": "Routes, voiries & aménagements urbains",
+    "expertise": "Conception et réalisation de routes, voiries urbaines et aménagements, avec maîtrise des matériaux, drainage, sécurité et durabilité",
+    "tags": ["Infrastructures", "Collectivités", "Routes", "VRD", "B2B"],
+    "applications": [
+      "Études de trafic (concept)",
+      "Études géotechniques (coordination)",
+      "Dimensionnement structure chaussée",
+      "Terrassements routiers",
+      "Plateforme et couches de forme",
+      "Stabilisation latéritique/ciment (concept)",
+      "Couche de fondation (GNT)",
+      "Couche de base",
+      "Couche de roulement (enrobé)",
+      "Chaussée béton (si requis)",
+      "Bordures et caniveaux",
+      "Trottoirs et pavés",
+      "Ronds-points et carrefours",
+      "Accotements et fossés",
+      "Ouvrages de drainage routier",
+      "Signalisation horizontale",
+      "Signalisation verticale",
+      "Dispositifs de retenue (glissières) (concept)",
+      "Éclairage public (coordination)",
+      "Réparation nids-de-poule",
+      "Reprofilage et rechargement",
+      "Entretien périodique",
+      "Entretien courant",
+      "Aménagements de parkings",
+      "Voies industrielles",
+      "Pistes rurales",
+      "DOE et réception"
+    ],
+    "produits": [
+      {
+        "reference": "CE-RT-001",
+        "nom": "Grave non traitée (GNT) – fourniture",
+        "utilisation": ["Fondation", "Base", "Accès industriels"],
+        "specifications": "Granulométrie selon couche"
+      },
+      {
+        "reference": "CE-RT-002",
+        "nom": "Enrobé à chaud – fourniture et pose",
+        "utilisation": ["Roulement", "Réhabilitation", "Accès"],
+        "specifications": "Formulation selon trafic et climat"
+      },
+      {
+        "reference": "CE-RT-003",
+        "nom": "Émulsion bitumineuse – imprégnation/accrochage",
+        "utilisation": ["Chaussées", "Réparations", "Préparation support"],
+        "specifications": "Type selon température et support"
+      },
+      {
+        "reference": "CE-RT-004",
+        "nom": "Bordures béton préfabriquées",
+        "utilisation": ["Voiries", "Trottoirs", "Aménagement urbain"],
+        "specifications": "Formats T2/T3 ou équivalents"
+      },
+      {
+        "reference": "CE-RT-005",
+        "nom": "Caniveaux préfabriqués",
+        "utilisation": ["Drainage urbain", "Voiries", "Parkings"],
+        "specifications": "Sections adaptées, grilles option"
+      },
+      {
+        "reference": "CE-RT-006",
+        "nom": "Peinture routière (marquage) – prestation",
+        "utilisation": ["Axes urbains", "Zones industrielles", "Parkings"],
+        "specifications": "Durabilité selon trafic, billes réfléchissantes"
+      },
+      {
+        "reference": "CE-RT-007",
+        "nom": "Panneaux de signalisation – fourniture",
+        "utilisation": ["Routes", "Chantiers", "Zones urbaines"],
+        "specifications": "Film rétro-réfléchissant, supports galvanisés"
+      },
+      {
+        "reference": "CE-RT-008",
+        "nom": "Pavés autobloquants – fourniture/pose",
+        "utilisation": ["Trottoirs", "Cours", "Places publiques"],
+        "specifications": "Épaisseurs selon charges"
+      },
+      {
+        "reference": "CE-RT-009",
+        "nom": "Géotextile routier",
+        "utilisation": ["Séparation", "Filtration", "Renforcement"],
+        "specifications": "Classe selon projet"
+      },
+      {
+        "reference": "CE-RT-010",
+        "nom": "Service maintenance routière (contrat)",
+        "utilisation": ["Collectivités", "Zones industrielles", "Concessions"],
+        "specifications": "Programme préventif + interventions curatives"
+      }
+    ],
+    "description": "ENCOPS BTP construit et réhabilite des routes et voiries, avec drainage, bordures, signalisation et aménagements urbains, en garantissant qualité, sécurité et durabilité.",
+    "img": "https://example.com/img/routes-voiries.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/routes-1.jpg",
+      "https://example.com/img/routes-2.jpg",
+      "https://example.com/img/routes-3.jpg"
+    ],
+    "watermark": "routes-voiries-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour, j’ai un projet de route/voirie/aménagement urbain (construction ou réhabilitation). Pouvez-vous me faire une proposition technique et financière ?"
+    }
+  },
+  {
+    "ID": 8,
+    "slug": "ponts-ouvrages-art-infrastructures",
+    "categorie": "Ponts & ouvrages d’art",
+    "expertise": "Ingénierie et construction d’ouvrages d’art (ponts, passerelles, dalots, murs de soutènement) avec maîtrise des risques, contrôle qualité et conformité",
+    "tags": ["Ouvrages d’art", "Infrastructures", "B2B", "Collectivités", "Qualité", "Sécurité"],
+    "applications": [
+      "Études de conception (concept)",
+      "Études d’exécution (EXE)",
+      "Calculs structurels (coordination)",
+      "Fondations profondes (pieux)",
+      "Fondations sur semelles",
+      "Culées et piles",
+      "Tabliers béton armé",
+      "Tabliers précontraints (concept)",
+      "Charpente métallique (pont)",
+      "Passerelles piétonnes",
+      "Dalots cadres",
+      "Buses de grand diamètre",
+      "Murs de soutènement BA",
+      "Gabions (aménagement et protection)",
+      "Protection contre affouillement",
+      "Enrochements de protection",
+      "Étanchéité de tablier",
+      "Joints de chaussée (concept)",
+      "Appareils d’appui (concept)",
+      "Réhabilitation d’ouvrages",
+      "Réparation fissures/épaufrures",
+      "Protection anticorrosion armatures (concept)",
+      "Instrumentation et auscultation (concept)",
+      "Contrôle qualité (béton/acier)",
+      "Gestion de circulation chantier (concept)",
+      "Réception et mise en service",
+      "Dossier DOE"
+    ],
+    "produits": [
+      {
+        "reference": "CE-OA-001",
+        "nom": "Coffrage grande hauteur (service/location)",
+        "utilisation": ["Piles", "Culées", "Voiles"],
+        "specifications": "Sécurité travail en hauteur, accessoires"
+      },
+      {
+        "reference": "CE-OA-002",
+        "nom": "Acier de précontrainte (concept/fourniture)",
+        "utilisation": ["Tabliers", "Poutres", "Ouvrages spéciaux"],
+        "specifications": "Selon calcul, traçabilité complète"
+      },
+      {
+        "reference": "CE-OA-003",
+        "nom": "Béton haute performance – formulation",
+        "utilisation": ["Ouvrages exposés", "Zones agressives", "Ponts"],
+        "specifications": "Durabilité améliorée, faible perméabilité"
+      },
+      {
+        "reference": "CE-OA-004",
+        "nom": "Membrane d’étanchéité tablier",
+        "utilisation": ["Ponts", "Dalles", "Ouvrages hydrauliques"],
+        "specifications": "Système multi-couches selon exposition"
+      },
+      {
+        "reference": "CE-OA-005",
+        "nom": "Mortier de réparation structurale (R4)",
+        "utilisation": ["Réhabilitation", "Reprises béton", "Réparations"],
+        "specifications": "Adhérence élevée, retrait compensé"
+      },
+      {
+        "reference": "CE-OA-006",
+        "nom": "Gabions (kits + pierre) – fourniture/pose",
+        "utilisation": ["Stabilisation", "Berges", "Soutènements"],
+        "specifications": "Mailles galvanisées, dimensions selon projet"
+      },
+      {
+        "reference": "CE-OA-007",
+        "nom": "Enrochements calibrés – fourniture",
+        "utilisation": ["Protection berges", "Anti-érosion", "Affouillement"],
+        "specifications": "Classes granulométriques"
+      },
+      {
+        "reference": "CE-OA-008",
+        "nom": "Joints de dilatation (concept/fourniture)",
+        "utilisation": ["Ponts", "Passerelles", "Ouvrages"],
+        "specifications": "Type selon mouvements calculés"
+      },
+      {
+        "reference": "CE-OA-009",
+        "nom": "Peinture anticorrosion acier – prestation",
+        "utilisation": ["Charpentes", "Garde-corps", "Ouvrages métalliques"],
+        "specifications": "Systèmes multi-couches, préparation support"
+      },
+      {
+        "reference": "CE-OA-010",
+        "nom": "Contrôle qualité béton (éprouvettes/essais) – service",
+        "utilisation": ["Suivi chantier", "Réception", "Traçabilité"],
+        "specifications": "Rapports essais, conformité lots"
+      }
+    ],
+    "description": "ENCOPS BTP conçoit, construit et réhabilite des ouvrages d’art avec un niveau d’exigence élevé : durabilité, sécurité, contrôle qualité et gestion de chantier en environnement contraint.",
+    "img": "https://example.com/img/ouvrages-art.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/ouvrages-1.jpg",
+      "https://example.com/img/ouvrages-2.jpg",
+      "https://example.com/img/ouvrages-3.jpg"
+    ],
+    "watermark": "ouvrages-art-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour, j’ai un projet ou une réhabilitation de pont/ouvrage d’art. Pouvez-vous réaliser l’étude et l’exécution avec contrôle qualité ?"
+    }
+  },
+  {
+    "ID": 9,
+    "slug": "geotechnique-fondations-stabilisation-sols",
+    "categorie": "Géotechnique, fondations & stabilisation des sols",
+    "expertise": "Solutions géotechniques pour sécuriser les ouvrages : investigations, dimensionnement, améliorations de sol et fondations adaptées",
+    "tags": ["Géotechnique", "Fondations", "Infrastructures", "B2B", "Risques"],
+    "applications": [
+      "Reconnaissance géotechnique (concept)",
+      "Sondages et essais in situ (coordination)",
+      "Essais de laboratoire sols (coordination)",
+      "Étude de portance plateformes",
+      "Dimensionnement fondations",
+      "Semelles isolées/filantes",
+      "Radier général",
+      "Pieux forés",
+      "Micropieux (concept)",
+      "Amélioration de sol (concept)",
+      "Compactage contrôlé",
+      "Stabilisation chaux/ciment (concept)",
+      "Colonnes ballastées (concept)",
+      "Drainage vertical (concept)",
+      "Confortement talus",
+      "Protection contre glissements",
+      "Murs de soutènement",
+      "Parois berlinoises (concept)",
+      "Palplanches (concept)",
+      "Injection de consolidation (concept)",
+      "Traitement de cavités (concept)",
+      "Gestion des eaux souterraines (rabattement) (concept)",
+      "Plateformes industrielles",
+      "Routes sur sols compressibles (concept)",
+      "Contrôle qualité compactage",
+      "Instrumentation/monitoring (concept)",
+      "Assistance technique chantier"
+    ],
+    "produits": [
+      {
+        "reference": "CE-GEO-001",
+        "nom": "Service d’étude géotechnique (G1–G2) – concept",
+        "utilisation": ["Bâtiments", "Routes", "Ouvrages d’art"],
+        "specifications": "Rapport recommandations + paramètres"
+      },
+      {
+        "reference": "CE-GEO-002",
+        "nom": "Pieux forés – exécution",
+        "utilisation": ["Ponts", "Tours", "Zones instables"],
+        "specifications": "Diamètres/longueurs selon calcul"
+      },
+      {
+        "reference": "CE-GEO-003",
+        "nom": "Micropieux – renforcement (concept)",
+        "utilisation": ["Reprises en sous-œuvre", "Réhabilitation", "Sites urbains"],
+        "specifications": "Accès contraint, solution adaptable"
+      },
+      {
+        "reference": "CE-GEO-004",
+        "nom": "Géotextile de renforcement",
+        "utilisation": ["Plateformes", "Routes", "Remblais"],
+        "specifications": "Résistance traction selon projet"
+      },
+      {
+        "reference": "CE-GEO-005",
+        "nom": "Géogrille de stabilisation",
+        "utilisation": ["Talus", "Chaussées", "Remblais"],
+        "specifications": "Choix selon contraintes et calcul"
+      },
+      {
+        "reference": "CE-GEO-006",
+        "nom": "Matériau de remblai sélectionné – fourniture",
+        "utilisation": ["Plateformes", "Fondations", "Accès"],
+        "specifications": "Granulométrie et humidité contrôlées"
+      },
+      {
+        "reference": "CE-GEO-007",
+        "nom": "Essais compactage (densité/Proctor) – service",
+        "utilisation": ["Contrôle chantier", "Réception", "Qualité"],
+        "specifications": "Rapports et traçabilité par zone"
+      },
+      {
+        "reference": "CE-GEO-008",
+        "nom": "Drainage de plateforme (drains + géocomposite)",
+        "utilisation": ["Routes", "Bâtiments", "Ouvrages"],
+        "specifications": "Prévention surpressions et instabilités"
+      },
+      {
+        "reference": "CE-GEO-009",
+        "nom": "Confortement talus par gabions",
+        "utilisation": ["Routes", "Berges", "Sites industriels"],
+        "specifications": "Dimensionnement selon pente et charges"
+      },
+      {
+        "reference": "CE-GEO-010",
+        "nom": "Assistance géotechnique chantier (contrat)",
+        "utilisation": ["Projets sensibles", "Multi-lots", "Zones à risques"],
+        "specifications": "Suivi, recommandations, validations terrain"
+      }
+    ],
+    "description": "ENCOPS BTP sécurise les projets via la géotechnique et les fondations : investigations, dimensionnement, stabilisation et contrôle qualité, pour réduire les risques et garantir la durabilité des ouvrages.",
+    "img": "https://example.com/img/geotechnique.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/geo-1.jpg",
+      "https://example.com/img/geo-2.jpg",
+      "https://example.com/img/geo-3.jpg"
+    ],
+    "watermark": "geotechnique-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour, j’ai un projet nécessitant fondations/stabilisation des sols. Pouvez-vous faire l’étude et l’exécution avec contrôle qualité ?"
+    }
+  },
+  {
+    "ID": 10,
+    "slug": "rehabilitation-renovation-maintenance-infrastructures",
+    "categorie": "Réhabilitation, rénovation & maintenance d’infrastructures",
+    "expertise": "Diagnostic, renforcement et remise à niveau d’ouvrages existants : sécurité, conformité, performance et prolongation de durée de vie",
+    "tags": ["Réhabilitation", "Maintenance", "B2B", "Collectivités", "Industrie", "Sécurité"],
+    "applications": [
+      "Diagnostic technique bâtiment",
+      "Audit structure (fissures/déformations)",
+      "Inspection ouvrages d’art (concept)",
+      "Réhabilitation béton (réparation)",
+      "Injection de fissures (concept)",
+      "Renforcement par platines/acier",
+      "Renforcement FRP (concept)",
+      "Reprise en sous-œuvre (concept)",
+      "Réfection étanchéité toiture",
+      "Traitement infiltrations",
+      "Réhabilitation réseaux EU/EP",
+      "Réfection voiries dégradées",
+      "Reprofilage pistes",
+      "Mise aux normes électricité",
+      "Mise aux normes incendie (concept)",
+      "Modernisation plomberie",
+      "Modernisation CVC",
+      "Ravalement façades",
+      "Peinture et finitions",
+      "Remplacement menuiseries",
+      "Réfection sols (carrelage, béton, résine) (concept)",
+      "Travaux anti-corrosion",
+      "Mise en accessibilité (concept)",
+      "Travaux en site occupé (phasing)",
+      "Gestion des déchets chantier",
+      "Essais, réception et DOE",
+      "Contrats de maintenance pluriannuels"
+    ],
+    "produits": [
+      {
+        "reference": "CE-REH-001",
+        "nom": "Mortier de réparation béton (R3/R4)",
+        "utilisation": ["Poutres", "Poteaux", "Dalles"],
+        "specifications": "Compatibilité support, durabilité élevée"
+      },
+      {
+        "reference": "CE-REH-002",
+        "nom": "Résine d’injection fissures (concept/fourniture)",
+        "utilisation": ["Réparation fissures", "Étanchéité", "Reprises"],
+        "specifications": "Choix PU/époxy selon contexte"
+      },
+      {
+        "reference": "CE-REH-003",
+        "nom": "Système étanchéité toiture (membrane)",
+        "utilisation": ["Toitures terrasses", "Sous-sols", "Locaux techniques"],
+        "specifications": "Système complet primaire + membrane"
+      },
+      {
+        "reference": "CE-REH-004",
+        "nom": "Peinture anticorrosion – prestation",
+        "utilisation": ["Structures métalliques", "Garde-corps", "Charpentes"],
+        "specifications": "Préparation support + multi-couches"
+      },
+      {
+        "reference": "CE-REH-005",
+        "nom": "Menuiseries aluminium – remplacement",
+        "utilisation": ["Bureaux", "Hôtels", "Bâtiments publics"],
+        "specifications": "Vitrage selon confort thermique/phonique"
+      },
+      {
+        "reference": "CE-REH-006",
+        "nom": "Kit remise à niveau électricité (tableaux/protections)",
+        "utilisation": ["Bâtiments existants", "Ateliers", "Entrepôts"],
+        "specifications": "Sélectivité, repérage, conformité"
+      },
+      {
+        "reference": "CE-REH-007",
+        "nom": "Reprise réseaux plomberie – service",
+        "utilisation": ["Immeubles", "Sites industriels", "ERP"],
+        "specifications": "Essais pression + mise en service"
+      },
+      {
+        "reference": "CE-REH-008",
+        "nom": "Ravalement façade (enduit/peinture)",
+        "utilisation": ["Bâtiments", "Murs", "Enveloppes"],
+        "specifications": "Traitement fissures + finition durable"
+      },
+      {
+        "reference": "CE-REH-009",
+        "nom": "Réfection sols béton (réparation/ponçage) – service",
+        "utilisation": ["Dalles industrielles", "Parkings", "Entrepôts"],
+        "specifications": "Planéité, résistance selon usage"
+      },
+      {
+        "reference": "CE-REH-010",
+        "nom": "Contrat maintenance multi-lots (SLA)",
+        "utilisation": ["Industrie", "Tertiaire", "Collectivités"],
+        "specifications": "Préventif + curatif + reporting"
+      }
+    ],
+    "description": "ENCOPS BTP remet à niveau les ouvrages existants grâce à des diagnostics, des renforcements et des travaux multi-lots (structure, enveloppe, réseaux, MEP), avec gestion de site et réduction des interruptions.",
+    "img": "https://example.com/img/rehabilitation.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/rehab-1.jpg",
+      "https://example.com/img/rehab-2.jpg",
+      "https://example.com/img/rehab-3.jpg"
+    ],
+    "watermark": "rehabilitation-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour, j’ai un besoin de réhabilitation/rénovation/maintenance d’infrastructures. Pouvez-vous faire un diagnostic et un plan d’intervention ?"
+    }
+  },
+  {
+    "ID": 11,
+    "slug": "energie-renouvelable-eclairage-public-solaires",
+    "categorie": "Énergie & solutions renouvelables (solaire, éclairage public)",
+    "expertise": "Conception et déploiement de solutions énergétiques fiables : solaire, hybridation, éclairage public et optimisation énergétique pour sites et collectivités",
+    "tags": ["Énergie", "Solaire", "Collectivités", "Industrie", "B2B", "Durabilité"],
+    "applications": [
+      "Audit énergétique site",
+      "Étude de dimensionnement solaire",
+      "Centrales solaires toitures (concept)",
+      "Centrales solaires au sol (concept)",
+      "Hybridation solaire + groupe (concept)",
+      "Stockage batteries (concept)",
+      "Éclairage public solaire",
+      "Éclairage public LED réseau",
+      "Modernisation éclairage (relamping)",
+      "Réseaux BT pour éclairage public",
+      "Armoire de commande EP",
+      "Protection électrique (parafoudre, terre)",
+      "Mesure et monitoring énergie (concept)",
+      "Optimisation facteur de puissance (concept)",
+      "Maintenance panneaux/structures",
+      "Nettoyage panneaux (O&M)",
+      "Maintenance armoires EP",
+      "Remplacement luminaires",
+      "Études photométriques (concept)",
+      "Télégestion EP (concept)",
+      "Alimentation sites isolés",
+      "Énergie pour bases-vie chantier",
+      "Sécurisation alimentation (UPS) (concept)",
+      "Conformité et réception",
+      "DOE et formation exploitation",
+      "Contrat O&M pluriannuel",
+      "Approvisionnement équipements"
+    ],
+    "produits": [
+      {
+        "reference": "CE-ENR-001",
+        "nom": "Lampadaire solaire autonome – fourniture/pose",
+        "utilisation": ["Voiries", "Zones rurales", "Parkings"],
+        "specifications": "Autonomie dimensionnée, batterie et panneau adaptés"
+      },
+      {
+        "reference": "CE-ENR-002",
+        "nom": "Projecteur LED extérieur – fourniture/pose",
+        "utilisation": ["Sites industriels", "Stades", "Entrepôts"],
+        "specifications": "Indice IP élevé, optique selon usage"
+      },
+      {
+        "reference": "CE-ENR-003",
+        "nom": "Panneaux photovoltaïques – fourniture",
+        "utilisation": ["Toitures", "Centrales", "Sites isolés"],
+        "specifications": "Puissance unitaire selon stock et projet"
+      },
+      {
+        "reference": "CE-ENR-004",
+        "nom": "Onduleur solaire (string/hybride) – intégration",
+        "utilisation": ["PV", "Hybridation", "Autoconsommation"],
+        "specifications": "Dimensionné, protections et monitoring"
+      },
+      {
+        "reference": "CE-ENR-005",
+        "nom": "Batteries (stockage) – concept/intégration",
+        "utilisation": ["Sites isolés", "Hybridation", "Secours"],
+        "specifications": "Capacité et cycles selon besoin"
+      },
+      {
+        "reference": "CE-ENR-006",
+        "nom": "Structure de montage PV – fourniture",
+        "utilisation": ["Toitures", "Au sol", "Carports"],
+        "specifications": "Résistance vent/corrosion selon site"
+      },
+      {
+        "reference": "CE-ENR-007",
+        "nom": "Armoire EP – commande/protection",
+        "utilisation": ["Éclairage public", "Zones industrielles", "Campements"],
+        "specifications": "Protections, horloge/cellule, repérage"
+      },
+      {
+        "reference": "CE-ENR-008",
+        "nom": "Câbles + accessoires EP – fourniture",
+        "utilisation": ["Réseaux EP", "Alimentation", "Raccordement"],
+        "specifications": "Sections selon calcul, protections adaptées"
+      },
+      {
+        "reference": "CE-ENR-009",
+        "nom": "Service étude photométrique – concept",
+        "utilisation": ["Routes", "Parkings", "Sites industriels"],
+        "specifications": "Niveaux d’éclairement cibles, optimisation"
+      },
+      {
+        "reference": "CE-ENR-010",
+        "nom": "Contrat O&M énergie/EP – service",
+        "utilisation": ["Collectivités", "Entreprises", "Concessions"],
+        "specifications": "Maintenance préventive, dépannage, reporting"
+      }
+    ],
+    "description": "ENCOPS BTP déploie des solutions énergie et éclairage (solaire/LED) pour collectivités et industries, en garantissant dimensionnement, sécurité électrique, maintenance et optimisation des coûts d’exploitation.",
+    "img": "https://example.com/img/energie-enr.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/energie-1.jpg",
+      "https://example.com/img/energie-2.jpg",
+      "https://example.com/img/energie-3.jpg"
+    ],
+    "watermark": "energie-enr-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour, je souhaite une solution énergie/solaire/éclairage public pour mon site ou ma collectivité. Pouvez-vous dimensionner et installer ?"
+    }
+  },
+  {
+    "ID": 12,
+    "slug": "conseil-ingenierie-genie-civil-pmo",
+    "categorie": "Conseil & ingénierie en génie civil (AMO/MOE/PMO)",
+    "expertise": "Conseil, assistance à maîtrise d’ouvrage et maîtrise d’œuvre pour sécuriser coûts, délais, qualité, risques et conformité sur des projets BTP multi-sites",
+    "tags": ["Conseil", "AMO", "MOE", "PMO", "B2B", "Gouvernements", "Industrie", "PPP", "Qualité", "HSE"],
+    "applications": [
+      "Études de faisabilité technico-économique",
+      "Due diligence technique (audit projet)",
+      "Assistance à maîtrise d’ouvrage (AMO)",
+      "Maîtrise d’œuvre (MOE) de conception",
+      "Maîtrise d’œuvre (MOE) d’exécution",
+      "Gestion de projet (PMO)",
+      "Planification (Primavera/MS Project)",
+      "Gestion des risques projet",
+      "Analyse de la valeur (value engineering)",
+      "Estimation budgétaire (CAPEX/OPEX)",
+      "Montage de dossiers d’investissement",
+      "Ingénierie des appels d’offres",
+      "Rédaction CCTP/CCAP (concept)",
+      "BPU/DQE et quantitatifs",
+      "Analyse des offres et négociation",
+      "Ordonnancement, pilotage, coordination (OPC)",
+      "Gestion des modifications (change management)",
+      "Contrôle qualité (QA/QC) et audits",
+      "Mise en place HSE (plans, procédures)",
+      "Contrôle d’avancement (earned value) (concept)",
+      "Gestion documentaire (DOE, as-built)",
+      "Coordination multi-lots (structure/MEP/VRD)",
+      "Audit de conformité réglementaire (concept)",
+      "Diagnostic structurel et pathologies",
+      "Expertise après sinistre (concept)",
+      "Formation des équipes et transfert de compétences",
+      "Médiation technique / résolution de litiges (concept)"
+    ],
+    "produits": [
+      {
+        "reference": "EN-CSI-001",
+        "nom": "Étude de faisabilité technico-économique (pack)",
+        "utilisation": ["Investisseurs", "Collectivités", "Industries"],
+        "specifications": "Scénarios + coûts + planning + risques"
+      },
+      {
+        "reference": "EN-CSI-002",
+        "nom": "Dossier d’appel d’offres (DCE/DAO) – prestation",
+        "utilisation": ["Appels d’offres", "PPP", "Projets multi-lots"],
+        "specifications": "Pièces écrites + plans + BPU/DQE"
+      },
+      {
+        "reference": "EN-CSI-003",
+        "nom": "OPC (ordonnancement/pilotage/coordination) – contrat",
+        "utilisation": ["Chantiers complexes", "Tertiaire", "Industrie"],
+        "specifications": "Planning, réunions, rapports, jalons"
+      },
+      {
+        "reference": "EN-CSI-004",
+        "nom": "Audit technique d’ouvrage existant",
+        "utilisation": ["Réhabilitation", "Acquisition", "Conformité"],
+        "specifications": "Rapport pathologies + recommandations"
+      },
+      {
+        "reference": "EN-CSI-005",
+        "nom": "Contrôle qualité chantier (QA/QC) – service",
+        "utilisation": ["Béton", "VRD", "Ouvrages d’art"],
+        "specifications": "ITP, inspections, rapports et traçabilité"
+      },
+      {
+        "reference": "EN-CSI-006",
+        "nom": "Plan HSE chantier (PPSPS/équivalent) – prestation",
+        "utilisation": ["Chantiers", "Sites industriels", "Projets publics"],
+        "specifications": "Procédures, EPI, analyses de risques"
+      },
+      {
+        "reference": "EN-CSI-007",
+        "nom": "Estimation budgétaire (quantitatifs + DQE)",
+        "utilisation": ["Avant-projets", "Financement", "Arbitrages"],
+        "specifications": "Estimation par lot, hypothèses documentées"
+      },
+      {
+        "reference": "EN-CSI-008",
+        "nom": "Value engineering (optimisation coûts)",
+        "utilisation": ["Projets en conception", "Projets en dérive", "PPP"],
+        "specifications": "Options techniques + impact coûts/délais"
+      },
+      {
+        "reference": "EN-CSI-009",
+        "nom": "Gestion documentaire (DOE/As-built) – service",
+        "utilisation": ["Réception", "Exploitation", "Conformité"],
+        "specifications": "Indexation, plans as-built, PV, notices"
+      },
+      {
+        "reference": "EN-CSI-010",
+        "nom": "Expertise après sinistre (concept) – intervention",
+        "utilisation": ["Assurances", "Industriels", "Bâtiments publics"],
+        "specifications": "Constat, mesures, recommandations sécurisation"
+      }
+    ],
+    "description": "ENCOPS BTP accompagne maîtres d’ouvrage et investisseurs par du conseil et de l’ingénierie (AMO/MOE/OPC/QA-QC/HSE) pour sécuriser la performance des projets, de l’étude à la réception.",
+    "img": "https://example.com/img/conseil-genie-civil.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/conseil-1.jpg",
+      "https://example.com/img/conseil-2.jpg",
+      "https://example.com/img/conseil-3.jpg"
+    ],
+    "watermark": "encops-conseil-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour ENCOPS BTP, je souhaite un accompagnement en conseil/ingénierie génie civil (AMO, MOE, OPC, QA/QC, HSE). Pouvez-vous m’aider ?"
+    }
+  },
+  {
+    "ID": 13,
+    "slug": "hydraulique-adduction-eau-potable-aep",
+    "categorie": "Hydraulique & adduction d’eau potable (AEP)",
+    "expertise": "Études et réalisation de réseaux d’adduction, stockage et distribution d’eau potable, avec maîtrise de la qualité, de la pression et de la durabilité des ouvrages",
+    "tags": ["Hydraulique", "Collectivités", "Infrastructures", "AEP", "B2B", "Réseaux"],
+    "applications": [
+      "Études hydrauliques AEP",
+      "Reconnaissance et tracé de réseau",
+      "Dimensionnement conduites",
+      "Pose conduites PEHD",
+      "Pose conduites fonte (concept)",
+      "Raccordements et branchements",
+      "Réservoirs surélevés (concept)",
+      "Châteaux d’eau (concept)",
+      "Stations de pompage",
+      "Surpression et régulation",
+      "Vannes et organes de sectionnement",
+      "Purge et ventouses",
+      "Protection anti-bélier (concept)",
+      "Essais de pression",
+      "Désinfection et mise en service réseau",
+      "Recherche de fuites (concept)",
+      "Sectorisation et comptage (concept)",
+      "Réhabilitation réseaux vétustes",
+      "Réparation casses et fuites",
+      "Forages (coordination) (concept)",
+      "Protection des ouvrages (clôture/accès)",
+      "Alimentation sites isolés",
+      "Gestion de la qualité (chloration) (concept)",
+      "Réalisation de chambres de vannes",
+      "Ouvrages de traversée (routes/rivières)",
+      "DOE et formation exploitation",
+      "Contrat de maintenance réseau"
+    ],
+    "produits": [
+      {
+        "reference": "EN-AEP-001",
+        "nom": "Tuyaux PEHD AEP (PN selon projet)",
+        "utilisation": ["Adduction", "Distribution", "Branchements"],
+        "specifications": "PN10–PN25, diamètres 32–630 mm"
+      },
+      {
+        "reference": "EN-AEP-002",
+        "nom": "Vannes de sectionnement (DN selon réseau)",
+        "utilisation": ["Réseaux", "Chambres de vannes", "Maintenance"],
+        "specifications": "Corps fonte/acier, étanchéité renforcée"
+      },
+      {
+        "reference": "EN-AEP-003",
+        "nom": "Ventouses et purges",
+        "utilisation": ["Réseaux", "Points hauts/bas", "Sécurité"],
+        "specifications": "Débits d’air adaptés, anti-bélier (option)"
+      },
+      {
+        "reference": "EN-AEP-004",
+        "nom": "Pompes de surpression (skid)",
+        "utilisation": ["Réseaux urbains", "Zones élevées", "Industriels"],
+        "specifications": "Débit/HMT selon étude"
+      },
+      {
+        "reference": "EN-AEP-005",
+        "nom": "Compteurs d’eau (bulk/branchements) (concept)",
+        "utilisation": ["Sectorisation", "Facturation", "Suivi pertes"],
+        "specifications": "DN selon réseau, lecture/AMR (option)"
+      },
+      {
+        "reference": "EN-AEP-006",
+        "nom": "Accessoires PEHD (coudes, tés, manchons)",
+        "utilisation": ["Assemblage", "Réparations", "Extensions"],
+        "specifications": "Électrosoudable / bout à bout"
+      },
+      {
+        "reference": "EN-AEP-007",
+        "nom": "Service d’essais pression + PV",
+        "utilisation": ["Réception", "Contrôle qualité", "Mise en service"],
+        "specifications": "Procès-verbal, critères d’acceptation"
+      },
+      {
+        "reference": "EN-AEP-008",
+        "nom": "Désinfection réseau (chloration) – service",
+        "utilisation": ["Mise en service", "Réhabilitation", "Urgence"],
+        "specifications": "Procédure, dosage, rinçage et PV"
+      },
+      {
+        "reference": "EN-AEP-009",
+        "nom": "Réparation fuite (colliers, manchons) – kit",
+        "utilisation": ["Maintenance", "Urgence", "Réseaux"],
+        "specifications": "Compatibilité multi-diamètres (selon stock)"
+      },
+      {
+        "reference": "EN-AEP-010",
+        "nom": "Chambre de vannes préfabriquée (concept)",
+        "utilisation": ["Réseaux", "Protection organes", "Accès"],
+        "specifications": "Béton préfabriqué, étanchéité et ventilation"
+      }
+    ],
+    "description": "ENCOPS BTP réalise des projets AEP : études, pose de réseaux, stations de pompage, essais, désinfection et mise en service, avec une logique d’exploitation et de maintenance.",
+    "img": "https://example.com/img/aep.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/aep-1.jpg",
+      "https://example.com/img/aep-2.jpg",
+      "https://example.com/img/aep-3.jpg"
+    ],
+    "watermark": "encops-aep-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour ENCOPS BTP, j’ai un projet d’adduction/distribution d’eau potable (AEP). Pouvez-vous faire l’étude et l’exécution ?"
+    }
+  },
+  {
+    "ID": 14,
+    "slug": "amenagements-paysagers-espaces-verts-urbains",
+    "categorie": "Aménagements paysagers & espaces verts",
+    "expertise": "Conception et réalisation d’espaces extérieurs durables : voiries piétonnes, parcs, plantations, arrosage et valorisation urbaine",
+    "tags": ["Collectivités", "Immobilier", "Urbanisme", "B2B", "Aménagement"],
+    "applications": [
+      "Conception d’espaces verts (concept)",
+      "Plan d’aménagement paysager (concept)",
+      "Terrassement léger et modelage",
+      "Engazonnement",
+      "Plantations (arbres/arbustes)",
+      "Haies et alignements",
+      "Amendement et préparation des sols",
+      "Arrosage goutte-à-goutte (concept)",
+      "Arrosage automatisé (concept)",
+      "Réseau d’arrosage (pose)",
+      "Bordures paysagères",
+      "Pavés et allées piétonnes",
+      "Mobilier urbain (pose)",
+      "Aires de jeux (pose) (concept)",
+      "Clôtures et portails",
+      "Éclairage extérieur (coordination)",
+      "Drainage des espaces verts (concept)",
+      "Gestion eaux pluviales (noues) (concept)",
+      "Stabilisation des talus (plantations/gabions)",
+      "Protection anti-érosion",
+      "Revêtements perméables (concept)",
+      "Nettoyage et entretien périodique",
+      "Taille et élagage (concept)",
+      "Reboisement (projets) (concept)",
+      "Aménagement de parkings perméables (concept)",
+      "Réhabilitation d’espaces publics",
+      "Maintenance pluriannuelle (contrat)"
+    ],
+    "produits": [
+      {
+        "reference": "EN-PAY-001",
+        "nom": "Gazons (semences) – fourniture",
+        "utilisation": ["Parcs", "Résidences", "Stades (concept)"],
+        "specifications": "Variétés selon climat et usage"
+      },
+      {
+        "reference": "EN-PAY-002",
+        "nom": "Arbres et arbustes (plants) – fourniture",
+        "utilisation": ["Alignements", "Parcs", "Jardins"],
+        "specifications": "Essences locales adaptées"
+      },
+      {
+        "reference": "EN-PAY-003",
+        "nom": "Système goutte-à-goutte – kit",
+        "utilisation": ["Espaces verts", "Jardins", "Sites industriels"],
+        "specifications": "Débits et longueurs modulables"
+      },
+      {
+        "reference": "EN-PAY-004",
+        "nom": "Programmateur arrosage (concept)",
+        "utilisation": ["Arrosage automatique", "Optimisation eau", "Parcs"],
+        "specifications": "Plages horaires, capteurs optionnels"
+      },
+      {
+        "reference": "EN-PAY-005",
+        "nom": "Pavés autobloquants – fourniture/pose",
+        "utilisation": ["Allées", "Placettes", "Trottoirs"],
+        "specifications": "Épaisseurs selon charges"
+      },
+      {
+        "reference": "EN-PAY-006",
+        "nom": "Bordures paysagères – fourniture",
+        "utilisation": ["Délimitation", "Allées", "Espaces verts"],
+        "specifications": "Béton/pierre selon projet"
+      },
+      {
+        "reference": "EN-PAY-007",
+        "nom": "Géotextile anti-mauvaises herbes",
+        "utilisation": ["Massifs", "Allées", "Plantations"],
+        "specifications": "Grammage selon usage"
+      },
+      {
+        "reference": "EN-PAY-008",
+        "nom": "Mobilier urbain (bancs, poubelles) – pose",
+        "utilisation": ["Parcs", "Places", "Sites privés"],
+        "specifications": "Fixations antivol, finitions durables"
+      },
+      {
+        "reference": "EN-PAY-009",
+        "nom": "Clôtures grillagées – fourniture/pose",
+        "utilisation": ["Parcs", "Sites privés", "Zones techniques"],
+        "specifications": "Hauteurs et mailles selon sécurité"
+      },
+      {
+        "reference": "EN-PAY-010",
+        "nom": "Contrat entretien espaces verts – service",
+        "utilisation": ["Collectivités", "Résidences", "Industries"],
+        "specifications": "Tonte, taille, replantation, reporting"
+      }
+    ],
+    "description": "ENCOPS BTP réalise des aménagements extérieurs : espaces verts, allées, pavés, arrosage, mobilier urbain et entretien, en intégrant drainage et durabilité des ouvrages.",
+    "img": "https://example.com/img/paysage.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/paysage-1.jpg",
+      "https://example.com/img/paysage-2.jpg",
+      "https://example.com/img/paysage-3.jpg"
+    ],
+    "watermark": "encops-paysage-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour ENCOPS BTP, j’ai un besoin d’aménagement paysager/espaces verts (création ou entretien). Pouvez-vous intervenir ?"
+    }
+  },
+  {
+    "ID": 15,
+    "slug": "carriere-granulats-beton-prefabrique",
+    "categorie": "Carrières, granulats & préfabrication (béton)",
+    "expertise": "Production et fourniture de matériaux (granulats, graves) et éléments préfabriqués béton pour sécuriser l’approvisionnement, la qualité et les délais",
+    "tags": ["Matériaux", "BTP", "Infrastructures", "B2B", "Supply chain", "Qualité"],
+    "applications": [
+      "Extraction et production granulats (concept)",
+      "Criblage et lavage (concept)",
+      "Fourniture sable 0/5",
+      "Fourniture gravillons (5/15, 15/25)",
+      "Fourniture grave latéritique",
+      "Fourniture GNT pour routes",
+      "Fourniture pierres et enrochements",
+      "Production de blocs béton (parpaings)",
+      "Production de bordures préfabriquées",
+      "Production de caniveaux préfabriqués",
+      "Production d’éléments de regards (anneaux)",
+      "Préfabrication dalles et poutrelles (concept)",
+      "Préfabrication dalots/buses (concept)",
+      "Contrôle qualité granulats (concept)",
+      "Contrôle qualité béton (éprouvettes) (concept)",
+      "Livraison sur chantier",
+      "Gestion des stocks multi-chantiers",
+      "Contrats d’approvisionnement",
+      "Optimisation logistique transport",
+      "Échantillonnage et traçabilité lots",
+      "Matériaux pour VRD",
+      "Matériaux pour ouvrages hydrauliques",
+      "Matériaux pour aménagement urbain",
+      "Matériaux pour réhabilitation",
+      "Assistance technique choix matériaux",
+      "Fabrication sur mesure (concept)",
+      "Mise à disposition bennes/transport"
+    ],
+    "produits": [
+      {
+        "reference": "EN-MAT-001",
+        "nom": "Sable 0/5 – fourniture",
+        "utilisation": ["Béton", "Mortier", "Enduits"],
+        "specifications": "Propreté et granulométrie contrôlées"
+      },
+      {
+        "reference": "EN-MAT-002",
+        "nom": "Gravillons 5/15 – fourniture",
+        "utilisation": ["Béton", "Voiries", "Drainage"],
+        "specifications": "Granulométrie stable, faible fines"
+      },
+      {
+        "reference": "EN-MAT-003",
+        "nom": "Gravillons 15/25 – fourniture",
+        "utilisation": ["Béton", "Ouvrages", "Remblais drainants"],
+        "specifications": "Selon besoins chantier"
+      },
+      {
+        "reference": "EN-MAT-004",
+        "nom": "Grave non traitée (GNT) – fourniture",
+        "utilisation": ["Routes", "Plateformes", "Accès industriels"],
+        "specifications": "Classe selon structure chaussée"
+      },
+      {
+        "reference": "EN-MAT-005",
+        "nom": "Latérite sélectionnée – fourniture",
+        "utilisation": ["Pistes", "Rechargement", "Plateformes"],
+        "specifications": "Humidité/portance contrôlées"
+      },
+      {
+        "reference": "EN-MAT-006",
+        "nom": "Enrochements calibrés – fourniture",
+        "utilisation": ["Berges", "Anti-érosion", "Ouvrages hydrauliques"],
+        "specifications": "Classes granulométriques"
+      },
+      {
+        "reference": "EN-MAT-007",
+        "nom": "Parpaings/blocs béton – fourniture",
+        "utilisation": ["Murs", "Cloisons", "Clôtures"],
+        "specifications": "Résistance selon standard interne"
+      },
+      {
+        "reference": "EN-MAT-008",
+        "nom": "Bordures préfabriquées – fourniture",
+        "utilisation": ["Voiries", "Trottoirs", "Aménagement urbain"],
+        "specifications": "Formats standard, qualité vibrée"
+      },
+      {
+        "reference": "EN-MAT-009",
+        "nom": "Caniveaux préfabriqués – fourniture",
+        "utilisation": ["Drainage", "Voiries", "Parkings"],
+        "specifications": "Sections et classes selon trafic"
+      },
+      {
+        "reference": "EN-MAT-010",
+        "nom": "Anneaux de regards béton – fourniture",
+        "utilisation": ["Assainissement", "AEP (chambres)", "VRD"],
+        "specifications": "Joints et emboîtements étanches"
+      }
+    ],
+    "description": "ENCOPS BTP sécurise l’approvisionnement des chantiers via la fourniture de granulats, graves et éléments préfabriqués béton, avec contrôle qualité, logistique et contrats d’approvisionnement.",
+    "img": "https://example.com/img/materiaux.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/materiaux-1.jpg",
+      "https://example.com/img/materiaux-2.jpg",
+      "https://example.com/img/materiaux-3.jpg"
+    ],
+    "watermark": "encops-materiaux-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour ENCOPS BTP, je cherche un approvisionnement fiable en matériaux (granulats, graves, préfabrication béton) livré sur chantier. Pouvez-vous me proposer une offre ?"
+    }
+  },
+  {
+    "ID": 16,
+    "slug": "installations-industrielles-ouvrages-speciaux",
+    "categorie": "Installations industrielles & ouvrages spéciaux",
+    "expertise": "Construction d’ouvrages et bâtiments industriels, structures métalliques, plateformes techniques et ouvrages spéciaux avec exigences sécurité et continuité d’exploitation",
+    "tags": ["Industrie", "Oil & Gas (concept)", "Mines (concept)", "Structures", "B2B", "HSE", "Qualité"],
+    "applications": [
+      "Bâtiments industriels (entrepôts, usines)",
+      "Dalles industrielles forte charge",
+      "Plateformes et massifs machines",
+      "Fosses techniques et caniveaux industriels",
+      "Structures métalliques (charpentes)",
+      "Bardage et couverture industrielle",
+      "Clôtures industrielles et portails",
+      "Voiries et parkings industriels",
+      "Réseaux VRD industriels",
+      "Réseaux incendie (concept)",
+      "Réseaux air comprimé (concept)",
+      "Réseaux utilités (eau, vapeur) (concept)",
+      "Salles techniques (local électrique) (concept)",
+      "Bases-vie chantier",
+      "Ateliers de maintenance",
+      "Racks et supports (concept)",
+      "Escaliers, garde-corps, passerelles",
+      "Réservoirs béton (concept)",
+      "Fosses séparateurs (concept)",
+      "Travaux en site occupé (phasing)",
+      "Arrêt technique (shutdown) (concept)",
+      "Mise en sécurité chantier HSE",
+      "Contrôle qualité soudure (concept)",
+      "Traitement anticorrosion structures",
+      "Instrumentation génie civil (concept)",
+      "Réception, DOE et formation exploitation",
+      "Contrats de maintenance industrielle"
+    ],
+    "produits": [
+      {
+        "reference": "EN-IND-001",
+        "nom": "Charpente métallique – fabrication/pose",
+        "utilisation": ["Entrepôts", "Usines", "Hangars"],
+        "specifications": "Calculs et assemblages selon plans EXE"
+      },
+      {
+        "reference": "EN-IND-002",
+        "nom": "Bardage métallique – fourniture/pose",
+        "utilisation": ["Façades", "Bâtiments industriels", "Extensions"],
+        "specifications": "Épaisseur et isolant selon besoins"
+      },
+      {
+        "reference": "EN-IND-003",
+        "nom": "Couverture bac acier – fourniture/pose",
+        "utilisation": ["Toitures", "Hangars", "Ateliers"],
+        "specifications": "Étanchéité et fixations renforcées"
+      },
+      {
+        "reference": "EN-IND-004",
+        "nom": "Dalle industrielle (béton) – exécution",
+        "utilisation": ["Entrepôts", "Usines", "Zones logistiques"],
+        "specifications": "Planéité, joints, durcisseur (option)"
+      },
+      {
+        "reference": "EN-IND-005",
+        "nom": "Garde-corps et passerelles – fabrication/pose",
+        "utilisation": ["Plateformes", "Escaliers", "Sites industriels"],
+        "specifications": "Conformes sécurité, galvanisation possible"
+      },
+      {
+        "reference": "EN-IND-006",
+        "nom": "Peinture anticorrosion – prestation",
+        "utilisation": ["Structures", "Supports", "Ouvrages métalliques"],
+        "specifications": "Préparation surface + système multi-couches"
+      },
+      {
+        "reference": "EN-IND-007",
+        "nom": "Clôture industrielle haute sécurité – pose",
+        "utilisation": ["Sites industriels", "Zones sensibles", "Périmètres"],
+        "specifications": "Hauteur/renforts selon sécurité"
+      },
+      {
+        "reference": "EN-IND-008",
+        "nom": "Portail coulissant motorisé (concept)",
+        "utilisation": ["Accès sites", "Logistique", "Sécurité"],
+        "specifications": "Motorisation et contrôle d’accès (option)"
+      },
+      {
+        "reference": "EN-IND-009",
+        "nom": "Base-vie chantier (modulaire) (concept)",
+        "utilisation": ["Chantiers", "Sites éloignés", "Projets multi-mois"],
+        "specifications": "Bureaux, vestiaires, réfectoires selon besoin"
+      },
+      {
+        "reference": "EN-IND-010",
+        "nom": "Contrat maintenance industrielle – service",
+        "utilisation": ["Multi-sites", "Usines", "Entrepôts"],
+        "specifications": "Préventif + curatif + reporting"
+      }
+    ],
+    "description": "ENCOPS BTP construit des ouvrages industriels et spéciaux (structures métalliques, dalles, plateformes, VRD industriels) avec exigences HSE, contrôle qualité, et capacité d’intervention en site occupé.",
+    "img": "https://example.com/img/industriel.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/industriel-1.jpg",
+      "https://example.com/img/industriel-2.jpg",
+      "https://example.com/img/industriel-3.jpg"
+    ],
+    "watermark": "encops-industriel-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour ENCOPS BTP, j’ai un projet de bâtiment/ouvrage industriel ou d’extension sur site. Pouvez-vous concevoir et exécuter en sécurité ?"
+    }
+  },
+  {
+    "ID": 17,
+    "slug": "vente-materiaux-btp-genie-civil",
+    "categorie": "Vente de matériaux BTP & génie civil",
+    "expertise": "Approvisionnement, stockage, contrôle qualité et livraison multi-chantiers de matériaux BTP pour sécuriser coûts, délais et conformité technique",
+    "tags": ["Vente", "Matériaux", "BTP", "Supply chain", "B2B", "Chantiers", "Qualité"],
+    "applications": [
+      "Approvisionnement ciment multi-marques",
+      "Approvisionnement acier (HA, treillis, profils)",
+      "Fourniture sable, gravier, gravillons",
+      "Fourniture GNT et latérite",
+      "Fourniture blocs/parpaings",
+      "Fourniture bordures et caniveaux",
+      "Fourniture tuyaux PVC/PEHD",
+      "Fourniture regards et buses béton",
+      "Fourniture géotextiles et géogrilles",
+      "Fourniture adjuvants béton (concept)",
+      "Fourniture étanchéité (membranes) (concept)",
+      "Fourniture peinture routière (concept)",
+      "Fourniture signalisation (panneaux, cônes) (concept)",
+      "Fourniture câbles et appareillage BT",
+      "Fourniture luminaires chantier",
+      "Fourniture robinetterie et sanitaires",
+      "Fourniture gaines et accessoires ventilation",
+      "Fourniture EPI chantier",
+      "Fourniture outillage chantier",
+      "Gestion des stocks par projet",
+      "Livraison sur chantier (planning)",
+      "Livraison express (urgence)",
+      "Traçabilité lots et certificats",
+      "Échantillonnage et contrôle réception",
+      "Optimisation coût d’achat (contrats cadre)",
+      "Regroupement logistique multi-sites",
+      "Support technique choix matériaux"
+    ],
+    "produits": [
+      {
+        "reference": "EN-VEN-001",
+        "nom": "Ciment (CEM I/CEM II) – vente",
+        "utilisation": ["Béton", "Maçonnerie", "Enduits"],
+        "specifications": "Traçabilité lot, stockage sec"
+      },
+      {
+        "reference": "EN-VEN-002",
+        "nom": "Acier HA (armatures) – vente",
+        "utilisation": ["Ferraillage", "Fondations", "Ouvrages BA"],
+        "specifications": "Diamètres 6–32 mm, certificats matière"
+      },
+      {
+        "reference": "EN-VEN-003",
+        "nom": "Treillis soudé – vente",
+        "utilisation": ["Dalles", "Chapes", "Voiries légères"],
+        "specifications": "Mailles et sections selon projet"
+      },
+      {
+        "reference": "EN-VEN-004",
+        "nom": "Sable 0/5 – vente",
+        "utilisation": ["Mortier", "Béton", "Enduits"],
+        "specifications": "Granulométrie contrôlée"
+      },
+      {
+        "reference": "EN-VEN-005",
+        "nom": "Gravillons 5/15 – vente",
+        "utilisation": ["Béton", "Drainage", "Ouvrages"],
+        "specifications": "Faible taux de fines"
+      },
+      {
+        "reference": "EN-VEN-006",
+        "nom": "GNT / grave – vente",
+        "utilisation": ["Routes", "Plateformes", "Accès industriels"],
+        "specifications": "Classe selon structure"
+      },
+      {
+        "reference": "EN-VEN-007",
+        "nom": "Tuyaux PEHD/PVC – vente",
+        "utilisation": ["AEP", "Assainissement", "Drainage"],
+        "specifications": "PN/SN selon réseau"
+      },
+      {
+        "reference": "EN-VEN-008",
+        "nom": "Géotextile routier – vente",
+        "utilisation": ["Séparation", "Filtration", "Renforcement"],
+        "specifications": "Grammage et classe selon projet"
+      },
+      {
+        "reference": "EN-VEN-009",
+        "nom": "Bordures & caniveaux préfabriqués – vente",
+        "utilisation": ["Voiries", "Drainage urbain", "Parkings"],
+        "specifications": "Classes de charge selon trafic"
+      },
+      {
+        "reference": "EN-VEN-010",
+        "nom": "Parpaings/blocs béton – vente",
+        "utilisation": ["Murs", "Clôtures", "Cloisons"],
+        "specifications": "Formats standards, résistance contrôlée"
+      }
+    ],
+    "description": "ENCOPS BTP assure la vente et la livraison de matériaux BTP et génie civil (structure, VRD, réseaux, MEP), avec gestion de stock, traçabilité, et support technique pour les choix matériaux.",
+    "img": "https://example.com/img/vente-materiaux.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/vente-1.jpg",
+      "https://example.com/img/vente-2.jpg",
+      "https://example.com/img/vente-3.jpg"
+    ],
+    "watermark": "encops-vente-materiaux-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour ENCOPS BTP, je souhaite acheter des matériaux BTP/génie civil avec livraison sur chantier. Pouvez-vous me faire un devis ?"
+    }
+  },
+  {
+    "ID": 18,
+    "slug": "reparation-maintenance-materiels-engins-btp",
+    "categorie": "Réparation & maintenance des matériels / engins BTP",
+    "expertise": "Maintenance préventive et corrective des engins et matériels de chantier, avec diagnostic, pièces, interventions sur site et réduction des arrêts",
+    "tags": ["Maintenance", "Réparation", "Engins BTP", "Atelier", "B2B", "Disponibilité"],
+    "applications": [
+      "Diagnostic pannes engins",
+      "Maintenance préventive (vidanges)",
+      "Maintenance corrective (réparations)",
+      "Réparation circuit hydraulique",
+      "Réparation vérins hydrauliques (concept)",
+      "Réparation pompes hydrauliques (concept)",
+      "Remplacement flexibles et raccords",
+      "Réparation systèmes de refroidissement",
+      "Réparation électrique engins (démarrage/alternateur)",
+      "Batteries et démarreurs",
+      "Réparation transmissions (concept)",
+      "Réparation trains de roulement (chenilles)",
+      "Remplacement filtres (air/huile/gasoil)",
+      "Entretien godets et accessoires",
+      "Soudure et renforts structures",
+      "Réparation bennes et châssis camions",
+      "Calibrage et réglages (concept)",
+      "Contrôle fuites et étanchéité",
+      "Graissage et points de lubrification",
+      "Inspection sécurité machine",
+      "Maintenance groupes électrogènes",
+      "Maintenance compresseurs chantier (concept)",
+      "Interventions sur chantier (dépannage mobile)",
+      "Gestion stock pièces d’usure",
+      "Contrats de maintenance (SLA)",
+      "Rapports d’intervention et historiques",
+      "Remise en état avant location"
+    ],
+    "produits": [
+      {
+        "reference": "EN-REP-001",
+        "nom": "Kit filtres (air/huile/gasoil) – fourniture",
+        "utilisation": ["Pelles", "Chargeuses", "Bulldozers"],
+        "specifications": "Compatibilité selon modèle"
+      },
+      {
+        "reference": "EN-REP-002",
+        "nom": "Huile hydraulique – fourniture",
+        "utilisation": ["Hydraulique engins", "Systèmes auxiliaires", "Atelier"],
+        "specifications": "Grade selon constructeur"
+      },
+      {
+        "reference": "EN-REP-003",
+        "nom": "Flexibles hydrauliques (sur mesure) – fourniture",
+        "utilisation": ["Remplacement", "Réparation fuites", "Hydraulique"],
+        "specifications": "Pression nominale adaptée"
+      },
+      {
+        "reference": "EN-REP-004",
+        "nom": "Raccords hydrauliques – fourniture",
+        "utilisation": ["Hydraulique", "Maintenance", "Réparation"],
+        "specifications": "Standards BSP/JIC selon besoin"
+      },
+      {
+        "reference": "EN-REP-005",
+        "nom": "Batterie démarrage – fourniture",
+        "utilisation": ["Engins", "Camions", "Groupes électrogènes"],
+        "specifications": "Capacité selon machine"
+      },
+      {
+        "reference": "EN-REP-006",
+        "nom": "Alternateur/démarreur (concept) – fourniture",
+        "utilisation": ["Systèmes électriques", "Démarrage", "Charge"],
+        "specifications": "Selon modèle et référence"
+      },
+      {
+        "reference": "EN-REP-007",
+        "nom": "Pièces d’usure (dents, lames) – fourniture",
+        "utilisation": ["Godets", "Bulldozers", "Terrassement"],
+        "specifications": "Acier traité, compatibilité"
+      },
+      {
+        "reference": "EN-REP-008",
+        "nom": "Service dépannage mobile – intervention",
+        "utilisation": ["Chantiers", "Urgence", "Remise en service"],
+        "specifications": "Déplacement + diagnostic + réparation"
+      },
+      {
+        "reference": "EN-REP-009",
+        "nom": "Contrat maintenance préventive – service",
+        "utilisation": ["Parcs engins", "Multi-chantiers", "Loueurs"],
+        "specifications": "Planning, checklists, reporting"
+      },
+      {
+        "reference": "EN-REP-010",
+        "nom": "Remise en état avant location – service",
+        "utilisation": ["Engins location", "Matériels chantier", "Flotte"],
+        "specifications": "Checklist sécurité + essais fonctionnels"
+      }
+    ],
+    "description": "ENCOPS BTP propose la réparation et la maintenance des engins et matériels BTP : diagnostic, pièces d’usure, dépannage mobile, contrats de maintenance et remise en état pour améliorer la disponibilité.",
+    "img": "https://example.com/img/reparation-engins.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/reparation-1.jpg",
+      "https://example.com/img/reparation-2.jpg",
+      "https://example.com/img/reparation-3.jpg"
+    ],
+    "watermark": "encops-reparation-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour ENCOPS BTP, j’ai besoin d’une réparation/maintenance pour mes engins ou matériels de chantier. Pouvez-vous intervenir rapidement ?"
+    }
+  },
+  {
+    "ID": 19,
+    "slug": "location-materiels-outillage-btp",
+    "categorie": "Location de matériels & outillage de chantier",
+    "expertise": "Location d’équipements et outillage BTP avec options maintenance, livraison, formation sécurité et optimisation des coûts d’exploitation",
+    "tags": ["Location", "Matériels", "Outillage", "BTP", "B2B", "Chantiers"],
+    "applications": [
+      "Location bétonnières",
+      "Location aiguilles vibrantes",
+      "Location plaques vibrantes",
+      "Location pilonneuses",
+      "Location scies à sol (concept)",
+      "Location marteaux-piqueurs",
+      "Location groupes électrogènes",
+      "Location compresseurs (concept)",
+      "Location pompes d’épuisement",
+      "Location échafaudages",
+      "Location étaiements (concept)",
+      "Location coffrages (concept)",
+      "Location banches (concept)",
+      "Location tours d’éclairage (concept)",
+      "Location soudeuses (concept)",
+      "Location carotteuses/perforateurs",
+      "Location brouettes et petits matériels",
+      "Location niveleuses laser (concept)",
+      "Location équipements de levage (concept)",
+      "Location containers chantier (concept)",
+      "Location bases-vie modulaires (concept)",
+      "Livraison sur chantier",
+      "Installation/montage équipements (concept)",
+      "Formation utilisation/sécurité (concept)",
+      "Maintenance préventive matériels loués",
+      "Dépannage matériels loués",
+      "Location courte durée",
+      "Location longue durée"
+    ],
+    "produits": [
+      {
+        "reference": "EN-LOC-OUT-001",
+        "nom": "Bétonnière 250–350L (location)",
+        "utilisation": ["Bétonnage", "Maçonnerie", "Petits chantiers"],
+        "specifications": "Moteur thermique/électrique selon disponibilité"
+      },
+      {
+        "reference": "EN-LOC-OUT-002",
+        "nom": "Aiguille vibrante (location)",
+        "utilisation": ["Béton", "Coulage", "Qualité"],
+        "specifications": "Diamètres selon usage"
+      },
+      {
+        "reference": "EN-LOC-OUT-003",
+        "nom": "Plaque vibrante (location)",
+        "utilisation": ["Compactage", "Tranchées", "Pavés"],
+        "specifications": "Poids/force selon couche"
+      },
+      {
+        "reference": "EN-LOC-OUT-004",
+        "nom": "Pilon(neuse) (location)",
+        "utilisation": ["Compactage local", "Tranchées", "Accès"],
+        "specifications": "Puissance selon besoin"
+      },
+      {
+        "reference": "EN-LOC-OUT-005",
+        "nom": "Marteau-piqueur (location)",
+        "utilisation": ["Démolition", "Découpe", "Travaux urbains"],
+        "specifications": "Électrique/pneumatique selon option"
+      },
+      {
+        "reference": "EN-LOC-OUT-006",
+        "nom": "Groupe électrogène 5–50 kVA (location)",
+        "utilisation": ["Chantiers", "Secours", "Sites isolés"],
+        "specifications": "Puissance selon charge, maintenance incluse"
+      },
+      {
+        "reference": "EN-LOC-OUT-007",
+        "nom": "Pompe d’épuisement (location)",
+        "utilisation": ["Fouilles", "Inondations", "Chantiers"],
+        "specifications": "Débit selon besoin, tuyaux inclus (option)"
+      },
+      {
+        "reference": "EN-LOC-OUT-008",
+        "nom": "Échafaudage (location)",
+        "utilisation": ["Façades", "Peinture", "Maçonnerie"],
+        "specifications": "Conforme sécurité, montage (option)"
+      },
+      {
+        "reference": "EN-LOC-OUT-009",
+        "nom": "Perforateur/carotteuse (location)",
+        "utilisation": ["Percements", "Carottages", "Réseaux"],
+        "specifications": "Diamètres selon couronnes"
+      },
+      {
+        "reference": "EN-LOC-OUT-010",
+        "nom": "Coffrage modulaire (concept) (location)",
+        "utilisation": ["Voiles", "Dalles", "Poteaux"],
+        "specifications": "Accessoires et sécurité inclus"
+      }
+    ],
+    "description": "ENCOPS BTP propose la location de matériels et outillage de chantier (énergie, compactage, bétonnage, pompage, accès en hauteur) avec services de livraison, maintenance et dépannage.",
+    "img": "https://example.com/img/location-materiels.png",
+    "pdf": "",
+    "gallery": [
+      "https://example.com/img/locout-1.jpg",
+      "https://example.com/img/locout-2.jpg",
+      "https://example.com/img/locout-3.jpg"
+    ],
+    "watermark": "encops-location-outillage-filigrane",
+    "cta": {
+      "whatsapp": "+237651254307",
+      "message": "Bonjour ENCOPS BTP, je souhaite louer du matériel/outillage de chantier avec livraison et maintenance. Pouvez-vous me proposer une offre ?"
+    }
+  }
+]
