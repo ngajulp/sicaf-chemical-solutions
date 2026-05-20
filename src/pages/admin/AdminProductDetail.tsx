@@ -194,8 +194,8 @@ const AdminProductDetail = () => {
         {isEditing && product && (
           <EditProductModal
             product={product}
+            isOpen={isEditing}
             onClose={() => setIsEditing(false)}
-            onSave={handleUpdate}
           />
         )}
       </div>
