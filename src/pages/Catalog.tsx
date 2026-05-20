@@ -124,13 +124,13 @@ const Catalog = () => {
 
                         <div className="space-y-4">
                            <div className="flex flex-wrap gap-2">
-                             {item.products.slice(0, 3).map((prod, i) => (
+                             {(item.products ?? []).slice(0, 3).map((prod, i) => (
                                <span key={i} className="text-[9px] bg-white border border-slate-200 px-2 py-1 font-bold uppercase text-slate-400">
                                  {prod}
                                </span>
                              ))}
-                             {item.products.length > 3 && (
-                               <span className="text-[9px] font-bold text-primary italic">+{item.products.length - 3} autres</span>
+                             {(item.products?.length ?? 0) > 3 && (
+                               <span className="text-[9px] font-bold text-primary italic">+{(item.products?.length ?? 0) - 3} autres</span>
                              )}
                            </div>
                            

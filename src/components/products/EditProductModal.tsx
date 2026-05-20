@@ -12,8 +12,8 @@ interface EditProductModalProps {
 }
 
 const EditProductModal = ({ product, isOpen, onClose }: EditProductModalProps) => {
-  const { updateProduct } = useGitHubProducts();
   const { language } = useLanguage();
+  const updateProduct = (_ref: string, _data: any) => { console.log('updateProduct not implemented'); };
 
   const [name, setName] = useState(product.name[language] || '');
   const [applications, setApplications] = useState(product.applications[language] || '');

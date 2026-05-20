@@ -195,7 +195,7 @@ const AdminProductDetail = () => {
           <EditProductModal
             product={product}
             onClose={() => setIsEditing(false)}
-            onSave={handleUpdate}
+            onUpdate={handleUpdate}
           />
         )}
       </div>
